@@ -6,20 +6,22 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:52:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/13 10:54:57 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/13 11:21:57 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_parse(t_struct *strct, t_args *tmp, int i)
+int		ft_parse(t_struct *strct, t_args *tmp_head, int i)
 {
+	t_args	*tmp;
 	char	*str;
 	char	*tmp_str;
 	int		k;
 
 	k = 1;
-	if ((str = (char *)malloc(sizeof(char) * k + 1)) == NULL)
+	tmp = tmp_head;
+	if ((str = (char *)malloc(sizeof(char) * (k + 1))) == NULL)
 		return (-1);
 	
 	while (strct->parsed_str[i] == ' ')
