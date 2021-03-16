@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 13:56:32 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/16 14:15:56 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/16 14:55:18 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,6 @@ static	int		ft_check_spec_symb_in_dq(t_struct *strct)
 
 	tmp = strct->args_head;
 	i = 0;
-	// printf("N_I %d\n", strct->n_i);
-	// printf("%s\n", tmp->arg[n_i]);
-	// printf("%s\n", tmp->arg[1]);
-	// exit(0);
 	while (tmp)
 	{
 		while (tmp->arg[strct->n_i - 1][i])
