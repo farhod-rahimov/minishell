@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/17 14:41:30 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/17 16:55:34 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void	ft_print_env(t_env *head);
 // VAR=echo && ls /usr/local/bin | grep $VAR ; ls /usr/bin | grep $VAR ; ls /bin | grep $VAR ; ls /usr/sbin | grep $VAR ; ls /sbin | grep $VAR ; ls /usr/local/munki | grep $VAR
 // first second third fourth fifth sixth seventh eights nines tens 11th 12th 13th
 // "1'$PATH' 2$PATH$PATH$PATH 3ballalalala 4$PATH 5PATH"
+
+//"balalalalalala $PATH popopopopopopopop"
 
 void	ft_error();
 void	ft_strcopy(char *dst, char *src);
