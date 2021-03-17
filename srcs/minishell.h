@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/17 16:55:34 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/17 17:22:26 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	ft_print_env(t_env *head);
 // "1'$PATH' 2$PATH$PATH$PATH 3ballalalala 4$PATH 5PATH"
 
 //"balalalalalala $PATH popopopopopopopop"
+//"balalalalalala $PATH popopopopopopopop" 'jcvnwkejncwkjenckjwencvjkwenkjwe' ; "balalalalalala $PATH popopopopopopopop""balalalalalala $PATH popopopopopopopop"
 
 void	ft_error();
 void	ft_strcopy(char *dst, char *src);
