@@ -6,17 +6,23 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 13:56:32 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/16 18:56:47 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/17 09:24:39 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+// нужно ли обрабатывать такое echo "$(PWD)"
+//echo * \* "*" '*'
+//ls * "*"
+//echo "$" "\$" echo "$""\$" где записать пробел
+
 static	int		ft_check_spec_symb_in_dq(t_struct *strct);
 static	int		ft_work_with_env_var_in_dq(t_struct *strct, t_args **tmp_args, int i, int n_i);
 static	char	*ft_get_env_var_value(t_env *env_head, char **env_var);
 static	int		ft_check_and_work_with_backslash(t_args **args, int i, int n_i);
-static	void	ft_replace_env_var_in_str_to_its_value(t_struct *strct, char **env_var, int i, int initial_i);
+static	void	ft_replace_some_var_in_str_to_its_value(t_struct *strct, char **env_var, int i, int initial_i);
+static	int		ft_work_with_return_value(t_struct *strct, int i);
 
 int		ft_parse_str_till_dq_ends(t_args **current_t_arg, int i, t_struct *strct, int k)
 {
@@ -55,7 +61,12 @@ static	int		ft_check_spec_symb_in_dq(t_struct *strct)
 		{
 			if (tmp->arg[strct->n_i - 1][i] == '$')
 			{
-                if ((i = ft_work_with_env_var_in_dq(strct, &tmp, i + 1, strct->n_i - 1)) == -1)
+				if (tmp->arg[strct->n_i - 1][i + 1] == '?' && tmp->arg[strct->n_i - 1][i - 1] != '\\')
+				{
+					if ((i = ft_work_with_return_value(strct, ++i)) == -1)
+						return (-1);
+				}
+                else if ((i = ft_work_with_env_var_in_dq(strct, &tmp, i + 1, strct->n_i - 1)) == -1)
                     return (-1);
 			}
 			else
@@ -67,11 +78,20 @@ static	int		ft_check_spec_symb_in_dq(t_struct *strct)
 	return (0);
 }
 
+static int ft_work_with_return_value(t_struct *strct, int i)
+{
+	int		return_value = 5678; // change
+	char	*ret_val;
+
+	if ((ret_val = ft_itoa(return_value)) == NULL)
+		return (-1);
+	
+	ft_replace_some_var_in_str_to_its_value(strct, &ret_val, i + 1, i);
+	return (++i);
+}
 static	int		ft_work_with_env_var_in_dq(t_struct *strct, t_args **tmp_args, int i, int n_i)
 {
 	char	*env_var;
-	// char	*tmp1;
-	// char	*tmp2;
     int		initial_i;
 	
 	initial_i = i;
@@ -89,11 +109,11 @@ static	int		ft_work_with_env_var_in_dq(t_struct *strct, t_args **tmp_args, int i
 	if ((env_var = ft_get_env_var_value(strct->env_head, &env_var)) == NULL)
 		return (-1);
 
-	ft_replace_env_var_in_str_to_its_value(strct, &env_var, i, initial_i);
+	ft_replace_some_var_in_str_to_its_value(strct, &env_var, i, initial_i);
 	return (i);
 }
 
-static	void	ft_replace_env_var_in_str_to_its_value(t_struct *strct, char **env_var, int i, int initial_i)
+static	void	ft_replace_some_var_in_str_to_its_value(t_struct *strct, char **env_var, int i, int initial_i)
 {
 	char	*tmp1;
 	char	*tmp2;
