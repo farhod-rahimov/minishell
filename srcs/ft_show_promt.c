@@ -6,13 +6,14 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 09:17:01 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/18 09:51:45 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/18 13:34:45 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static	int		ft_add_back_string(t_struct *strct, int i, char c);
+static	void	ft_free_t_args(t_args *head);
 
 int	ft_show_prompt(t_struct *strct, int i)
 {
@@ -51,8 +52,13 @@ static	int	ft_add_back_string(t_struct *strct, int i, char c)
 
 int	ft_begin_parsing(t_struct *strct)
 {
+	t_args *tmp;
+	
+	tmp = strct->args_head;
 	if ((strct->args_head = ft_create_new_t_args(strct, NULL)) == NULL)
 		return (-1);
+	if (tmp != NULL)
+		ft_free_t_args(tmp);
 
 	if ((ft_parse(strct, strct->args_head, 0)) == -1)
 		return (-1);
@@ -60,4 +66,17 @@ int	ft_begin_parsing(t_struct *strct)
 	ft_print_devided_args(strct->args_head);
 	
 	return (0);
+}
+
+static	void	ft_free_t_args(t_args *head)
+{
+	t_args *tmp;
+
+	while (head)
+	{
+		tmp = head;
+		head = head->next;
+		ft_free_arg(tmp->arg);
+		free(tmp);
+	}
 }
