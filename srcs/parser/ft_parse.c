@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:52:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/18 09:50:37 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/18 10:04:32 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ int		ft_parse(t_struct *strct, t_args *tmp_head, int i)
 			i = ft_parse_str_till_dq_ends(&tmp, ++i, strct, 1);		// dq = double quotes // ++i for skipping the first "
 		else if (strct->parsed_str[i] == '\'')
 			i = ft_parse_str_till_sq_ends(&tmp, ++i, strct, 1);		// sq = single quote // ++i for skipping the first '
-		else if (strct->parsed_str[i] == '$')						// parses ENV_VAR and replaces it to its value
-		{
-			if ((i = ft_parse_str_till_env_var_ends(&tmp, i, strct, 1)) == -1)
-				return (-1);
-		}
-		else if	((i = ft_parse_str_till_it_ends(&tmp, i, strct, 1)) == -1)
-			return (-1);
+		// else if (strct->parsed_str[i] == '$')						// parses ENV_VAR and replaces it to its value
+		// {
+		// 	if ((i = ft_parse_str_till_env_var_ends(&tmp, i, strct, 1)) == -1)
+		// 		return (-1);
+		// }
+		// else if	((i = ft_parse_str_till_it_ends(&tmp, i, strct, 1)) == -1)
+		// 	return (-1);
 	}
 	free(strct->parsed_str);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/18 09:27:58 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/18 10:10:45 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,26 @@ int		ft_begin_parsing(t_struct *strct);
 
 
 int		ft_parse(t_struct *strct, t_args *tmp_head, int i);
+
 int		ft_parse_str_till_dq_ends(t_args **current_t_arg, int i, t_struct *strct, int k);
+int		ft_copy_str_to_structure_t_args(t_args **tmp, char *str, int n_i);
+void	ft_push_back_char(char **str, char c);
+int		ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_arg, int i);
+int		ft_copy_old_arg_to_new(t_args **new_arg, char **old_arg, int n_i);
+void	ft_free_arg(char **tmp_arg);
+
+
 int		ft_parse_str_till_sq_ends(t_args **current_t_arg, int i, t_struct *strct, int k);
-int		ft_parse_str_till_env_var_ends(t_args **current_t_arg, int i, t_struct *strct, int k);
-int		ft_parse_str_till_it_ends(t_args **current_t_arg, int i, t_struct *strct, int k);
+// int		ft_parse_str_till_env_var_ends(t_args **current_t_arg, int i, t_struct *strct, int k);
+// int		ft_parse_str_till_it_ends(t_args **current_t_arg, int i, t_struct *strct, int k);
 
 t_args	*ft_create_new_t_args(t_struct *strct, t_args *prev_t_args);
-int		ft_check_if_new_list_is_needed(t_struct *strct, t_args **current_t_arg, int i);
+// int		ft_check_if_new_list_is_needed(t_struct *strct, t_args **current_t_arg, int i);
 char	*ft_add_back_str(char *str, int k, char c);
 
 
-int		ft_check_if_new_list_is_needed(t_struct *strct, t_args **current_t_arg, int i);
-int		ft_copy_str_to_structure_args(t_args *tmp, char *str, int n_i);
+// int		ft_check_if_new_list_is_needed(t_struct *strct, t_args **current_t_arg, int i);
+// int		ft_copy_str_to_structure_args(t_args *tmp, char *str, int n_i);
 int		ft_copy_old_arg_n_i_of_tmp(t_args *tmp, char **tmp_arg, int n_i);
 void	ft_print_devided_args(t_args *head);
 
@@ -67,8 +75,8 @@ int		ft_structure_env(t_struct *strct, char **env);
 void	ft_fill_t_env_list(t_env *env_list, char **env, int i, int k);
 t_env	*ft_create_new_t_env(t_env *prev);
 void	ft_get_path_to_bins(t_struct *strct);
-void	ft_print_path_to_bins(char **path_to_bins);
-void	ft_print_env(t_env *head);
+// void	ft_print_path_to_bins(char **path_to_bins);
+// void	ft_print_env(t_env *head);
 
 // int		ft_get_command_e(t_struct *strct, int i);
 // int		ft_get_command_c(t_struct *strct, int i);
@@ -91,8 +99,3 @@ void	ft_print_env(t_env *head);
 
 void	ft_error();
 void	ft_strcopy(char *dst, char *src);
-
-// 0  0 1
-// 1  0 1 2
-// 2  0 1 2 3
-// 3  0 1 2 3 4
