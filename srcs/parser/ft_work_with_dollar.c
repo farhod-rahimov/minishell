@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 11:03:57 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/18 11:32:28 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/18 13:14:40 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int				ft_work_with_dollar(t_args **current_t_arg, int i, t_struct *strct)
 {
 	char	*str;
 	char	*tmp;
-	
+	// add $?	
 	str = ft_create_str_from_2_char('$', '\0');
 	if (strct->parsed_str[i] != '\"' && strct->parsed_str[i] != '\'' && strct->parsed_str[i] != ';' && strct->parsed_str[i] != '|' && strct->parsed_str[i] != ' ')
 	{

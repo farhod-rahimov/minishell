@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:52:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/18 11:36:28 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/18 13:25:38 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		ft_parse(t_struct *strct, t_args *tmp_head, int i)
 	{
 		while (strct->parsed_str[i] == ' ')
 			i++;
-		if (strct->parsed_str[i] == ';' || strct->parsed_str[i] == '|')
+		if (strct->parsed_str[i] == ';' || strct->parsed_str[i] == '|')				// str cannot start with ; | 
 			return (-1);
 		else if (strct->parsed_str[i] == '\"')
 			i = ft_parse_str_till_dq_ends(&tmp, ++i, strct, 1);						// dq = double quotes // ++i for skipping the first "
@@ -31,10 +31,15 @@ int		ft_parse(t_struct *strct, t_args *tmp_head, int i)
 		else if (strct->parsed_str[i] == '$' && (ft_isalnum(strct->parsed_str[i + 1]) || strct->parsed_str[i + 1] == '_'))
 			i = ft_parse_str_till_env_var_ends(&tmp, ++i, strct, 1);
 		else if (strct->parsed_str[i] == '$' && (!ft_isalnum(strct->parsed_str[i + 1]) && strct->parsed_str[i + 1] != '_'))
-		// else if (strct->parsed_str[i] == '$' && strct->parsed_str[i + 1] == '$')
 			i = ft_work_with_dollar(&tmp, ++i, strct);
-		// else if	((i = ft_parse_str_till_it_ends(&tmp, i, strct, 1)) == -1)
-		// 	return (-1);
+		// else if (strct->parsed_str[i] == '|')
+		// 	ft_work_with_pipe;
+		// else if (strct->parsed_str[i] == '>')
+		// 	ft_work_with_right_redirect;
+		// else if (strct->parsed_str[i] == '<')
+		// 	ft_work_with_left_redirect;
+		else
+			i = ft_parse_str_till_it_ends(&tmp, i, strct, 1);
 	}
 	free(strct->parsed_str);
 	return (0);
