@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/17 17:22:26 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/18 09:27:58 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,3 +91,8 @@ void	ft_print_env(t_env *head);
 
 void	ft_error();
 void	ft_strcopy(char *dst, char *src);
+
+// 0  0 1
+// 1  0 1 2
+// 2  0 1 2 3
+// 3  0 1 2 3 4

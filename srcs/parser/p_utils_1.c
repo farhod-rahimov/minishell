@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 09:20:25 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/17 17:27:14 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/18 09:28:03 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_args	*ft_create_new_t_args(t_struct *strct, t_args *prev_t_args)
 	if ((new_t_args = (t_args *)malloc(sizeof(t_args))) == NULL)
 		return (NULL);
 	new_t_args->next = NULL;
+	new_t_args->arg = NULL;
 		
 	if (prev_t_args != NULL)
 		prev_t_args->next = new_t_args;
