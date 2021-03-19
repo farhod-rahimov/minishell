@@ -6,11 +6,29 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:08:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/18 10:32:38 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/19 14:36:10 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+t_args	*ft_create_new_t_args(t_struct *strct, t_args *prev_t_args)
+{
+	t_args *new_t_args;
+
+	if ((new_t_args = (t_args *)malloc(sizeof(t_args))) == NULL)
+		return (NULL);
+	new_t_args->next = NULL;
+	new_t_args->arg = NULL;
+	new_t_args->pipe = 0;
+		
+	if (prev_t_args != NULL)
+		prev_t_args->next = new_t_args;
+
+	strct->n_i = 0;
+	
+	return (new_t_args);
+}
 
 int ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_arg, int i)
 {
@@ -22,8 +40,10 @@ int ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_ar
 		strct->n_i++;
 	while (strct->parsed_str[i] == ' ')
 		i++;
-	if (strct->parsed_str[i] == ';')
+	if (strct->parsed_str[i] == ';' || strct->parsed_str[i] == '|')
 	{
+		if (strct->parsed_str[i] == '|')
+			(*current_t_arg)->pipe = 1;
 		i++;
 		if ((*current_t_arg = ft_create_new_t_args(strct, *current_t_arg)) == NULL)
 			return (-1);

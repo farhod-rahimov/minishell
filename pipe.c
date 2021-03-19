@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 15:17:31 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/19 10:40:22 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/19 14:25:51 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ int main(int argc, char **argv, char **env)
 	}
 	write(1, "FINISH\n", 7);
 	
-	int ret;
-	char c;
-	while ((ret = read(0, &c, 1)) && ret != -1)
-	{
-		write(1, &c, 1);
-	}
+	// int ret;
+	// char c;
+	// while ((ret = read(0, &c, 1)) && ret != -1)
+	// {
+	// 	write(1, &c, 1);
+	// }
 
-	return (0);
+	return (1);
 }

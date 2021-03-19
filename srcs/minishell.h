@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/18 13:21:40 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/19 14:34:03 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ typedef struct env
 
 typedef struct args
 {
-	char **arg;			//args[0] = command, argsp[1 + ...] arguments	
+	char	**arg;			//args[0] = command, argsp[1 + ...] arguments	
+	int		pipe;
 	struct args *next;
 } t_args;
 

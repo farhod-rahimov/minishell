@@ -6,7 +6,7 @@
 #    By: btammara <btammara@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/06 16:30:33 by btammara          #+#    #+#              #
-#    Updated: 2021/03/18 11:11:06 by btammara         ###   ########.fr        #
+#    Updated: 2021/03/19 14:28:46 by btammara         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,6 @@ SRCS =			./srcs/main.c \
 				./srcs/utils.c \
 				./srcs/ft_show_promt.c \
 				./srcs/parser/ft_parse.c \
-				./srcs/parser/p_utils_1.c \
 				./srcs/parser/new_utils.c \
 				./srcs/parser/ft_parse_str_till_env_var_ends.c \
 				./srcs/parser/ft_parse_str_till_it_ends.c \
