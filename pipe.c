@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 15:17:31 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/19 14:25:51 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/20 10:04:05 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@ int main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)env;
 	
-	int intitial_fd_0 = dup(0);
-	int intitial_fd_1 = dup(0);
+	int initial_fd[2];
+	initial_fd[0] = dup(0);
+	initial_fd[1] = dup(1);
 	int fd_pipe[2];
 	pid_t pid;
 	int status;
-	char *argv2[] = {"Makefile", "cmake-build-debug", "minishell", "pipe.c", "srcs"};
+	char *argv2[] = {"Makefile", "cmake-build-debug", "minishell", "pipe.c", "srcs", NULL};
 	
 	printf ("PIPE %d\n", pipe(fd_pipe));
 	if ((pid = fork()) == 0)
@@ -52,7 +53,7 @@ int main(int argc, char **argv, char **env)
 		else
 		{
 			waitpid(pid, &status, 0);
-			if ((dup2(intitial_fd_0, 0)) == -1)
+			if ((dup2(initial_fd[0], 0)) == -1)
 				write(2, "3 dup2 error\n", 13);
 		}
 	}
