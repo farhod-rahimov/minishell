@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/20 17:08:47 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/20 19:17:33 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		ft_parse(t_struct *strct, t_args *tmp_head, int i);
 
 int		ft_parse_str_till_dq_ends(t_args **current_t_arg, int i, t_struct *strct, int k);
 int		ft_copy_str_to_structure_t_args(t_args **tmp, char *str, int n_i);
-void	ft_push_back_char(char **str, char c);
+void	ft_push_backft_push_back_char(char **str, char c);
 int		ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_arg, int i);
 int		ft_copy_old_arg_to_new(t_args **new_arg, char **old_arg, int n_i);
 void	ft_free_arg(char **tmp_arg);

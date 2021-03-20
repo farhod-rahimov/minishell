@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/20 18:37:45 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/20 19:17:18 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int ft_exec_build_in(char **arg, t_env **head);
 
 void	ft_work_with_t_arg_lists(t_struct *strct)
 {
+	int fd_pipe[2];
 	char **env;
 	t_args *tmp;
 
@@ -27,11 +28,57 @@ void	ft_work_with_t_arg_lists(t_struct *strct)
 	{
 		if (tmp->arg)
 		{
+			if (tmp->pipe)
+			{
+				if (pipe(fd_pipe) == -1)
+					write(2, "pipe ERROR\n", 11);
+				if (dup2(fd_pipe[1], 1) == -1)
+					write(2, "dup2 ERROR\n", 11);
+			}
+			else
+			{
+				close(fd_pipe[0]);
+				close(fd_pipe[1]);
+				if (dup2(strct->initial_fd[1], 1) == -1)
+					write(2, "dup2 ERROR\n", 11);
+			}
 			if (!(ft_exec_build_in(strct->args_head->arg, &strct->env_head)))
 				ft_exec_bin(strct, tmp, strct->path_to_bins, env);
-			
 		}
 		tmp = tmp->next;
+		if (tmp)
+		{
+			if (tmp->prev)
+			{
+				if (tmp->prev->pipe)
+				{
+					close(fd_pipe[1]);
+					if (dup2(fd_pipe[0], 0) == -1)
+						write(2, "dup2 ERROR\n", 11);
+				}
+				else
+				{
+					close(fd_pipe[0]);
+					close(fd_pipe[1]);
+					if (dup2(strct->initial_fd[0], 0) == -1)
+						write(2, "dup2 ERROR\n", 11);
+				}
+			}
+			else
+			{
+				close(fd_pipe[0]);
+				close(fd_pipe[1]);
+				if (dup2(strct->initial_fd[0], 0) == -1)
+					write(2, "dup2 ERROR\n", 11);
+			}
+		}
+		else
+		{
+			close(fd_pipe[0]);
+			close(fd_pipe[1]);
+			if (dup2(strct->initial_fd[0], 0) == -1)
+			write(2, "dup2 ERROR\n", 11);
+		}
 	}
 	ft_free_splited_array(env, ft_get_env_size(strct->env_head));
 }
@@ -39,7 +86,6 @@ void	ft_work_with_t_arg_lists(t_struct *strct)
 int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 {
 	(void)strct;
-	static int		fd_pipe[2];
 	pid_t	pid;
 	int		status;
 	char	*abs_path_to_command;
@@ -49,27 +95,8 @@ int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 	abs_path_to_command = ft_strdup("");
 	i = 0;
 	
-	if (tmp->pipe && tmp->pipe % 2 != 0)
-		pipe(fd_pipe);
 	if ((pid = fork()) == 0)
 	{
-		/*******************PIPE_START********************/
-		if (tmp->pipe && tmp->pipe % 2 != 0)
-		{
-			if ((dup2(fd_pipe[1], 1)) == -1)
-				write(2, "1 dup2 error\n", 13);
-			close(fd_pipe[0]);
-		}
-		else if ((tmp->pipe && tmp->pipe % 2 == 0) || (!tmp->pipe && tmp->prev->pipe))
-		{
-			if ((dup2(fd_pipe[0], 0)) == -1)
-				write(2, "2 dup2 error\n", 14);
-			close(fd_pipe[1]);
-			waitpid(pid, &status, 0);
-			close(fd_pipe[0]);
-		}
-		/*******************PIPE_END********************/
-
 		if (tmp->arg[i][0] == '/' || tmp->arg[i][0] == '.' || tmp->arg[i][0] == '~')
 		{
 			if ((execve(tmp->arg[0], tmp->arg, env)) == -1)
