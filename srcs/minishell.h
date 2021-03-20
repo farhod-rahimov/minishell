@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/19 14:34:03 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/19 16:54:49 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct args
 
 typedef struct s
 {
+	char **env;
 	char *parsed_str;
 	char **path_to_bins;
 	t_env *env_head;
@@ -77,7 +78,7 @@ int		ft_structure_env(t_struct *strct, char **env);
 void	ft_fill_t_env_list(t_env *env_list, char **env, int i, int k);
 t_env	*ft_create_new_t_env(t_env *prev);
 void	ft_get_path_to_bins(t_struct *strct);
-// void	ft_print_path_to_bins(char **path_to_bins);
+void	ft_print_path_to_bins(char **path_to_bins);
 // void	ft_print_env(t_env *head);
 
 // int		ft_get_command_e(t_struct *strct, int i);
@@ -101,3 +102,4 @@ void	ft_get_path_to_bins(t_struct *strct);
 
 void	ft_error();
 void	ft_strcopy(char *dst, char *src);
+void	ft_work_with_t_arg_lists(t_struct *strct);
