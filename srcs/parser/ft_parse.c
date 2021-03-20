@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:52:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/19 14:42:14 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/20 10:31:17 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_print_devided_args(t_args *head)
 	printf("------------------------\n");
 	while (tmp)
 	{
-		while (tmp->arg[i][0])
+		while (tmp->arg[i])
 		{
 			printf("arg[%d][%d]	|%s|\n", k, i, tmp->arg[i]);
 			i++;

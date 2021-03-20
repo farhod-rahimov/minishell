@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:08:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/19 14:36:10 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/20 10:51:30 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ int ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_ar
 		if (strct->parsed_str[i] == '|')
 			(*current_t_arg)->pipe = 1;
 		i++;
-		if ((*current_t_arg = ft_create_new_t_args(strct, *current_t_arg)) == NULL)
-			return (-1);
+		if (strct->parsed_str[i] != '\0')
+			if ((*current_t_arg = ft_create_new_t_args(strct, *current_t_arg)) == NULL)
+				return (-1);
 	}
 	return (i);
 }
@@ -62,8 +63,9 @@ int		ft_copy_str_to_structure_t_args(t_args **tmp, char *str, int n_i) //rewrite
 			ft_error();
 		if (((*tmp)->arg[0] = ft_strdup(str)) == NULL)
 			ft_error();
-		if (((*tmp)->arg[1] = ft_strdup("")) == NULL)
-			ft_error();
+		// if (((*tmp)->arg[1] = ft_strdup("")) == NULL)
+		// 	ft_error();
+		(*tmp)->arg[1] = NULL;
 		return (0);
 	}
 	if (((*tmp)->arg = (char **)malloc(sizeof(char *) * (n_i + 2))) == NULL)
@@ -71,8 +73,9 @@ int		ft_copy_str_to_structure_t_args(t_args **tmp, char *str, int n_i) //rewrite
 	ft_copy_old_arg_to_new(tmp, tmp_arg, n_i);
 	if (((*tmp)->arg[n_i] = ft_strjoin(tmp_arg[n_i], str)) == NULL)
 		ft_error();
-	if (((*tmp)->arg[n_i + 1] = ft_strdup("")) == NULL)
-		ft_error();
+	// if (((*tmp)->arg[n_i + 1] = ft_strdup("")) == NULL)
+	// 	ft_error();
+	(*tmp)->arg[n_i + 1] = NULL;
 
 	ft_free_arg(tmp_arg);
 	return (0);
@@ -133,7 +136,7 @@ void	ft_free_arg(char **tmp_arg)
 	int i;
 
 	i = 0;
-	while (tmp_arg[i][0])
+	while (tmp_arg[i])
 	{
 		free(tmp_arg[i++]);
 	}
