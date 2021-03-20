@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/20 15:26:05 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/20 17:08:47 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct args
 	char	**arg;			//args[0] = command, argsp[1 + ...] arguments	
 	int		pipe;
 	struct args *next;
+	struct args *prev;
 } t_args;
 
 typedef struct s
@@ -36,6 +37,8 @@ typedef struct s
 	t_env *env_head;
 	t_args *args_head;
 	int n_i;
+
+	int	initial_fd[2];
 } t_struct;
 
 void	ft_free_splited_array(char **array, int n);

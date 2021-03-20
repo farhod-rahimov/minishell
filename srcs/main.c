@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:39:57 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/18 13:29:25 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/20 16:51:16 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	main(int argc, char **argv, char **env)
 		return (-1); // minishell doesn't launch with arguments
 	if (ft_structure_env(&strct, env) == -1)
 		return (-1);
+	strct.initial_fd[0] = dup(0);
+	strct.initial_fd[1] = dup(1);
 	while (ft_show_prompt(&strct, 1) != -1)
 		;
 	return (0);

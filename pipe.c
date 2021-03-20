@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 15:17:31 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/20 10:04:05 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/20 16:47:24 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int main(int argc, char **argv, char **env)
 	int fd_pipe[2];
 	pid_t pid;
 	int status;
-	char *argv2[] = {"Makefile", "cmake-build-debug", "minishell", "pipe.c", "srcs", NULL};
+	char *argv2[] = {"-la", NULL};
 	
 	printf ("PIPE %d\n", pipe(fd_pipe));
 	if ((pid = fork()) == 0)

@@ -6,13 +6,13 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/20 15:26:46 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/20 18:37:45 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
-int	ft_exec_bin(t_args *tmp, char **path_to_bins, char **env);
+int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env);
 int ft_exec_build_in(char **arg, t_env **head);
 
 void	ft_work_with_t_arg_lists(t_struct *strct)
@@ -25,15 +25,21 @@ void	ft_work_with_t_arg_lists(t_struct *strct)
 	tmp = strct->args_head;
 	while (tmp)
 	{
-		if (!(ft_exec_build_in(strct->args_head->arg, &strct->env_head)))
-			ft_exec_bin(tmp, strct->path_to_bins, env);
+		if (tmp->arg)
+		{
+			if (!(ft_exec_build_in(strct->args_head->arg, &strct->env_head)))
+				ft_exec_bin(strct, tmp, strct->path_to_bins, env);
+			
+		}
 		tmp = tmp->next;
 	}
 	ft_free_splited_array(env, ft_get_env_size(strct->env_head));
 }
 
-int	ft_exec_bin(t_args *tmp, char **path_to_bins, char **env)
+int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 {
+	(void)strct;
+	static int		fd_pipe[2];
 	pid_t	pid;
 	int		status;
 	char	*abs_path_to_command;
@@ -43,11 +49,29 @@ int	ft_exec_bin(t_args *tmp, char **path_to_bins, char **env)
 	abs_path_to_command = ft_strdup("");
 	i = 0;
 	
+	if (tmp->pipe && tmp->pipe % 2 != 0)
+		pipe(fd_pipe);
 	if ((pid = fork()) == 0)
 	{
+		/*******************PIPE_START********************/
+		if (tmp->pipe && tmp->pipe % 2 != 0)
+		{
+			if ((dup2(fd_pipe[1], 1)) == -1)
+				write(2, "1 dup2 error\n", 13);
+			close(fd_pipe[0]);
+		}
+		else if ((tmp->pipe && tmp->pipe % 2 == 0) || (!tmp->pipe && tmp->prev->pipe))
+		{
+			if ((dup2(fd_pipe[0], 0)) == -1)
+				write(2, "2 dup2 error\n", 14);
+			close(fd_pipe[1]);
+			waitpid(pid, &status, 0);
+			close(fd_pipe[0]);
+		}
+		/*******************PIPE_END********************/
+
 		if (tmp->arg[i][0] == '/' || tmp->arg[i][0] == '.' || tmp->arg[i][0] == '~')
 		{
-			// printf("/ || . || ~\n");
 			if ((execve(tmp->arg[0], tmp->arg, env)) == -1)
 			{
 				printf("my_bash: %s: No such file or directory\n", tmp->arg[0]);
@@ -71,7 +95,14 @@ int	ft_exec_bin(t_args *tmp, char **path_to_bins, char **env)
 		}
 	}
 	else
+	{
 		waitpid(pid, &status, 0);
+		// if (tmp->next)
+		// 	if (!tmp->pipe && tmp->prev->pipe)   // если у текущего pipe = 0 && у предущего pipe != 0
+		// 		if ((dup2(strct->initial_fd[0], 0)) == -1)
+		// 			write(2, "3 dup2 error\n", 13);
+
+	}
 	// printf("FINISH\n");
 	return (0);
 }
@@ -81,8 +112,8 @@ int ft_exec_build_in(char **arg, t_env **head)
 	(void)arg;
 	(void)head;
 
-	ft_change_shell_level(*head); /// это при запуске нашего минишелла
-	ft_print_env(*head);
+	// ft_change_shell_level(*head); /// это при запуске нашего минишелла
+	// ft_print_env(*head);
 	// printf("\nHERE SHOULD BE THE RESULT OF EXECUTION OF 'BUILD IN' COMMAND\n");
 	return (0);
 }

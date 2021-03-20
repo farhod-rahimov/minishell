@@ -1,6 +1,0 @@
-/Users/btammara/CLionProjects/minishell/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/btammara/CLionProjects/minishell/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/btammara/CLionProjects/minishell/cmake-build-debug/CMakeFiles/minishell.dir
-/Users/btammara/CLionProjects/minishell/cmake-build-debug/srcs/libft/CMakeFiles/rebuild_cache.dir
-/Users/btammara/CLionProjects/minishell/cmake-build-debug/srcs/libft/CMakeFiles/edit_cache.dir
-/Users/btammara/CLionProjects/minishell/cmake-build-debug/srcs/libft/CMakeFiles/libft.dir
