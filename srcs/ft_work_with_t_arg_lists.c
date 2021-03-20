@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/20 15:06:38 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/20 15:26:46 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int ft_exec_build_in(char **arg, t_env **head)
 	(void)arg;
 	(void)head;
 
+	ft_change_shell_level(*head); /// это при запуске нашего минишелла
+	ft_print_env(*head);
 	// printf("\nHERE SHOULD BE THE RESULT OF EXECUTION OF 'BUILD IN' COMMAND\n");
 	return (0);
 }

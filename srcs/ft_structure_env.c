@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:21:41 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/20 14:55:15 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/20 15:22:34 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,11 @@ int	ft_structure_env(t_struct *strct, char **env)
 		i++;
 	}
 
-	// ft_print_env(strct->env_head);
 
 	ft_get_path_to_bins(strct);
-	// !!!!!!!!!!!!!ft_change_shell_level!!!!
+	
+	
+	// ft_print_env(strct->env_head);
 	return (0);
 }
 
