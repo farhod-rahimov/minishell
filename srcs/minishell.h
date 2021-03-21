@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/20 19:17:33 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/21 08:15:13 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	ft_print_path_to_bins(char **path_to_bins);
 //"balalalalalala $PATH popopopopopopopop"
 //"balalalalalala $PATH popopopopopopopop" 'jcvnwkejncwkjenckjwencvjkwenkjwe' ; "balalalalalala $PATH popopopopopopopop""balalalalalala $PATH popopopopopopopop"
 
+void	ft_push_back_char(char **str, char c);
 void	ft_error();
 void	ft_strcopy(char *dst, char *src);
 void	ft_work_with_t_arg_lists(t_struct *strct);
