@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 09:10:15 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/21 09:42:28 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/21 14:41:01 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ int main(int argc, char **argv)
 	}
 	else
 	{
-		waitpid(pid, &status, 0);
+		// waitpid(pid, &status, 0);
+		wait(&status);
+		while (1)
+			;
 	}
 	
 	
