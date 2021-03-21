@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/21 14:29:03 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/21 17:26:59 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ typedef struct args
 	struct	args	*prev;
 	int				redir_flag;
 	t_redirect		*redir_head;
+	int				right_redir;
+	int				left_redir;
 } t_args;
 
 typedef struct s

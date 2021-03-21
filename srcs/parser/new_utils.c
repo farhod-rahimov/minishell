@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:08:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/21 14:32:56 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/21 18:44:43 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_args	*ft_create_new_t_args(t_struct *strct, t_args *prev_t_args)
 	new_t_args->redir_head = NULL;
 
 	new_t_args->pipe = 0;
+	new_t_args->right_redir = 0;
+	new_t_args->left_redir = 0;
 	new_t_args->redir_flag = 0;
 		
 	if (prev_t_args != NULL)
@@ -109,6 +111,10 @@ void		ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, ch
 	if (tmp->type != NULL && tmp->file_name == NULL)
 	{
 		tmp->file_name = ft_strdup(file_name);
+		if (!ft_strncmp(tmp->type, "<", 1))
+			(*current_t_arg)->left_redir += 1;
+		else if (!ft_strncmp(tmp->type, ">", 1))
+			(*current_t_arg)->right_redir += 1;
 		(*current_t_arg)->redir_flag = 0;
 		return ;
 	}
