@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:52:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/20 13:12:15 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/21 10:16:59 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int		ft_parse(t_struct *strct, t_args *tmp_head, int i)
 		while (strct->parsed_str[i] == ' ')
 			i++;
 		if (strct->parsed_str[i] == ';' || strct->parsed_str[i] == '|')				// str cannot start with ; | 
+			return (-1);
+		else if ((strct->parsed_str[i] == '<' || strct->parsed_str[i] == '>') && tmp_head->arg)
 			return (-1);
 		else if (strct->parsed_str[i] == '\"')
 			i = ft_parse_str_till_dq_ends(&tmp, ++i, strct, 1);						// dq = double quotes // ++i for skipping the first "
@@ -63,6 +65,9 @@ void	ft_print_devided_args(t_args *head)
 			i++;
 		}
 		printf("arg[%d][pipe]	|%d|\n", k, tmp->pipe);
+		printf("arg[%d][s_lh]	|%d|\n", k, tmp->s_lh_redirect);
+		printf("arg[%d][s_rh]	|%d|\n", k, tmp->s_rh_redirect);
+		printf("arg[%d][d_rh]	|%d|\n", k, tmp->d_rh_redirect);
 		printf("------------------------\n\n");
 		i = 0;
 		k++;

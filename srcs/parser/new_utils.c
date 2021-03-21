@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:08:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/20 17:17:51 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/21 10:18:54 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ t_args	*ft_create_new_t_args(t_struct *strct, t_args *prev_t_args)
 	new_t_args->next = NULL;
 	new_t_args->prev = NULL;
 	new_t_args->arg = NULL;
+
 	new_t_args->pipe = 0;
+	new_t_args->s_lh_redirect = 0;
+	new_t_args->s_rh_redirect = 0;
+	new_t_args->d_rh_redirect = 0;
 		
 	if (prev_t_args != NULL)
 	{
@@ -44,7 +48,7 @@ int ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_ar
 		strct->n_i++;
 	while (strct->parsed_str[i] == ' ')
 		i++;
-	if (strct->parsed_str[i] == ';' || strct->parsed_str[i] == '|')
+	if (strct->parsed_str[i] == ';' || strct->parsed_str[i] == '|' || strct->parsed_str[i] == '>' || strct->parsed_str[i] == '<')
 	{
 		if (strct->parsed_str[i] == '|')
 		{
@@ -58,6 +62,15 @@ int ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_ar
 			else
 				(*current_t_arg)->pipe = 1;
 		}
+		else if (strct->parsed_str[i] == '>' && strct->parsed_str[i + 1] == '>')
+		{
+			i++;
+			(*current_t_arg)->d_rh_redirect = 1;
+		}
+		else if (strct->parsed_str[i] == '>')
+			(*current_t_arg)->s_rh_redirect = 1;
+		else if (strct->parsed_str[i] == '<')
+			(*current_t_arg)->s_lh_redirect = 1;
 		i++;
 		if (strct->parsed_str[i] != '\0')
 			if ((*current_t_arg = ft_create_new_t_args(strct, *current_t_arg)) == NULL)

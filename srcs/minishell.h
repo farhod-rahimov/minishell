@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/21 08:15:13 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/21 09:45:17 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ typedef struct args
 {
 	char	**arg;			//args[0] = command, argsp[1 + ...] arguments	
 	int		pipe;
+	int		s_lh_redirect;
+	int		s_rh_redirect;
+	int		d_rh_redirect;
 	struct args *next;
 	struct args *prev;
 } t_args;

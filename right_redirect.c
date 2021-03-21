@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 09:10:15 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/21 09:33:29 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/21 09:42:28 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,18 @@ int main(int argc, char **argv)
 	char *argv2[] = {"ls -la", "-la", NULL};
 
 
-	if (argv[1][0] == '>' && argv[1][1] == '>')
-	{
-		if ((fd = open("new_file", O_CREAT | O_WRONLY | O_APPEND, 0766)) == -1)
-			write(2, "fd errorr\n", 10);
-	}
-	else if (argv[1][0] == '>')
-	{
-		if ((fd = open("new_file", O_CREAT | O_WRONLY | O_TRUNC, 0766)) == -1)
-			write(2, "fd errorr\n", 10);
-	}
 	if ((pid = fork()) == 0)
 	{
+		if (argv[1][0] == '>' && argv[1][1] == '>')
+		{
+			if ((fd = open("new_file", O_CREAT | O_WRONLY | O_APPEND, 0766)) == -1)
+				write(2, "fd errorr\n", 10);
+		}
+		else if (argv[1][0] == '>')
+		{
+			if ((fd = open("new_file", O_CREAT | O_WRONLY | O_TRUNC, 0766)) == -1)
+				write(2, "fd errorr\n", 10);
+		}
 		if (dup2(fd, 1) == -1)
 			write(2, "dup2 error\n", 11);
 		if ((execve("/bin/ls", argv2, NULL)) == -1)
