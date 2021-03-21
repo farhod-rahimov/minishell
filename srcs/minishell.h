@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/21 17:26:59 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/21 19:18:05 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <sys/wait.h>  // wait()
 #include "./libft/libft.h"
+#include <fcntl.h>
 
 typedef struct env
 {
