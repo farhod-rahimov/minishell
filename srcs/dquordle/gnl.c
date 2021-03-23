@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 char	*ft_strjoinf(char *s1, char *s2)
 {
@@ -67,6 +67,7 @@ int		get_next_line(int fd, char **line)
 	char		*buf;
 	int			check;
 
+	buf = NULL;
 	if (!line || (read(fd, buf, 0) == -1) || !(*line = ft_strdup("")))
 		return (-1);
 	if (!rem)

@@ -15,6 +15,18 @@
 #include <sys/wait.h>  // wait()
 #include "./libft/libft.h"
 #include <fcntl.h>
+#include <stdlib.h>
+#include <term.h>
+#include <curses.h>
+#include <signal.h>
+#include <string.h>
+
+#define HISTFILE "./hist.txt"
+
+typedef struct flags
+{
+	int	signal_c;
+}				t_flags;
 
 typedef struct env
 {
@@ -53,7 +65,7 @@ typedef struct s
 	int		initial_fd[2];
 } t_struct;
 
-void	ft_free_splited_array(char **array, int n);
+void	ft_free_splited_array(char ***array, int n);
 void	ft_copy_old_str(char *old_buf, char *new_buf);
 
 
@@ -133,3 +145,17 @@ void ft_right_redirect(t_struct *strct, t_args *args, char **env, int counter);
 void    ft_pipe(int fd_pipe[2]);
 void    ft_close_pipe_01_dup_initial_0(int fd_pipe[2], t_struct *strct);
 void    ft_close_pipe_01_dup_initial_1(int fd_pipe[2], t_struct *strct);
+
+
+int		buildin(char **arg, t_env **env);
+void	ft_term(t_struct *strct);
+int		ft_strcmp(const char *s1, const char *s2);
+int		get_next_line(int fd, char **line);
+char 	**ft_get_hist(void);
+void	ft_interrupt(int signal);
+void	ft_quit(int signal);
+void	ft_read(char ***hist, int *curpl, int hsize, char (*str)[1000]);
+
+
+
+t_flags g_flags;

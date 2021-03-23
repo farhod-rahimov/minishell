@@ -26,7 +26,12 @@ SRCS =			./srcs/main.c \
 				./srcs/ft_change_shell_level.c \
 				./srcs/ft_left_redirect.c \
 				./srcs/ft_right_redirect.c \
-				./srcs/ft_pipe.c
+				./srcs/ft_pipe.c \
+				./srcs/dquordle/builtins.c \
+				./srcs/dquordle/ft_get_hist.c \
+				./srcs/dquordle/gnl.c \
+				./srcs/dquordle/signals.c \
+				./srcs/dquordle/termcap.c
 
 OBJS =			$(SRCS:.c=.o)
 
@@ -44,10 +49,10 @@ LIBFT_NAME =	libft.a
 all: 			make_libft $(NAME)
 
 make_libft:		
-				@ cd ./srcs/libft && make && cp libft.a ../.. && cd ../..
+				@ cd ./srcs/libft && make bonus && cp libft.a ../.. && cd ../..
 
 $(NAME):		$(OBJS)
-				@ $(GCC) -o $(NAME) $(OBJS) $(LIBFT_NAME)
+				@ $(GCC) -o $(NAME) $(OBJS) $(LIBFT_NAME) -ltermcap
 				@ echo 'minishell built, run ./minishell'
 
 clean:

@@ -38,7 +38,7 @@ void	ft_work_with_t_arg_lists(t_struct *strct)
 		tmp = tmp->next;
 		ft_check_if_reset_01fds_needed(tmp, strct, fd_pipe);
 	}
-	ft_free_splited_array(env, ft_get_env_size(strct->env_head));
+	ft_free_splited_array(&env, ft_get_env_size(strct->env_head));
 }
 
 int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
@@ -148,8 +148,9 @@ int ft_exec_build_in(char **arg, t_env **head)
 	(void)arg;
 	(void)head;
 
+
 	// ft_change_shell_level(*head); /// это при запуске нашего минишелла
 	// ft_print_env(*head);
 	// printf("\nHERE SHOULD BE THE RESULT OF EXECUTION OF 'BUILD IN' COMMAND\n");
-	return (0);
+	return (buildin(arg, head));
 }

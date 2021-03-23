@@ -12,14 +12,14 @@
 
 #include "minishell.h"
 
-void	ft_free_splited_array(char **array, int n)
+void	ft_free_splited_array(char ***array, int n)
 {
 	int i;
 
 	i = 0;
 	while (i < n)
-		free(array[i++]);
-	free(array);
+		free((*array)[i++]);
+	free(*array);
 }
 
 void	ft_copy_old_str(char *old_buf, char *new_buf)

@@ -65,7 +65,7 @@ int	ft_begin_parsing(t_struct *strct)
 	if ((ft_parse(strct, strct->args_head, 0)) == -1)
 		return (-1);
 	
-	// ft_print_devided_args(strct->args_head);
+//	 ft_print_devided_args(strct->args_head);
 	
 	return (0);
 }

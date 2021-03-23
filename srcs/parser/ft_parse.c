@@ -43,7 +43,7 @@ int		ft_parse(t_struct *strct, t_args *tmp_head, int i)
 		else
 			i = ft_parse_str_till_it_ends(&tmp, i, strct, 1);
 	}
-	free(strct->parsed_str);
+//	free(strct->parsed_str);
 	return (0);
 }
 

@@ -17,15 +17,23 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	t_struct strct;
 	strct.args_head = NULL;
-	
+	int fd;
+
 	if (argc != 1)
 		return (-1); // minishell doesn't launch with arguments
+	g_flags.signal_c = 0;
+	fd = open(HISTFILE, O_CREAT, 00777);
+	close(fd);
+	signal(SIGINT, ft_interrupt);
+	signal(SIGQUIT, ft_quit);
 	if (ft_structure_env(&strct, env) == -1)
 		return (-1);
 	strct.initial_fd[0] = dup(0);
 	strct.initial_fd[1] = dup(1);
-	while (ft_show_prompt(&strct, 1) != -1)
-		;
+	ft_term(&strct);
+
+//	while (ft_show_prompt(&strct, 1) != -1)
+//		;
 	return (0);
 }
 

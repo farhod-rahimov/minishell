@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "minishell.h"
+#include "../minishell.h"
 #include <sys/errno.h>
 
 //extern int	errno;
@@ -75,13 +75,13 @@ void	ft_env(t_env *head)
 	}
 }
 
-int		ft_new_env(t_env **head, char *key, char *value)
+void	ft_new_env(t_env **head, char *key, char *value)
 {
 	t_env	*new_env;
 	t_env	*tmp;
 
 	if ((new_env = (t_env *)malloc(sizeof(t_env))) == NULL)
-		return (-1); // tell me whyyy -> exit(-1)
+		exit (-1); // ft_error
 	new_env->next = NULL;
 	new_env->key = ft_strdup(key);
 	new_env->value = NULL;
@@ -109,7 +109,8 @@ int		ft_rewrite(t_env *head, char *key, char *value)
 		{
 			if (value)
 			{
-				free(tmp->value);
+				if (tmp->value)
+					free(tmp->value);
 				tmp->value = ft_strdup(value);
 			}
 			return (1);
@@ -119,7 +120,7 @@ int		ft_rewrite(t_env *head, char *key, char *value)
 	return (0);
 }
 
-int		ft_add_env(t_env **head, char *arg)
+void	ft_add_env(t_env **head, char *arg)
 {
 	char *value;
 	int i;
@@ -249,15 +250,15 @@ int	ft_atol(char *str)
 		num *= 10;
 		num += str[i++] - 48;
 	}
-	if (num > 9223372036854775808 || num == 9223372036854775808 && m == 0)
-	{
-		write(2, "exit: ", 6);
-		write(2, str, ft_strlen(str));
-		write(2, ": numeric argument required", 27);
-		exit(255);
-	}
-	if (m != 0)
-		num = 9223372036854775808 - num;
+//	if (num > 9223372036854775808 || (num == 9223372036854775808 && m == 0))
+//	{
+//		write(2, "exit: ", 6);
+//		write(2, str, ft_strlen(str));
+//		write(2, ": numeric argument required", 27);
+//		exit(255);
+//	}
+//	if (m != 0)
+//		num = 9223372036854775808 - num;
 	return (num % 256);
 }
 

@@ -19,7 +19,12 @@ add_executable(minishell_new ./srcs/main.c
                             ./srcs/parser/ft_work_with_dollar.c
                             ./srcs/ft_work_with_t_arg_lists.c
                             ./srcs/ft_create_env.c
-                            ./srcs/ft_change_shell_level.c)
+                            ./srcs/ft_change_shell_level.c
+                            ./srcs/dquordle/builtins.c
+                            ./srcs/dquordle/ft_get_hist.c
+                            ./srcs/dquordle/gnl.c
+                            ./srcs/dquordle/signals.c
+                            ./srcs/dquordle/termcap.c)
 
 
 target_link_libraries(minishell_new libft)

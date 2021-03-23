@@ -28,7 +28,7 @@ char	**ft_create_env(t_env *env_head)
 	i = 0;
 	while (tmp)
 	{
-		ft_join_key_and_value(tmp, &env[i++]);
+		ft_join_key_and_value(tmp, &(env[i++]));
 		tmp = tmp->next;
 	}
 	env[i] = NULL;
