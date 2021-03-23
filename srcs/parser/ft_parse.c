@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:52:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/21 17:30:16 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/23 14:22:33 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int		ft_parse(t_struct *strct, t_args *tmp_head, int i)
 			i++;
 		if (strct->parsed_str[i] == ';' || strct->parsed_str[i] == '|')				// str cannot start with ; | 
 			return (-1);
-		else if ((strct->parsed_str[i] == '<' || strct->parsed_str[i] == '>') && tmp_head->arg)
-			return (-1);
+		// else if ((strct->parsed_str[i] == '<' || strct->parsed_str[i] == '>') && tmp_head->arg)
+		// 	return (-1);
 		else if (strct->parsed_str[i] == '\"')
 			i = ft_parse_str_till_dq_ends(&tmp, ++i, strct, 1);						// dq = double quotes // ++i for skipping the first "
 		else if (strct->parsed_str[i] == '\'')
