@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/21 19:18:05 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/23 13:58:49 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,3 +124,12 @@ int		ft_get_env_size(t_env *tmp);
 void	ft_change_shell_level(t_env *env_head);
 void	ft_print_env(t_env *head);
 void	ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, char *type, char *file_name);
+
+int		ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env);
+int		ft_exec_build_in(char **arg, t_env **head);
+void    ft_left_redirect(t_args *args, int counter);
+void ft_right_redirect(t_struct *strct, t_args *args, char **env, int counter);
+
+void    ft_pipe(int fd_pipe[2]);
+void    ft_close_pipe_01_dup_initial_0(int fd_pipe[2], t_struct *strct);
+void    ft_close_pipe_01_dup_initial_1(int fd_pipe[2], t_struct *strct);

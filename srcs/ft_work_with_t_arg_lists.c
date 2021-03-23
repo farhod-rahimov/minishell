@@ -6,100 +6,55 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/21 19:18:38 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/23 13:59:50 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
-int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env);
-int ft_exec_build_in(char **arg, t_env **head);
-
 void	ft_work_with_t_arg_lists(t_struct *strct)
 {
-	
-	int fd_red;
 	t_redirect *tmp_red;
 	tmp_red = strct->args_head->redir_head;
 
 	int fd_pipe[2];
 	char **env;
 	t_args *tmp;
-	int counter = 0;
 
 	env = ft_create_env(strct->env_head);
 	
 	tmp = strct->args_head;
 	while (tmp)
 	{
-		tmp_red = tmp->redir_head;
-		printf("ddddd %d\n", tmp->right_redir);
-		if (tmp->right_redir)
+		if (tmp->prev != NULL)
 		{
-			while (1)
-			{
-				if (!ft_strncmp(tmp_red->type, ">", 1))
-				{
-					if (ft_strlen(tmp_red->type) == 2)
-					{
-						printf("file name %s\n", tmp_red->file_name);
-						if ((fd_red = open(tmp_red->file_name, O_CREAT | O_WRONLY | O_APPEND, 0766)) == -1)
-							write(2, "fd errorr\n", 10);
-						close(fd_red);
-					}
-					else
-					{
-						if ((fd_red = open(tmp_red->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0766)) == -1)
-							write(2, "fd errorr\n", 10);
-						close(fd_red);
-					}
-					counter++;
-				}
-				if (counter == tmp->right_redir)
-					break ;
-				tmp_red = tmp_red->next;
-			}
-			if (ft_strlen(tmp_red->file_name) == 2)
-			{
-				if ((fd_red = open(tmp_red->file_name, O_CREAT | O_WRONLY | O_APPEND, 0766)) == -1)
-					write(2, "fd errorr\n", 10);
-			}
-			else
-			{
-				if ((fd_red = open(tmp_red->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0766)) == -1)
-					write(2, "fd errorr\n", 10);
-			}
-			if (dup2(fd_red, 1) == -1)
-				write(2, "dup2 error\n", 11);
-			if (!(ft_exec_build_in(strct->args_head->arg, &strct->env_head)))
-				ft_exec_bin(strct, tmp, strct->path_to_bins, env);
-			close(fd_red);
-			if (dup2(strct->initial_fd[1], 1) == -1)
-				write(2, "dup2 ERROR\n", 11);
-			// tmp = tmp->next;
-			counter = 0;
-			// continue ;
+			if (tmp->left_redir && !tmp->prev->pipe)
+				ft_left_redirect(tmp, 0);
 		}
+		else if (tmp->prev == NULL && tmp->left_redir)
+			ft_left_redirect(tmp, 0);
+
+		if (tmp->right_redir)
+			ft_right_redirect(strct, tmp, env, 0);
+
 		if (tmp->arg)
 		{
 			if (tmp->pipe)
 			{
-				if (pipe(fd_pipe) == -1)
-					write(2, "pipe ERROR\n", 11);
-				if (dup2(fd_pipe[1], 1) == -1)
-					write(2, "dup2 ERROR\n", 11);
+				ft_pipe(fd_pipe);
 			}
-			else
+			else if (tmp->prev)
 			{
-				close(fd_pipe[0]);
-				close(fd_pipe[1]);
-				if (dup2(strct->initial_fd[1], 1) == -1)
-					write(2, "dup2 ERROR\n", 11);
+				if (tmp->prev->pipe)
+					ft_close_pipe_01_dup_initial_1(fd_pipe, strct);	
 			}
 			if (!tmp->right_redir)
 				if (!(ft_exec_build_in(strct->args_head->arg, &strct->env_head)))
 					ft_exec_bin(strct, tmp, strct->path_to_bins, env);
 		}
+		if (tmp->left_redir)
+			if (dup2(strct->initial_fd[0], 0) == -1)
+				write(2, "dup2 ERROR\n", 11);
 		tmp = tmp->next;
 		if (tmp)
 		{
@@ -112,28 +67,13 @@ void	ft_work_with_t_arg_lists(t_struct *strct)
 						write(2, "dup2 ERROR\n", 11);
 				}
 				else
-				{
-					close(fd_pipe[0]);
-					close(fd_pipe[1]);
-					if (dup2(strct->initial_fd[0], 0) == -1)
-						write(2, "dup2 ERROR\n", 11);
-				}
+					ft_close_pipe_01_dup_initial_0(fd_pipe, strct);	
 			}
 			else
-			{
-				close(fd_pipe[0]);
-				close(fd_pipe[1]);
-				if (dup2(strct->initial_fd[0], 0) == -1)
-					write(2, "dup2 ERROR\n", 11);
-			}
+				ft_close_pipe_01_dup_initial_0(fd_pipe, strct);	
 		}
 		else
-		{
-			close(fd_pipe[0]);
-			close(fd_pipe[1]);
-			if (dup2(strct->initial_fd[0], 0) == -1)
-			write(2, "dup2 ERROR\n", 11);
-		}
+			ft_close_pipe_01_dup_initial_0(fd_pipe, strct);	
 	}
 	ft_free_splited_array(env, ft_get_env_size(strct->env_head));
 }
