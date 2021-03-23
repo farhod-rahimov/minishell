@@ -6,7 +6,7 @@
 #    By: btammara <btammara@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/06 16:30:33 by btammara          #+#    #+#              #
-#    Updated: 2021/03/20 10:24:23 by btammara         ###   ########.fr        #
+#    Updated: 2021/03/23 13:53:03 by btammara         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,12 @@ SRCS =			./srcs/main.c \
 				./srcs/parser/ft_parse_str_till_sq_ends.c \
 				./srcs/parser/ft_parse_str_till_dq_ends.c \
 				./srcs/parser/ft_work_with_dollar.c \
-				./srcs/ft_work_with_t_arg_lists.c
+				./srcs/ft_work_with_t_arg_lists.c \
+				./srcs/ft_create_env.c \
+				./srcs/ft_change_shell_level.c \
+				./srcs/ft_left_redirect.c \
+				./srcs/ft_right_redirect.c \
+				./srcs/ft_pipe.c
 
 OBJS =			$(SRCS:.c=.o)
 

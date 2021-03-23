@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:08:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/20 10:51:30 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/23 13:30:26 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,20 @@ t_args	*ft_create_new_t_args(t_struct *strct, t_args *prev_t_args)
 	if ((new_t_args = (t_args *)malloc(sizeof(t_args))) == NULL)
 		return (NULL);
 	new_t_args->next = NULL;
+	new_t_args->prev = NULL;
 	new_t_args->arg = NULL;
+	new_t_args->redir_head = NULL;
+
 	new_t_args->pipe = 0;
+	new_t_args->right_redir = 0;
+	new_t_args->left_redir = 0;
+	new_t_args->redir_flag = 0;
 		
 	if (prev_t_args != NULL)
+	{
 		prev_t_args->next = new_t_args;
+		new_t_args->prev = prev_t_args;
+	}
 
 	strct->n_i = 0;
 	
@@ -43,20 +52,94 @@ int ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_ar
 	if (strct->parsed_str[i] == ';' || strct->parsed_str[i] == '|')
 	{
 		if (strct->parsed_str[i] == '|')
-			(*current_t_arg)->pipe = 1;
+		{
+			if ((*current_t_arg)->prev)
+			{
+				if ((*current_t_arg)->prev->pipe)
+					(*current_t_arg)->pipe += (*current_t_arg)->prev->pipe + 1;
+				else
+					(*current_t_arg)->pipe = 1;
+			}
+			else
+				(*current_t_arg)->pipe = 1;
+		}
 		i++;
 		if (strct->parsed_str[i] != '\0')
 			if ((*current_t_arg = ft_create_new_t_args(strct, *current_t_arg)) == NULL)
 				return (-1);
 	}
+	else if (strct->parsed_str[i] == '>' || strct->parsed_str[i] == '<')
+	{
+		if (strct->parsed_str[i] == '>' && strct->parsed_str[i + 1] == '>')
+		{
+			i++;
+			ft_push_back_redir_list(current_t_arg, (*current_t_arg)->redir_head, ">>", NULL);
+		}
+		else if (strct->parsed_str[i] == '>')
+			ft_push_back_redir_list(current_t_arg, (*current_t_arg)->redir_head, ">", NULL);
+		else if (strct->parsed_str[i] == '<')
+			ft_push_back_redir_list(current_t_arg, (*current_t_arg)->redir_head, "<", NULL);
+		i++;
+	}
 	return (i);
 }
 
-int		ft_copy_str_to_structure_t_args(t_args **tmp, char *str, int n_i) //rewrite
+void		ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, char *type, char *file_name)
+{
+	t_redirect *tmp;
+	t_redirect *new;
+
+	if (redir_head == NULL)
+	{
+		if ((redir_head = (t_redirect *)malloc(sizeof(t_redirect))) == NULL)
+			ft_error();
+		redir_head->type = ft_strdup(type);
+		redir_head->file_name = NULL;
+		redir_head->next = NULL;
+		(*current_t_arg)->redir_head = redir_head;
+		(*current_t_arg)->redir_flag = 1;
+		return ;
+	}
+	tmp = redir_head;
+	while (tmp)
+	{
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
+	}
+	
+	if (tmp->type != NULL && tmp->file_name == NULL)
+	{
+		tmp->file_name = ft_strdup(file_name);
+		if (!ft_strncmp(tmp->type, "<", 1))
+			(*current_t_arg)->left_redir += 1;
+		else if (!ft_strncmp(tmp->type, ">", 1))
+			(*current_t_arg)->right_redir += 1;
+		(*current_t_arg)->redir_flag = 0;
+		return ;
+	}
+
+	if ((new = (t_redirect *)malloc(sizeof(t_redirect))) == NULL)
+		ft_error();
+	new->type = ft_strdup(type);
+	new->file_name = NULL;
+	new->next = NULL;
+	tmp->next = new;
+	(*current_t_arg)->redir_flag = 1;
+}
+
+int		ft_copy_str_to_structure_t_args(t_struct *strct, t_args **tmp, char *str, int n_i)
 {
 	char	**tmp_arg; // tmp->arg
 	
 	tmp_arg = (*tmp)->arg;
+
+	if ((*tmp)->redir_flag)
+	{
+		ft_push_back_redir_list(tmp, (*tmp)->redir_head, NULL, str);
+		strct->n_i -= 1;
+		return (0);
+	}
 	if (tmp_arg == NULL)
 	{
 		if (((*tmp)->arg = (char **)malloc(sizeof(char *) * 2)) == NULL)
@@ -142,4 +225,19 @@ void	ft_free_arg(char **tmp_arg)
 	}
 	free(tmp_arg[i]);
 	free(tmp_arg);
+}
+
+void	ft_free_redir(t_redirect *head)
+{
+	t_redirect *tmp;
+	
+	tmp = head;
+	while (tmp)
+	{
+		free(tmp->type);
+		free(tmp->file_name);
+		head = head->next;
+		free(tmp);
+		tmp = head;
+	}
 }

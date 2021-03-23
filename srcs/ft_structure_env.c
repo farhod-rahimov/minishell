@@ -6,14 +6,13 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:21:41 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/19 16:59:47 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/20 15:22:34 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
 static	void	ft_add_slash_to_the_end_of_each_path_to_bins(t_struct *strct);
-static	void	ft_copy_env_to_struct(t_struct *strct, char **env);
 
 int	ft_structure_env(t_struct *strct, char **env)
 {
@@ -39,30 +38,12 @@ int	ft_structure_env(t_struct *strct, char **env)
 		i++;
 	}
 
-	// ft_print_env(strct->env_head);
 
 	ft_get_path_to_bins(strct);
-	ft_copy_env_to_struct(strct, env);
+	
+	
+	// ft_print_env(strct->env_head);
 	return (0);
-}
-
-static	void	ft_copy_env_to_struct(t_struct *strct, char **env)
-{
-	int i;
-
-	i = 0;
-	while (env[i])
-		i++;
-	if ((strct->env = (char **)malloc((sizeof(char *) * i))) == NULL)
-		ft_error();
-
-	i = 0;
-	while (env[i])
-	{
-		strct->env[i] = ft_strdup(env[i]);
-		i++;
-	}
-	env[i] = NULL;
 }
 
 void	ft_fill_t_env_list(t_env *env_list, char **env, int i, int k)
@@ -136,3 +117,5 @@ void	ft_print_env(t_env *head)
 		tmp = tmp->next;
 	}
 }
+
+// no NULL 

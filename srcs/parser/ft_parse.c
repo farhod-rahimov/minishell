@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:52:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/20 10:31:17 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/23 14:22:33 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int		ft_parse(t_struct *strct, t_args *tmp_head, int i)
 			i++;
 		if (strct->parsed_str[i] == ';' || strct->parsed_str[i] == '|')				// str cannot start with ; | 
 			return (-1);
+		// else if ((strct->parsed_str[i] == '<' || strct->parsed_str[i] == '>') && tmp_head->arg)
+		// 	return (-1);
 		else if (strct->parsed_str[i] == '\"')
 			i = ft_parse_str_till_dq_ends(&tmp, ++i, strct, 1);						// dq = double quotes // ++i for skipping the first "
 		else if (strct->parsed_str[i] == '\'')
@@ -62,8 +64,16 @@ void	ft_print_devided_args(t_args *head)
 			printf("arg[%d][%d]	|%s|\n", k, i, tmp->arg[i]);
 			i++;
 		}
+		while (tmp->redir_head)
+		{
+			printf("arg[%d][type]	|%s|\n", k, tmp->redir_head->type);
+			printf("arg[%d][name]	|%s|\n", k, tmp->redir_head->file_name);
+			tmp->redir_head = tmp->redir_head->next;
+		}
 		printf("arg[%d][pipe]	|%d|\n", k, tmp->pipe);
-		printf("------------------------\n");
+		printf("arg[%d][rh_red]	|%d|\n", k, tmp->right_redir);
+		printf("arg[%d][lh_red]	|%d|\n", k, tmp->left_redir);
+		printf("------------------------\n\n");
 		i = 0;
 		k++;
 		tmp = tmp->next;
