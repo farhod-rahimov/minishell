@@ -149,7 +149,7 @@ void	ft_export(char **arg, t_env **head)
 		while (tmp)
 		{
 //			printf("declare -x %s", tmp->key);
-			write(1, "declare -x ", 12);
+			write(1, "declare -x ", 11);
 		 	write (1, tmp->key, ft_strlen(tmp->key));
 			if (tmp->value)
 			{
