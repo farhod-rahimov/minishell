@@ -21,7 +21,7 @@
 #include <signal.h>
 #include <string.h>
 
-#define HISTFILE "./hist.txt"
+#define HISTFILE "/tmp/hist.txt"
 
 typedef struct flags
 {
@@ -146,6 +146,7 @@ void    ft_pipe(int fd_pipe[2]);
 void    ft_close_pipe_01_dup_initial_0(int fd_pipe[2], t_struct *strct);
 void    ft_close_pipe_01_dup_initial_1(int fd_pipe[2], t_struct *strct);
 
+//////////////////////////////////////////dickuordle
 
 int		buildin(char **arg, t_env **env);
 void	ft_term(t_struct *strct);
@@ -154,7 +155,9 @@ int		get_next_line(int fd, char **line);
 char 	**ft_get_hist(void);
 void	ft_interrupt(int signal);
 void	ft_quit(int signal);
-void	ft_read(char ***hist, int *curpl, int hsize, char (*str)[1000]);
+void	ft_read(char **hist, int *curpl, int hsize, char **str);
+int		ft_strcmp(const char *s1, const char *s2);
+int		ft_putchar(int c);
 
 
 

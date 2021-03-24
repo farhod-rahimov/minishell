@@ -5,22 +5,7 @@
 #include "../minishell.h"
 #include <sys/errno.h>
 
-//extern int	errno;
 int			error_code;
-
-//int	ft_strcmp(const char *s1, const char *s2)
-//{
-//	size_t i;
-//
-//	i = 0;
-//	while (s1[i] && s2[i])
-//	{
-//		if (s1[i] != s2[i])
-//			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-//		i++;
-//	}
-//	return (0);
-//}
 
 void	ft_pwd(void)
 {
@@ -46,7 +31,8 @@ void	ft_echo(char **arg)
 	while (arg[i])
 	{
 		write(1, arg[i], ft_strlen(arg[i]));
-		write(1, " ", 1);
+		if (arg[i + 1])
+			write(1, " ", 1);
 		i++;
 	}
 	if (n == 0)
@@ -55,6 +41,7 @@ void	ft_echo(char **arg)
 
 void	ft_cd(char **arg)
 {
+	printf("%s\n", arg[1]);
 	if (chdir(arg[1]) == -1)
 		printf("%s\n", strerror(errno));
 }
@@ -68,8 +55,12 @@ void	ft_env(t_env *head)
 	{
 		if (tmp->value)
 		{
-			printf("%s", tmp->key);
-			printf("=%s\n", tmp->value);
+//			printf("%s", tmp->key);
+			write(1, tmp->key, ft_strlen(tmp->key));
+			write(1, "=", 1);
+			write(1, tmp->value, ft_strlen(tmp->value));
+			write(1, "\n", 1);
+//			printf("=%s\n", tmp->value);
 		}
 		tmp = tmp->next;
 	}
@@ -157,10 +148,17 @@ void	ft_export(char **arg, t_env **head)
 	{
 		while (tmp)
 		{
-			printf("declare -x %s", tmp->key);
+//			printf("declare -x %s", tmp->key);
+			write(1, "declare -x ", 12);
+		 	write (1, tmp->key, ft_strlen(tmp->key));
 			if (tmp->value)
-				printf("=%s", tmp->value);
-			printf("\n");
+			{
+				write(1, "=", 1);
+				write(1, tmp->value, ft_strlen(tmp->value));
+//				printf("=%s", tmp->value);
+			}
+			write(1, "\n", 1);
+//			printf("\n");
 			tmp = tmp->next;
 		}
 	}
@@ -237,12 +235,16 @@ int		ft_isnum(char *str)
 int	ft_atol(char *str)
 {
 	unsigned long long int num;
+	unsigned long long int num2;
 	int i;
 	int m;
 
 	i = 0;
 	num = 0;
 	m = 0;
+	num2 = -1;  //9223372036854775808
+//	num2 /= 2;
+//	printf("%llu", num2);
 	if (str[i] == '-' || str[i] == '+')
 		m += str[i++] - '+';
 	while (str[i])
@@ -250,15 +252,16 @@ int	ft_atol(char *str)
 		num *= 10;
 		num += str[i++] - 48;
 	}
-//	if (num > 9223372036854775808 || (num == 9223372036854775808 && m == 0))
-//	{
+	if (num > num2 / 2  + 1 || (num == num2 / 2 + 1 && m == 0))
+	{
 //		write(2, "exit: ", 6);
 //		write(2, str, ft_strlen(str));
 //		write(2, ": numeric argument required", 27);
-//		exit(255);
-//	}
-//	if (m != 0)
-//		num = 9223372036854775808 - num;
+		printf("exit: %s: numeric argument required", str);
+		exit(255);
+	}
+	if (m != 0)
+		num = num2 / 2 + 1 - num;
 	return (num % 256);
 }
 

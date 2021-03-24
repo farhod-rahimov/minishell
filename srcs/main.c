@@ -19,6 +19,7 @@ int	main(int argc, char **argv, char **env)
 	strct.args_head = NULL;
 	int fd;
 
+
 	if (argc != 1)
 		return (-1); // minishell doesn't launch with arguments
 	g_flags.signal_c = 0;

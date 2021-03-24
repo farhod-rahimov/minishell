@@ -31,7 +31,8 @@ SRCS =			./srcs/main.c \
 				./srcs/dquordle/ft_get_hist.c \
 				./srcs/dquordle/gnl.c \
 				./srcs/dquordle/signals.c \
-				./srcs/dquordle/termcap.c
+				./srcs/dquordle/termcap.c \
+				./srcs/dquordle/more_utils.c
 
 OBJS =			$(SRCS:.c=.o)
 
@@ -63,6 +64,7 @@ fclean:			clean
 				@ rm -f $(NAME)
 				@ cd ./srcs/libft && make fclean && cd ../..
 				@ rm -f $(LIBFT_NAME)
+				@ rm -f /tmp/hist.txt
 
 re:				fclean all
 

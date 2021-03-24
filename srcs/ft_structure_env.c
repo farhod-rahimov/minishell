@@ -40,7 +40,7 @@ int	ft_structure_env(t_struct *strct, char **env)
 
 
 	ft_get_path_to_bins(strct);
-	
+//	ft_change_shell_level(strct->env_head); /// это при запуске нашего минишелла
 	
 	// ft_print_env(strct->env_head);
 	return (0);

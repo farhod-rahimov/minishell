@@ -17,7 +17,7 @@ int		ft_parse(t_struct *strct, t_args *tmp_head, int i)
 	t_args	*tmp;
 
 	tmp = tmp_head;
-		
+
 	while (strct->parsed_str[i])
 	{
 		while (strct->parsed_str[i] == ' ')

@@ -1,40 +1,20 @@
 #include "../minishell.h"
 
-int		ft_putchar(int c)
-{
-	return (write(1, &c, 1));
-}
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	size_t i;
-
-	i = 0;
-
-	while (s1[i] && s2[i])
-	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
-char	*ft_append(char **old, char *new)
+char	*ft_append(char *old, char *new)
 {
 	char	*newest;
 	int		i;
 	int		j;
 
-	newest = (char *)malloc(ft_strlen(*old) + ft_strlen(new) + 1);
+	newest = (char *)malloc(ft_strlen(old) + ft_strlen(new) + 1);
 	j = 0;
 	i = -1;
-	while ((*old)[++i])
-		newest[i] = (*old)[i];
+	while (old[++i])
+		newest[i] = old[i];
 	while (new[j])
 		newest[i++] = new[j++];
 	newest[i] = 0;
-	free(*old);
+	free(old);
 	return (newest);
 }
 
@@ -118,25 +98,25 @@ void	ft_terminal_backup(void)
 	tcsetattr(0, TCSANOW, &term);
 }
 
-void	ft_prompt(char (*str)[1000], char ***history, int *curpl)
+void	ft_prompt(char **str, char ***history, int *curpl)
 {
 	int hsize;
-//	char **hist;
+	char **hist;
 
 	if (!g_flags.signal_c)
 		write(1, "my_bash% ", 9);
 	tputs(save_cursor, 1, ft_putchar);
-//	hist = hist;
-	*history = ft_get_hist();
+	hist = ft_get_hist();
+	*history = hist;
 	hsize = 0;
-	while ((*history)[hsize])
+	while (hist[hsize])
 		hsize++;
 	(*curpl) = 0;
 	g_flags.signal_c = 0;
-	ft_read(history, curpl, hsize, str);
+	ft_read(hist, curpl, hsize, str);
 }
 
-void	ft_read(char ***hist, int *curpl, int hsize, char (*str)[1000])
+void	ft_read(char **hist, int *curpl, int hsize, char **str)
 {
 	int i;
 
@@ -152,14 +132,14 @@ void	ft_read(char ***hist, int *curpl, int hsize, char (*str)[1000])
 			(!ft_strcmp(*str, "\4") && hist[*curpl][0] == 0))
 			break ;
 		if (!ft_strcmp(*str, "\e[A") || !ft_strcmp(*str, "\e[B"))
-			ft_arrow(*hist, *str, curpl, hsize);
+			ft_arrow(hist, *str, curpl, hsize);
 		else if (!strcmp(*str, "\177"))
-			ft_backspace(*hist, *curpl);
+			ft_backspace(hist, *curpl);
 		else if (ft_strcmp(*str, "\e[C") && ft_strcmp(*str, "\e[D") &&
-			ft_strcmp(*str, "\4"))
+				 ft_strcmp(*str, "\4"))
 		{
 			write(1, *str, i);
-			(*hist)[*curpl] = ft_append(&(*hist)[*curpl], *str);
+			hist[*curpl] = ft_append(hist[*curpl], *str);
 		}
 		(*str)[0] = 0;
 	}
@@ -177,10 +157,11 @@ void	ft_free_hist(char ***hist)
 
 void	ft_term(t_struct *strct)
 {
-	char str[1000];
+	char *str;
 	int curpl;
 	char **hist;
 
+	str = (char *)malloc(1000);
 	ft_bzero(str, 1000);
 	while ((ft_strcmp(str, "\4")) || hist[curpl][0] != 0)
 	{
@@ -197,17 +178,17 @@ void	ft_term(t_struct *strct)
 				ft_add_command(hist, hist[curpl]);
 		}
 		strct->parsed_str = ft_strdup(hist[curpl]);
-//		printf("\n%s\n", strct->parsed_str);
-//		write(1, strct->parsed_str, ft_strlen(strct->parsed_str));
-//		free(strct->parsed_str);
-		ft_free_hist(&hist);
 		ft_terminal_backup();
+//		printf("\n%s\n", strct->parsed_str);
 		write(1, "\n", 1);
-//		write(1, hist[curpl], ft_strlen(hist[curpl]));
-		if (ft_begin_parsing(strct) == -1)
-			exit (-1);
-		ft_work_with_t_arg_lists(strct);
-//		write(1, "\n", 1);
+		if (hist[curpl][0] != 0)
+		{
+			if (ft_begin_parsing(strct) == -1)
+				exit(-1);
+			ft_work_with_t_arg_lists(strct);
+		}
+		ft_free_hist(&hist);
 	}
 	write(1, "exit\n", 5);
 }
+
