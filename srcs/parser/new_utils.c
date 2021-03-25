@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:08:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 07:49:39 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 09:54:49 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,10 +223,8 @@ void	ft_free_arg(char **tmp_arg)
 
 	i = 0;
 	while (tmp_arg[i])
-	{
 		free(tmp_arg[i++]);
-	}
-	free(tmp_arg[i]);
+	// free(tmp_arg[i]);
 	free(tmp_arg);
 }
 

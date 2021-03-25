@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 09:27:52 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 10:08:35 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,3 +167,4 @@ int		ft_putchar(int c);
 
 
 t_flags g_flags;
+// ls -la >0file ; ls -la | grep Makefile ; grep <0file >1file ;

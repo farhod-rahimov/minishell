@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 09:43:19 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 10:15:18 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,12 @@ void	ft_work_with_t_arg_lists(t_struct *strct, t_args **current_t_arg)
 
 	int fd_pipe[2];
 	char **env;
-	// t_args *tmp;
 
 	env = ft_create_env(strct->env_head);
 
 	ft_free_two_dimensional_array(strct->path_to_bins);	
 	ft_get_path_to_bins(strct);
 	
-	// tmp = strct->args_head;
-
 	while ((*current_t_arg)->prev != NULL)
 		*current_t_arg = (*current_t_arg)->prev;
 	
@@ -76,11 +73,12 @@ int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 	char	*tmp_str;
 	int		i;
 	
-	abs_path_to_command = ft_strdup("");
+	abs_path_to_command = NULL;
 	i = 0;
 	
 	if ((pid = fork()) == 0)
 	{
+		abs_path_to_command = ft_strdup("");
 		if (tmp->arg[i][0] == '/' || tmp->arg[i][0] == '.' || tmp->arg[i][0] == '~')
 		{
 			if ((execve(tmp->arg[0], tmp->arg, env)) == -1)

@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 09:17:01 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 07:41:47 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 10:03:00 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	ft_begin_parsing(t_struct *strct)
 	tmp = strct->args_head;
 	if ((strct->args_head = ft_create_new_t_args(strct, NULL)) == NULL)
 		return (-1);
-	
+
 	if (tmp != NULL)
 		ft_free_t_args(tmp);
 

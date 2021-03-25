@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 09:09:39 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 09:26:54 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 10:12:40 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_check_syntax(t_struct *strct, char *str)
 		if (str[i] == ';' || str[i] == '|')
 		{
 			tmp = str[i];
-			i = ft_skip_spaces(str, i);
+			i = ft_skip_spaces(str, ++i);
 			if (tmp == ';' && (str[i] == '|' || str[i] == ';'))
 			{
 				write(2, "my_bash: syntax error near unexpected token '", 45);
