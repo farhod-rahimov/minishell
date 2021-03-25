@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 11:02:58 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 11:17:23 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,8 @@ int		ft_work_with_dollar(t_args **current_t_arg, int i, t_struct *strct);
 int		ft_parse_str_till_it_ends(t_args **current_t_arg, int i, t_struct *strct, int k);
 
 t_args	*ft_create_new_t_args(t_struct *strct, t_args *prev_t_args);
-// int		ft_check_if_new_list_is_needed(t_struct *strct, t_args **current_t_arg, int i);
-char	*ft_add_back_str(char *str, int k, char c);
 
 
-// int		ft_check_if_new_list_is_needed(t_struct *strct, t_args **current_t_arg, int i);
-// int		ft_copy_str_to_structure_args(t_args *tmp, char *str, int n_i);
-int		ft_copy_old_arg_n_i_of_tmp(t_args *tmp, char **tmp_arg, int n_i);
 void	ft_print_devided_args(t_args *head);
 
 
