@@ -179,13 +179,12 @@ void	ft_term(t_struct *strct)
 		}
 		strct->parsed_str = ft_strdup(hist[curpl]);
 		ft_terminal_backup();
-//		printf("\n%s\n", strct->parsed_str);
 		write(1, "\n", 1);
 		if (hist[curpl][0] != 0)
 		{
-			if (ft_begin_parsing(strct) == -1)
-				exit(-1);
-			ft_work_with_t_arg_lists(strct);
+			ft_begin_parsing(strct);
+			// if (ft_begin_parsing(strct) != -1)
+			// 	ft_work_with_t_arg_lists(strct);
 		}
 		ft_free_hist(&hist);
 	}

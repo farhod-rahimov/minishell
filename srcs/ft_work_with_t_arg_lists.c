@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/24 14:43:54 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 07:57:36 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,38 @@ static	void	ft_check_if_reset_01fds_needed(t_args *tmp, t_struct *strct, int fd_
 static	void	ft_check_pipe(t_args *tmp, t_struct *strct, char **env, int fd_pipe[2]);
 static	void	ft_check_redirections(t_args *tmp, t_struct *strct, char **env);
 
-void	ft_work_with_t_arg_lists(t_struct *strct)
+void	ft_work_with_t_arg_lists(t_struct *strct, t_args **current_t_arg)
 {
 	t_redirect *tmp_red;
 	tmp_red = strct->args_head->redir_head;
 
 	int fd_pipe[2];
 	char **env;
-	t_args *tmp;
+	// t_args *tmp;
 
 	env = ft_create_env(strct->env_head);
 	
-	tmp = strct->args_head;
-	while (tmp)
+	// tmp = strct->args_head;
+
+	while ((*current_t_arg)->prev != NULL)
+		*current_t_arg = (*current_t_arg)->prev;
+	
+	while (*current_t_arg && (*current_t_arg)->exec_done == 0)
 	{
-		ft_check_redirections(tmp, strct, env);
-		ft_check_pipe(tmp, strct, env, fd_pipe);
-		if (tmp->left_redir)
+		ft_check_redirections(*current_t_arg, strct, env);
+		ft_check_pipe(*current_t_arg, strct, env, fd_pipe);
+		if ((*current_t_arg)->left_redir)
 			if (dup2(strct->initial_fd[0], 0) == -1)
 				write(2, "dup2 ERROR\n", 11);
-		tmp = tmp->next;
-		ft_check_if_reset_01fds_needed(tmp, strct, fd_pipe);
+		(*current_t_arg)->exec_done = 1;
+		if (((*current_t_arg) = (*current_t_arg)->next) == NULL)
+		{
+			ft_close_pipe_01_dup_initial_0(fd_pipe, strct);	
+			break ;
+		}
+		ft_check_if_reset_01fds_needed(*current_t_arg, strct, fd_pipe);
 	}
-	ft_free_splited_array(&env, ft_get_env_size(strct->env_head));
+	// ft_free_splited_array(&env, ft_get_env_size(strct->env_head));
 }
 
 int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)

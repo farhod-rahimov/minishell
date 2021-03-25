@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:21:41 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/20 15:22:34 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:20:19 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	ft_structure_env(t_struct *strct, char **env)
 	if ((strct->env_head = (t_env *)malloc(sizeof(t_env))) == NULL)
 		return (-1);
 	tmp = strct->env_head;
+	tmp->next = NULL;
 	i = 0;
 	while (env[i])
 	{
