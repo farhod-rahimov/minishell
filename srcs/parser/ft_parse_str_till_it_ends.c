@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 13:58:19 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/21 11:10:55 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 11:02:50 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int				ft_parse_str_till_it_ends(t_args **current_t_arg, int i, t_struct *strct,
 		ft_push_back_char(&str, strct->parsed_str[i++]);
 	}
 	
-	if ((ft_copy_str_to_structure_t_args(strct, current_t_arg, str, strct->n_i)) == -1)	// n_i++
-		return (-1); //malloc error
+	ft_copy_str_to_structure_t_args(strct, current_t_arg, str, strct->n_i);	// n_i++
 	free(str);
 
 	i = ft_check_if_new_list_or_arg_is_needed(strct, current_t_arg, i);

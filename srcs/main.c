@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:39:57 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 09:30:47 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 10:47:33 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	t_struct strct;
 	strct.args_head = NULL;
+	strct.exit_value = 0;
 	int fd;
 
 

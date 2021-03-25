@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 11:03:57 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/21 14:19:09 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 11:02:35 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,14 @@ int				ft_work_with_dollar(t_args **current_t_arg, int i, t_struct *strct)
 		free(tmp);
 	}
 
-	if ((ft_copy_str_to_structure_t_args(strct, current_t_arg, str, strct->n_i)) == -1)	// n_i++
-		return (-1); //malloc error
+	if (!ft_strcmp(str, "$?"))
+	{
+		tmp = str;
+		str = ft_itoa(strct->exit_value);
+		free(tmp);
+	}
+
+	ft_copy_str_to_structure_t_args(strct, current_t_arg, str, strct->n_i);	// n_i++
 	
 	free(str);
 

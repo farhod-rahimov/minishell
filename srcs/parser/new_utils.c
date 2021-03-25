@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:08:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 09:54:49 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 11:01:38 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void		ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, ch
 	(*current_t_arg)->redir_flag = 1;
 }
 
-int		ft_copy_str_to_structure_t_args(t_struct *strct, t_args **tmp, char *str, int n_i)
+void		ft_copy_str_to_structure_t_args(t_struct *strct, t_args **tmp, char *str, int n_i)
 {
 	char	**tmp_arg; // tmp->arg
 	
@@ -141,30 +141,24 @@ int		ft_copy_str_to_structure_t_args(t_struct *strct, t_args **tmp, char *str, i
 	{
 		ft_push_back_redir_list(tmp, (*tmp)->redir_head, NULL, str);
 		strct->n_i -= 1;
-		return (0);
+		return ;
 	}
 	if (tmp_arg == NULL)
 	{
 		if (((*tmp)->arg = (char **)malloc(sizeof(char *) * 2)) == NULL)
-			ft_error();
+			ft_new_error(strct, 1, 1);
 		if (((*tmp)->arg[0] = ft_strdup(str)) == NULL)
-			ft_error();
-		// if (((*tmp)->arg[1] = ft_strdup("")) == NULL)
-		// 	ft_error();
+			ft_new_error(strct, 1, 1);
 		(*tmp)->arg[1] = NULL;
-		return (0);
+		return ;
 	}
 	if (((*tmp)->arg = (char **)malloc(sizeof(char *) * (n_i + 2))) == NULL)
-		ft_error();
+		ft_new_error(strct, 1, 1);
 	ft_copy_old_arg_to_new(tmp, tmp_arg, n_i);
 	if (((*tmp)->arg[n_i] = ft_strjoin(tmp_arg[n_i], str)) == NULL)
-		ft_error();
-	// if (((*tmp)->arg[n_i + 1] = ft_strdup("")) == NULL)
-	// 	ft_error();
+		ft_new_error(strct, 1, 1);
 	(*tmp)->arg[n_i + 1] = NULL;
-
 	ft_free_arg(tmp_arg);
-	return (0);
 }
 
 void		ft_push_back_char(char **str, char c)
@@ -187,6 +181,13 @@ void	ft_error()
 {
 	write(1, "malloc error\n", ft_strlen("malloc error\n"));
 	exit(1);
+}
+
+void	ft_new_error(t_struct *strct, int i, int exit_flag)
+{
+	strct->exit_value = i;
+	if (exit_flag)
+		exit(i);
 }
 
 void	ft_strcopy(char *dst, char *src)
