@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 08:24:18 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 08:34:32 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	ft_fill_t_env_list(t_env *env_list, char **env, int i, int k);
 t_env	*ft_create_new_t_env(t_env *prev);
 void	ft_get_path_to_bins(t_struct *strct);
 void	ft_print_path_to_bins(char **path_to_bins);
+void	ft_free_two_dimensional_array(char **array);
 // void	ft_print_env(t_env *head);
 
 // int		ft_get_command_e(t_struct *strct, int i);

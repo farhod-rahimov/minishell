@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:21:41 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/24 15:20:19 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 08:38:06 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,12 @@ void	ft_get_path_to_bins(t_struct *strct)
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->key, "PATH", ft_strlen(tmp->key)) == 0)
+		{
 			strct->path_to_bins = ft_split(tmp->value, ':');
+			ft_add_slash_to_the_end_of_each_path_to_bins(strct);
+		}
 		tmp = tmp->next;
 	}
-	ft_add_slash_to_the_end_of_each_path_to_bins(strct);
 	// ft_print_path_to_bins(strct->path_to_bins);
 }
 
