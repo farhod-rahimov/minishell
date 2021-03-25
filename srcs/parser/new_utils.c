@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:08:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 14:04:48 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 14:20:32 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ int ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_ar
 	if (strct->parsed_str[i] == ';' || strct->parsed_str[i] == '|')
 	{
 		if (strct->parsed_str[i] == ';')
+		{
+			// ft_print_devided_args(*current_t_arg);
 			ft_work_with_t_arg_lists(strct, current_t_arg);
+		}
 		if (strct->parsed_str[i] == '|')
 		{
 			if ((*current_t_arg)->prev)

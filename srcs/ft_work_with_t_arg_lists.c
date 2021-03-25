@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 14:08:17 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 14:34:25 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,8 @@ static	void	ft_check_pipe(t_args *tmp, t_struct *strct, char **env, int fd_pipe[
 		}
 		if (!tmp->right_redir)
 			if (!(ft_exec_build_in(tmp->arg, &strct->env_head)))
-				ft_exec_bin(strct, tmp, strct->path_to_bins, env);
+				if (ft_strcmp(tmp->arg[0], ""))
+					ft_exec_bin(strct, tmp, strct->path_to_bins, env);
 	}
 }
 
