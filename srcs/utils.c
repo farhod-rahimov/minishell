@@ -6,21 +6,11 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 09:18:08 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/24 17:35:39 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 11:19:12 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_free_splited_array(char ***array, int n)
-{
-	int i;
-
-	i = 0;
-	while (i < n)
-		free((*array)[i++]);
-	free(*array);
-}
 
 void	ft_copy_old_str(char *old_buf, char *new_buf)
 {

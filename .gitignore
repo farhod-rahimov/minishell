@@ -3,3 +3,4 @@ libft.a
 .idea/workspace.xml
 .idea/modules.xml
 minishell
+minishell.dSYM/Contents/Info.plist

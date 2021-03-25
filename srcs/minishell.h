@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 11:17:23 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 11:24:19 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void	ft_strcopy(char *dst, char *src);
 void	ft_work_with_t_arg_lists(t_struct *strct, t_args **tmp);
 char	**ft_create_env(t_env *env_head);
 int		ft_get_env_size(t_env *tmp);
-void	ft_change_shell_level(t_env *env_head);
+void	ft_change_shell_level(t_struct *strct, t_env *env_head);
 void	ft_print_env(t_env *head);
 void	ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, char *type, char *file_name);
 
