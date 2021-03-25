@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 15:17:31 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/20 16:47:24 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/24 15:34:13 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ int main(int argc, char **argv, char **env)
 		if ((dup2(fd_pipe[1], 1)) == -1)
 			write(2, "1 dup2 error\n", 13);
 		close(fd_pipe[0]);
-		if ((execve("/bin/ls", argv2, env)) == -1)
-			write(2, "1 error execve\n", 15);
+		// if ((execve("/bin/ls", argv2, env)) == -1)
+		// 	write(2, "1 error execve\n", 15);
+		exit(0);
 	}
 	else
 	{
@@ -43,19 +44,20 @@ int main(int argc, char **argv, char **env)
 			write(2, "2 dup2 error\n", 14);
 		close(fd_pipe[1]);
 		waitpid(pid, &status, 0);
+		printf("status %d\n", WEXITSTATUS(status));
 		close(fd_pipe[0]);
 		
-		if ((pid = fork()) == 0)
-		{
-			if ((execve("/usr/bin/grep", argv, env)) == -1)
-				write(2, "2 error execve\n", 15);
-		}
-		else
-		{
-			waitpid(pid, &status, 0);
-			if ((dup2(initial_fd[0], 0)) == -1)
-				write(2, "3 dup2 error\n", 13);
-		}
+		// if ((pid = fork()) == 0)
+		// {
+		// 	if ((execve("/usr/bin/grep", argv, env)) == -1)
+		// 		write(2, "2 error execve\n", 15);
+		// }
+		// else
+		// {
+		// 	waitpid(pid, &status, 0);
+		// 	if ((dup2(initial_fd[0], 0)) == -1)
+		// 		write(2, "3 dup2 error\n", 13);
+		// }
 	}
 	write(1, "FINISH\n", 7);
 	

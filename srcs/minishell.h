@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/23 13:58:49 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 07:49:27 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct args
 	t_redirect		*redir_head;
 	int				right_redir;
 	int				left_redir;
+	int				exec_done;
 } t_args;
 
 typedef struct s
@@ -130,7 +131,7 @@ void	ft_print_path_to_bins(char **path_to_bins);
 void	ft_push_back_char(char **str, char c);
 void	ft_error();
 void	ft_strcopy(char *dst, char *src);
-void	ft_work_with_t_arg_lists(t_struct *strct);
+void	ft_work_with_t_arg_lists(t_struct *strct, t_args **tmp);
 char	**ft_create_env(t_env *env_head);
 int		ft_get_env_size(t_env *tmp);
 void	ft_change_shell_level(t_env *env_head);
