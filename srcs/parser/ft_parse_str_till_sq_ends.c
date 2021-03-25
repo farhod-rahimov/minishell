@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 13:59:07 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 11:02:02 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 11:09:46 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int				ft_parse_str_till_sq_ends(t_args **current_t_arg, int i, t_struct *strct,
 	(void)k;
 	
 	if (!(str = ft_strdup("")))
-		ft_error();
+		ft_new_error(strct, 1, 1);
 	while (strct->parsed_str[i] && strct->parsed_str[i] != '\'')
 	{
 		ft_push_back_char(&str, strct->parsed_str[i++]);

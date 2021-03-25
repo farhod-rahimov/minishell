@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 13:56:01 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 11:02:16 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 11:10:41 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int				ft_parse_str_till_env_var_ends(t_args **current_t_arg, int i, t_struct *s
 	(void)k;
 	
 	if (!(str = ft_strdup("")))
-		ft_error();
+		ft_new_error(strct, 1, 1);
 	while (strct->parsed_str[i] && (ft_isalnum(strct->parsed_str[i]) || strct->parsed_str[i] == '_'))
 	{
 		ft_push_back_char(&str, strct->parsed_str[i++]);
@@ -48,12 +48,12 @@ static char		*ft_get_env_var_value(char *env_var, t_struct *strct)
 		if (!ft_strncmp(env_var, tmp->key, ft_strlen(env_var) + ft_strlen(tmp->key)))
 		{
 			if ((env_var = ft_strdup(tmp->value)) == NULL)
-				ft_error();
+				ft_new_error(strct, 1, 1);
 			return (env_var);
 		}
 		tmp = tmp->next;
 	}
 	if ((env_var = ft_strdup("")) == NULL)
-		ft_error();
+		ft_new_error(strct, 1, 1);
 	return (env_var);
 }

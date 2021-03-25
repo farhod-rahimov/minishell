@@ -6,21 +6,11 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 13:56:32 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 11:08:33 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 11:09:35 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/* экраниолвание в "" \" \$ \\ */
-// echo \  $PATH
-
-/* экранирование в двойгых кавычках "\\, \$, \"" */
-
-// нужно ли обрабатывать такое echo "$(PWD)"
-//echo * \* "*" '*'
-//ls * "*"
-//echo "$" "\$" echo "$""\$" где записать пробел
 
 // static	char	*ft_push_back_char(char *str, char c);
 static void		ft_work_with_spec_sym(char **str, int i, t_struct *strct);
