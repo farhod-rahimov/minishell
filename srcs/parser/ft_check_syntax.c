@@ -6,12 +6,11 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 09:09:39 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 10:57:27 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 14:03:45 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-static	int		ft_skip_spaces(char *str, int i);
 static	void	ft_free_if_error(t_struct *strct);
 static	int		ft_print_stntax_error(t_struct *strct, char c);
 
@@ -48,7 +47,7 @@ static	int ft_print_stntax_error(t_struct *strct, char c)
 	return (-1);
 }
 
-static int ft_skip_spaces(char *str, int i)
+int ft_skip_spaces(char *str, int i)
 {
 	while (str[i] == ' ')
 		i++;

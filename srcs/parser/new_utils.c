@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:08:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 11:01:38 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 14:04:48 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ int ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_ar
         return (len);
 	if (strct->parsed_str[i] == ' ')
 		strct->n_i++;
-	while (strct->parsed_str[i] == ' ')
-		i++;
+	i = ft_skip_spaces(strct->parsed_str, i);
 	if (strct->parsed_str[i] == ';' || strct->parsed_str[i] == '|')
 	{
 		if (strct->parsed_str[i] == ';')
@@ -66,7 +65,7 @@ int ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_ar
 			else
 				(*current_t_arg)->pipe = 1;
 		}
-		i++;
+		i = ft_skip_spaces(strct->parsed_str, ++i);
 		if (strct->parsed_str[i] != '\0')
 			if ((*current_t_arg = ft_create_new_t_args(strct, *current_t_arg)) == NULL)
 				return (-1);
