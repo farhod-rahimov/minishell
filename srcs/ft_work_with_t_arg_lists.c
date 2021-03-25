@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 08:37:32 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 09:43:19 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	ft_work_with_t_arg_lists(t_struct *strct, t_args **current_t_arg)
 		ft_check_if_reset_01fds_needed(*current_t_arg, strct, fd_pipe);
 	}
 	// ft_free_splited_array(&env, ft_get_env_size(strct->env_head));
+	ft_free_two_dimensional_array(env);	
 }
 
 void ft_free_two_dimensional_array(char **array)
