@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 11:30:13 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 13:33:45 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 	
 	if ((pid = fork()) == 0)
 	{
-		abs_path_to_command = ft_strdup("");
+		if ((abs_path_to_command = ft_strdup("")) == NULL)
+			ft_new_error(strct, 1, 1);
 		if (tmp->arg[i][0] == '/' || tmp->arg[i][0] == '.' || tmp->arg[i][0] == '~')
 		{
 			if ((execve(tmp->arg[0], tmp->arg, env)) == -1)
@@ -91,7 +92,8 @@ int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 			while (path_to_bins[i])
 			{
 				tmp_str = abs_path_to_command;
-				abs_path_to_command = ft_strjoin(path_to_bins[i++], tmp->arg[0]);
+				if ((abs_path_to_command = ft_strjoin(path_to_bins[i++], tmp->arg[0])) == NULL)
+					ft_new_error(strct, 1, 1);
 				free(tmp_str);
 				execve(abs_path_to_command, tmp->arg, env);
 				if (!path_to_bins[i])
