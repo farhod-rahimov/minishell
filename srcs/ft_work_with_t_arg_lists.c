@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 11:19:09 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 11:30:13 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_work_with_t_arg_lists(t_struct *strct, t_args **current_t_arg)
 	int fd_pipe[2];
 	char **env;
 
-	env = ft_create_env(strct->env_head);
+	env = ft_create_env(strct, strct->env_head);
 
 	ft_free_two_dimensional_array(strct->path_to_bins);	
 	ft_get_path_to_bins(strct);
