@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 07:49:27 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 08:24:18 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 #include <signal.h>
 #include <string.h>
 
-#define HISTFILE "/tmp/hist.txt"
+#define HISTFILE "/tmp/minishell_hist.txt"
+#define OUTPUT "/tmp/minishell_output.txt"
 
 typedef struct flags
 {
@@ -64,6 +65,7 @@ typedef struct s
 	int		n_i;
 
 	int		initial_fd[2];
+	int		output_fd;
 } t_struct;
 
 void	ft_free_splited_array(char ***array, int n);
@@ -146,6 +148,7 @@ void ft_right_redirect(t_struct *strct, t_args *args, char **env, int counter);
 void    ft_pipe(int fd_pipe[2]);
 void    ft_close_pipe_01_dup_initial_0(int fd_pipe[2], t_struct *strct);
 void    ft_close_pipe_01_dup_initial_1(int fd_pipe[2], t_struct *strct);
+void	ft_print_output(void);
 
 //////////////////////////////////////////dickuordle
 

@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 13:48:19 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/23 13:58:42 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 08:25:43 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ void    ft_close_pipe_01_dup_initial_1(int fd_pipe[2], t_struct *strct)
 {
     close(fd_pipe[0]);
     close(fd_pipe[1]);
-    if (dup2(strct->initial_fd[1], 1) == -1)
+    if (dup2(strct->output_fd, 1) == -1)
         write(2, "dup2 ERROR\n", 11);
 }

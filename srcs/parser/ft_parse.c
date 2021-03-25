@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:52:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 07:42:36 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 08:24:57 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@ int		ft_parse(t_struct *strct, t_args *tmp_head, int i)
 {
 	t_args	*tmp;
 
+	if ((strct->output_fd = open(OUTPUT, O_CREAT | O_TRUNC | O_WRONLY, 0766)) == -1)
+		write (2, "cannot create a new file to record the result of minishell operation\n", 69);
+	dup2(strct->output_fd, 1);
 	tmp = tmp_head;
+
 
 	while (strct->parsed_str[i])
 	{
@@ -25,8 +29,10 @@ int		ft_parse(t_struct *strct, t_args *tmp_head, int i)
 		if (strct->parsed_str[i] == ';' || strct->parsed_str[i] == '|')				// str cannot start with ; | 
 		{
 			// free(strct->parsed_str);
+			write(2, "syntax error\n", 13);
 			free(strct->args_head);
 			strct->args_head = NULL;
+			dup2(strct->initial_fd[1], 1);
 			return (-1);
 		}
 			
@@ -51,6 +57,7 @@ int		ft_parse(t_struct *strct, t_args *tmp_head, int i)
 	}
 	// free(strct->parsed_str);
 	ft_work_with_t_arg_lists(strct, &tmp);
+	dup2(strct->initial_fd[1], 1);
 	return (0);
 }
 
