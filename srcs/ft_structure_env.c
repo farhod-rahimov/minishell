@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:21:41 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 08:38:06 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 09:30:56 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_structure_env(t_struct *strct, char **env)
 
 
 	ft_get_path_to_bins(strct);
-//	ft_change_shell_level(strct->env_head); /// это при запуске нашего минишелла
+	ft_change_shell_level(strct->env_head); /// это при запуске нашего минишелла
 	
 	// ft_print_env(strct->env_head);
 	return (0);
