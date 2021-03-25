@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 08:34:32 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 09:27:52 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void ft_right_redirect(t_struct *strct, t_args *args, char **env, int counter);
 void    ft_pipe(int fd_pipe[2]);
 void    ft_close_pipe_01_dup_initial_0(int fd_pipe[2], t_struct *strct);
 void    ft_close_pipe_01_dup_initial_1(int fd_pipe[2], t_struct *strct);
-void	ft_print_output(void);
+int		ft_check_syntax(t_struct *strct, char *str);
 
 //////////////////////////////////////////dickuordle
 

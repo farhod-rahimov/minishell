@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:52:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 08:24:57 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 09:21:59 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,30 @@ int		ft_parse(t_struct *strct, t_args *tmp_head, int i)
 {
 	t_args	*tmp;
 
-	if ((strct->output_fd = open(OUTPUT, O_CREAT | O_TRUNC | O_WRONLY, 0766)) == -1)
-		write (2, "cannot create a new file to record the result of minishell operation\n", 69);
-	dup2(strct->output_fd, 1);
+	// if ((strct->output_fd = open(OUTPUT, O_CREAT | O_TRUNC | O_WRONLY, 0766)) == -1)
+	// 	write (2, "cannot create a new file to record the result of minishell operation\n", 69);
+	// dup2(strct->output_fd, 1);
 	tmp = tmp_head;
 
-
+	if (ft_check_syntax(strct, strct->parsed_str) == -1)
+		return (-1);
 	while (strct->parsed_str[i])
 	{
 		while (strct->parsed_str[i] == ' ')
 			i++;
-		if (strct->parsed_str[i] == ';' || strct->parsed_str[i] == '|')				// str cannot start with ; | 
-		{
-			// free(strct->parsed_str);
-			write(2, "syntax error\n", 13);
-			free(strct->args_head);
-			strct->args_head = NULL;
-			dup2(strct->initial_fd[1], 1);
-			return (-1);
-		}
+		// if (strct->parsed_str[i] == ';' || strct->parsed_str[i] == '|')				// str cannot start with ; | 
+		// {
+		// 	// free(strct->parsed_str);
+		// 	write(2, "syntax error\n", 13);
+		// 	free(strct->args_head);
+		// 	strct->args_head = NULL;
+		// 	// dup2(strct->initial_fd[1], 1);
+		// 	return (-1);
+		// }
 			
 		// else if ((strct->parsed_str[i] == '<' || strct->parsed_str[i] == '>') && tmp_head->arg)
 		// 	return (-1);
-		else if (strct->parsed_str[i] == '\"')
+		if (strct->parsed_str[i] == '\"')
 			i = ft_parse_str_till_dq_ends(&tmp, ++i, strct, 1);						// dq = double quotes // ++i for skipping the first "
 		else if (strct->parsed_str[i] == '\'')
 			i = ft_parse_str_till_sq_ends(&tmp, ++i, strct, 1);						// sq = single quote // ++i for skipping the first '
@@ -57,7 +58,7 @@ int		ft_parse(t_struct *strct, t_args *tmp_head, int i)
 	}
 	// free(strct->parsed_str);
 	ft_work_with_t_arg_lists(strct, &tmp);
-	dup2(strct->initial_fd[1], 1);
+	// dup2(strct->initial_fd[1], 1);
 	return (0);
 }
 

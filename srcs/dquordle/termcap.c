@@ -182,9 +182,8 @@ void	ft_term(t_struct *strct)
 		write(1, "\n", 1);
 		if (hist[curpl][0] != 0)
 		{
-			// ft_begin_parsing(strct);
-			if (ft_begin_parsing(strct) != -1)
-				ft_print_output();
+			ft_begin_parsing(strct);
+			// if (ft_begin_parsing(strct) != -1)
 			// 	ft_work_with_t_arg_lists(strct);
 		}
 		ft_free_hist(&hist);
