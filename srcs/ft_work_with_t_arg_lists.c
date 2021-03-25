@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 11:19:09 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 14:37:54 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	ft_work_with_t_arg_lists(t_struct *strct, t_args **current_t_arg)
 	int fd_pipe[2];
 	char **env;
 
-	env = ft_create_env(strct->env_head);
+	if (!*current_t_arg)
+		return ;
+	env = ft_create_env(strct, strct->env_head);
 
 	ft_free_two_dimensional_array(strct->path_to_bins);	
 	ft_get_path_to_bins(strct);
@@ -77,7 +79,8 @@ int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 	
 	if ((pid = fork()) == 0)
 	{
-		abs_path_to_command = ft_strdup("");
+		if ((abs_path_to_command = ft_strdup("")) == NULL)
+			ft_new_error(strct, 1, 1);
 		if (tmp->arg[i][0] == '/' || tmp->arg[i][0] == '.' || tmp->arg[i][0] == '~')
 		{
 			if ((execve(tmp->arg[0], tmp->arg, env)) == -1)
@@ -91,9 +94,11 @@ int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 			while (path_to_bins[i])
 			{
 				tmp_str = abs_path_to_command;
-				abs_path_to_command = ft_strjoin(path_to_bins[i++], tmp->arg[0]);
+				if ((abs_path_to_command = ft_strjoin(path_to_bins[i++], tmp->arg[0])) == NULL)
+					ft_new_error(strct, 1, 1);
 				free(tmp_str);
-				execve(abs_path_to_command, tmp->arg, env);
+				if (ft_strcmp(tmp->arg[0], ""))
+					execve(abs_path_to_command, tmp->arg, env);
 				if (!path_to_bins[i])
 				{
 					printf("my_bash: %s: command not found\n", tmp->arg[0]);
@@ -105,10 +110,6 @@ int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 	else
 	{
 		waitpid(pid, &status, 0);
-		if (g_flags.signal_c)
-			strct->exit_value = 130;
-		else
-			strct->exit_value = WEXITSTATUS(status);
 		// if (tmp->next)
 		// 	if (!tmp->pipe && tmp->prev->pipe)   // если у текущего pipe = 0 && у предущего pipe != 0
 		// 		if ((dup2(strct->initial_fd[0], 0)) == -1)
@@ -151,8 +152,9 @@ static	void	ft_check_pipe(t_args *tmp, t_struct *strct, char **env, int fd_pipe[
 				ft_close_pipe_01_dup_initial_1(fd_pipe, strct);	
 		}
 		if (!tmp->right_redir)
-			if (!(ft_exec_build_in(tmp->arg, &strct->env_head, strct)))
-				ft_exec_bin(strct, tmp, strct->path_to_bins, env);
+			if (!(ft_exec_build_in(tmp->arg, &strct->env_head)))
+				if (ft_strcmp(tmp->arg[0], ""))
+					ft_exec_bin(strct, tmp, strct->path_to_bins, env);
 	}
 }
 
@@ -170,14 +172,14 @@ static	void	ft_check_redirections(t_args *tmp, t_struct *strct, char **env)
 		ft_right_redirect(strct, tmp, env, 0);
 }
 
-int ft_exec_build_in(char **arg, t_env **head, t_struct *strct)
+int ft_exec_build_in(char **arg, t_env **head)
 {
-//	(void)arg;
-//	(void)head;
+	(void)arg;
+	(void)head;
 
 
 	// ft_change_shell_level(*head); /// это при запуске нашего минишелла
 	// ft_print_env(*head);
 	// printf("\nHERE SHOULD BE THE RESULT OF EXECUTION OF 'BUILD IN' COMMAND\n");
-	return (buildin(arg, head, &(strct->exit_value)));
+	return (buildin(arg, head));
 }

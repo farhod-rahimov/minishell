@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 09:17:01 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 10:43:32 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 13:44:49 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_begin_parsing(t_struct *strct)
 
 	ft_parse(strct, strct->args_head, 0);
 	
-	//  ft_print_devided_args(strct->args_head);
+	// ft_print_devided_args(strct->args_head);
 	
 	return (0);
 }

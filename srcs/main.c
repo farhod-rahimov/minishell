@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:39:57 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 10:47:33 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 13:30:53 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ int	main(int argc, char **argv, char **env)
 	close(fd);
 	signal(SIGINT, ft_interrupt);
 	signal(SIGQUIT, ft_quit);
-	if (ft_structure_env(&strct, env) == -1)
-		return (-1);
+	ft_structure_env(&strct, env);
 	strct.initial_fd[0] = dup(0);
 	strct.initial_fd[1] = dup(1);
 	ft_term(&strct);

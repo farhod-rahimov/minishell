@@ -6,11 +6,13 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:08:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 11:01:38 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/25 15:05:58 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static	void	ft_tolower_str(char *str);
 
 t_args	*ft_create_new_t_args(t_struct *strct, t_args *prev_t_args)
 {
@@ -48,12 +50,14 @@ int ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_ar
         return (len);
 	if (strct->parsed_str[i] == ' ')
 		strct->n_i++;
-	while (strct->parsed_str[i] == ' ')
-		i++;
+	i = ft_skip_spaces(strct->parsed_str, i);
 	if (strct->parsed_str[i] == ';' || strct->parsed_str[i] == '|')
 	{
 		if (strct->parsed_str[i] == ';')
+		{
+			// ft_print_devided_args(*current_t_arg);
 			ft_work_with_t_arg_lists(strct, current_t_arg);
+		}
 		if (strct->parsed_str[i] == '|')
 		{
 			if ((*current_t_arg)->prev)
@@ -66,7 +70,7 @@ int ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_ar
 			else
 				(*current_t_arg)->pipe = 1;
 		}
-		i++;
+		i = ft_skip_spaces(strct->parsed_str, ++i);
 		if (strct->parsed_str[i] != '\0')
 			if ((*current_t_arg = ft_create_new_t_args(strct, *current_t_arg)) == NULL)
 				return (-1);
@@ -152,6 +156,7 @@ void		ft_copy_str_to_structure_t_args(t_struct *strct, t_args **tmp, char *str, 
 		(*tmp)->arg[1] = NULL;
 		return ;
 	}
+	ft_tolower_str((*tmp)->arg[0]);
 	if (((*tmp)->arg = (char **)malloc(sizeof(char *) * (n_i + 2))) == NULL)
 		ft_new_error(strct, 1, 1);
 	ft_copy_old_arg_to_new(tmp, tmp_arg, n_i);
@@ -159,6 +164,18 @@ void		ft_copy_str_to_structure_t_args(t_struct *strct, t_args **tmp, char *str, 
 		ft_new_error(strct, 1, 1);
 	(*tmp)->arg[n_i + 1] = NULL;
 	ft_free_arg(tmp_arg);
+}
+
+static	void	ft_tolower_str(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		str[i] = ft_tolower(str[i]);
+		i++;
+	}
 }
 
 void		ft_push_back_char(char **str, char c)
