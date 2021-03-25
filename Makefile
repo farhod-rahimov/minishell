@@ -54,7 +54,7 @@ make_libft:
 				@ cd ./srcs/libft && make bonus && cp libft.a ../.. && cd ../..
 
 $(NAME):		$(OBJS)
-				@ $(GCC) -o $(NAME) $(OBJS) $(LIBFT_NAME) -ltermcap
+				@ $(GCC)  $(OBJS) -g $(LIBFT_NAME) -ltermcap
 				@ echo 'minishell built, run ./minishell'
 
 clean:

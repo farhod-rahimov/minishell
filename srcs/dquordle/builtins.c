@@ -7,7 +7,7 @@
 
 int			error_code;
 
-void	ft_pwd(void)
+void	ft_pwd(int *exit_value)
 {
 	char *buf;
 
@@ -15,9 +15,10 @@ void	ft_pwd(void)
 	buf = getcwd(buf, 0);
 	printf("%s\n", buf);
 	free(buf);
+	*exit_value = 0;
 }
 
-void	ft_echo(char **arg)
+void	ft_echo(char **arg, int *exit_value)
 {
 	int i;
 	int n;
@@ -37,33 +38,41 @@ void	ft_echo(char **arg)
 	}
 	if (n == 0)
 		write(1, "\n", 1);
+	*exit_value = 0;
 }
 
-void	ft_cd(char **arg)
-{
-	printf("%s\n", arg[1]);
-	if (chdir(arg[1]) == -1)
-		printf("%s\n", strerror(errno));
-}
 
-void	ft_env(t_env *head)
+void	ft_env(char **arg, t_env *head, int *exit_value)
 {
 	t_env *tmp;
+	char	*str;
 
 	tmp = head;
+	if (arg[1])
+	{
+		*exit_value = 2;
+		return ;
+	}
 	while (tmp)
 	{
 		if (tmp->value)
 		{
 //			printf("%s", tmp->key);
-			write(1, tmp->key, ft_strlen(tmp->key));
-			write(1, "=", 1);
-			write(1, tmp->value, ft_strlen(tmp->value));
-			write(1, "\n", 1);
+			str = ft_strdup(tmp->key);
+			str = ft_append(str, "=");
+			str = ft_append(str, tmp->value);
+			str = ft_append(str, "\n");
+			write(1, str, ft_strlen(str));
+			free(str);
+//			write(1, tmp->key, ft_strlen(tmp->key));
+//			write(1, "=", 1);
+//			write(1, tmp->value, ft_strlen(tmp->value));
+//			write(1, "\n", 1);
 //			printf("=%s\n", tmp->value);
 		}
 		tmp = tmp->next;
 	}
+	*exit_value = 0;
 }
 
 void	ft_new_env(t_env **head, char *key, char *value)
@@ -138,16 +147,90 @@ void	ft_add_env(t_env **head, char *arg)
 		ft_new_env(head, arg, value);
 }
 
+t_env	*ft_new_smth(char *key, char *value)
+{
+	t_env	*new;
+
+	new = (t_env *)malloc(sizeof(t_env));
+	new->value = ft_strdup(value);
+	new->key = ft_strdup(key);
+	new->next = NULL;
+	return (new);
+}
+
+//  t_env	*ft_copy_list(t_env *head)
+//  {
+// 	t_env *tmp;
+// 	t_env *new_head;
+// 	t_env *new_tmp;
+
+// 	tmp = head;
+// 	new_tmp = new_head;
+// 	while (tmp)
+// 	{
+// 		new_tmp->key = tmp->key;
+// 		new_tmp->value = tmp->value;
+// 		new_tmp->next = NULL;
+// 		tmp = tmp->next;
+// 	}
+//  }
+
+t_env	*ft_sort_list(t_env *head)
+{
+	t_env	*new_head;
+	t_env	*tmp;
+	t_env	*prev;
+	int		flag;
+
+	flag = 1;
+	new_head = head; //ft_copy_list(head);
+	while (flag != 0)
+	{
+		flag = 0;
+		if (ft_strcmp(new_head->key, new_head->next->key) > 0)
+		{
+			tmp = new_head->next;
+			new_head->next = new_head->next->next;
+			tmp->next = new_head;
+			new_head = tmp;
+			flag++;
+		}
+		printf("lol\n");
+		prev = new_head;
+		tmp = new_head->next;
+//		printf("%s\n%s\n", prev->key, tmp->key);
+		while (tmp->next)
+		{
+//			printf("%s\n", tmp->key);
+//			printf("%s\n", tmp->next->key);
+			if (ft_strcmp(tmp->key, tmp->next->key) > 0)
+			{
+				prev->next = tmp->next;
+				tmp->next = tmp->next->next;
+				prev->next->next = tmp;
+				flag++;
+			}
+			else
+				tmp = tmp->next;
+			prev = prev->next;
+			//printf("kek\n");
+		}
+	}
+	return (new_head);
+}
+
 void	ft_export(char **arg, t_env **head)
 {
 	int i;
 	t_env *tmp;
 
-	tmp = *head;
 	if (*head && !arg[1])
 	{
+		*head = ft_sort_list(*head);
+		tmp = *head;
 		while (tmp)
 		{
+			printf("lol\n");
 //			printf("declare -x %s", tmp->key);
 			write(1, "declare -x ", 11);
 		 	write (1, tmp->key, ft_strlen(tmp->key));
@@ -212,6 +295,28 @@ void	ft_unset(char **arg, t_env **head)
 	}
 }
 
+void	ft_cd(char **arg, t_env **head, int *exit_value)
+{
+	char *new_pwd;
+	char *buf;
+
+	if (chdir(arg[1]) == -1)
+	{
+		printf("%s\n", strerror(errno));
+		*exit_value = 1;
+	}
+	else
+	{
+		new_pwd = NULL;
+		new_pwd = getcwd(new_pwd, 0);
+		buf = ft_strjoin("PWD=", new_pwd);
+		ft_add_env(head, buf);
+		free(buf);
+		free(new_pwd);
+		*exit_value = 0;
+	}
+}
+
 int		ft_isnum(char *str)
 {
 	int i;
@@ -265,12 +370,12 @@ int	ft_atol(char *str)
 	return (num % 256);
 }
 
-void	ft_exit(char **arg)
+void	ft_exit(char **arg, int exit_value)
 {
 	int ex_num;
 
 	if (!arg[1])
-		exit(error_code);
+		exit(exit_value);
 	if (ft_isnum(arg[1]) == 0)
 	{
 		write(2, "exit: ", 6);
@@ -285,24 +390,25 @@ void	ft_exit(char **arg)
 		write(2, "exit: too many arguments\n", 25);
 }
 
-int		buildin(char **arg, t_env **head)
+int		buildin(char **arg, t_env **head, int *exit_value)
 {
-	error_code = 42;
+//	*exit_value = 0;
 	if (!ft_strcmp(arg[0], "echo"))
-		ft_echo(arg);
+		ft_echo(arg, exit_value);
 	else if (!ft_strcmp(arg[0], "pwd"))
-		ft_pwd();
+		ft_pwd(exit_value);
 	else if (!ft_strcmp(arg[0], "cd"))
-		ft_cd(arg);
+		ft_cd(arg, head, exit_value);
 	else if (!ft_strcmp(arg[0], "env"))
-		ft_env(*head);
+		ft_env(arg, *head, exit_value);
 	else if (!ft_strcmp(arg[0], "export"))
 		ft_export(arg, head);
 	else if (!ft_strcmp(arg[0], "unset"))
 		ft_unset(arg, head);
 	else if (!ft_strcmp(arg[0], "exit"))
-		ft_exit(arg);
+		ft_exit(arg, *exit_value);
 	else
 		return (0);
+	printf("tuta\n");
 	return (1);
 }

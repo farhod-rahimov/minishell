@@ -63,7 +63,6 @@ typedef struct s
 	t_env	*env_head;
 	t_args	*args_head;
 	int		n_i;
-
 	int		initial_fd[2];
 	int		output_fd;
 	int		exit_value;
@@ -139,7 +138,7 @@ void	ft_print_env(t_env *head);
 void	ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, char *type, char *file_name);
 
 int		ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env);
-int		ft_exec_build_in(char **arg, t_env **head);
+int		ft_exec_build_in(char **arg, t_env **head, t_struct *strct);
 void    ft_left_redirect(t_args *args, int counter);
 void ft_right_redirect(t_struct *strct, t_args *args, char **env, int counter);
 
@@ -150,7 +149,7 @@ int		ft_check_syntax(t_struct *strct, char *str);
 
 //////////////////////////////////////////dickuordle
 
-int		buildin(char **arg, t_env **env);
+int		buildin(char **arg, t_env **env, int *exit_value);
 void	ft_term(t_struct *strct);
 int		ft_strcmp(const char *s1, const char *s2);
 int		get_next_line(int fd, char **line);
@@ -160,6 +159,7 @@ void	ft_quit(int signal);
 void	ft_read(char **hist, int *curpl, int hsize, char **str);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_putchar(int c);
+char	*ft_append(char *old, char *new);
 
 
 

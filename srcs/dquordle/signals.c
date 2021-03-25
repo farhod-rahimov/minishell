@@ -12,6 +12,7 @@ void	ft_interrupt(int signal)
 //		write(1, "\n", 1);  //daughter
 //	else
 		write(1, "\nmy_bash% ", 10);  //mommy
+		// exit_value!!!
 }
 
 void	ft_quit(int signal)

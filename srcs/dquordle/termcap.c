@@ -1,22 +1,5 @@
 #include "../minishell.h"
 
-char	*ft_append(char *old, char *new)
-{
-	char	*newest;
-	int		i;
-	int		j;
-
-	newest = (char *)malloc(ft_strlen(old) + ft_strlen(new) + 1);
-	j = 0;
-	i = -1;
-	while (old[++i])
-		newest[i] = old[i];
-	while (new[j])
-		newest[i++] = new[j++];
-	newest[i] = 0;
-	free(old);
-	return (newest);
-}
 
 void	ft_add_command(char **hist, char *command)
 {
@@ -161,6 +144,7 @@ void	ft_term(t_struct *strct)
 	int curpl;
 	char **hist;
 
+
 	str = (char *)malloc(1000);
 	ft_bzero(str, 1000);
 	while ((ft_strcmp(str, "\4")) || hist[curpl][0] != 0)
@@ -168,7 +152,10 @@ void	ft_term(t_struct *strct)
 		ft_terminal_setup(strct);
 		ft_prompt(&str, &hist, &curpl);
 		if (g_flags.signal_c)
-			continue ;
+		{
+			strct->exit_value = 1;
+			continue;
+		}
 		if (!(ft_strcmp(str, "\4")) && hist[curpl][0] == 0)
 			break ;
 		if (!ft_strcmp(str, "\n"))
@@ -186,8 +173,11 @@ void	ft_term(t_struct *strct)
 			// if (ft_begin_parsing(strct) != -1)
 			// 	ft_work_with_t_arg_lists(strct);
 		}
-		ft_free_hist(&hist);
+//		ft_free_hist(&hist);
 	}
+//	strct->parsed_str = ft_strdup("export");
+//	ft_begin_parsing(strct);
 	write(1, "exit\n", 5);
+	exit(strct->exit_value);
 }
 
