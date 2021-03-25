@@ -110,6 +110,10 @@ int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 	else
 	{
 		waitpid(pid, &status, 0);
+		if (g_flags.signal_c)
+			strct->exit_value = 130;
+		else
+			strct->exit_value = WEXITSTATUS(status);
 		// if (tmp->next)
 		// 	if (!tmp->pipe && tmp->prev->pipe)   // если у текущего pipe = 0 && у предущего pipe != 0
 		// 		if ((dup2(strct->initial_fd[0], 0)) == -1)
@@ -152,7 +156,7 @@ static	void	ft_check_pipe(t_args *tmp, t_struct *strct, char **env, int fd_pipe[
 				ft_close_pipe_01_dup_initial_1(fd_pipe, strct);	
 		}
 		if (!tmp->right_redir)
-			if (!(ft_exec_build_in(tmp->arg, &strct->env_head)))
+			if (!(ft_exec_build_in(tmp->arg, &strct->env_head, strct)))
 				if (ft_strcmp(tmp->arg[0], ""))
 					ft_exec_bin(strct, tmp, strct->path_to_bins, env);
 	}
@@ -172,7 +176,7 @@ static	void	ft_check_redirections(t_args *tmp, t_struct *strct, char **env)
 		ft_right_redirect(strct, tmp, env, 0);
 }
 
-int ft_exec_build_in(char **arg, t_env **head)
+int ft_exec_build_in(char **arg, t_env **head, t_struct *strct)
 {
 	(void)arg;
 	(void)head;
@@ -181,5 +185,5 @@ int ft_exec_build_in(char **arg, t_env **head)
 	// ft_change_shell_level(*head); /// это при запуске нашего минишелла
 	// ft_print_env(*head);
 	// printf("\nHERE SHOULD BE THE RESULT OF EXECUTION OF 'BUILD IN' COMMAND\n");
-	return (buildin(arg, head));
+	return (buildin(arg, head, &(strct->exit_value)));
 }

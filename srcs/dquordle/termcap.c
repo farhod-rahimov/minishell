@@ -86,7 +86,9 @@ void	ft_prompt(char **str, char ***history, int *curpl)
 	int hsize;
 	char **hist;
 
-	if (!g_flags.signal_c)
+	if (g_flags.signal_c == 2)
+		write(1, "\n", 1);
+	if (g_flags.signal_c != 1)
 		write(1, "my_bash% ", 9);
 	tputs(save_cursor, 1, ft_putchar);
 	hist = ft_get_hist();
@@ -173,7 +175,7 @@ void	ft_term(t_struct *strct)
 			// if (ft_begin_parsing(strct) != -1)
 			// 	ft_work_with_t_arg_lists(strct);
 		}
-//		ft_free_hist(&hist);
+		ft_free_hist(&hist);
 	}
 //	strct->parsed_str = ft_strdup("export");
 //	ft_begin_parsing(strct);

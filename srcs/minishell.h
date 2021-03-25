@@ -20,6 +20,7 @@
 #include <curses.h>
 #include <signal.h>
 #include <string.h>
+#include <sys/errno.h>
 
 #define HISTFILE "/tmp/minishell_hist.txt"
 #define OUTPUT "/tmp/minishell_output.txt"
