@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:08:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 15:27:23 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:33:12 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,3 +276,11 @@ void	ft_free_redir(t_redirect *head)
 		tmp = head;
 	}
 }
+
+int				ft_skip_spaces(char *str, int i)
+{
+	while (str[i] == ' ')
+		i++;
+	return (i);
+}
+
