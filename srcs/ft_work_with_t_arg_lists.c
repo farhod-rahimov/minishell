@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 13:43:27 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 13:45:50 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,10 @@ int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 	else
 	{
 		waitpid(pid, &status, 0);
-		strct->exit_value = WEXITSTATUS(status);
+		if (g_flags.signal_c)
+			strct->exit_value = 130;
+		else
+			strct->exit_value = WEXITSTATUS(status);
 		// if (tmp->next)
 		// 	if (!tmp->pipe && tmp->prev->pipe)   // если у текущего pipe = 0 && у предущего pipe != 0
 		// 		if ((dup2(strct->initial_fd[0], 0)) == -1)
