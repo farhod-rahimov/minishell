@@ -6,7 +6,7 @@
 #    By: btammara <btammara@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/06 16:30:33 by btammara          #+#    #+#              #
-#    Updated: 2021/03/25 09:21:16 by btammara         ###   ########.fr        #
+#    Updated: 2021/03/26 13:28:30 by btammara         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ make_libft:
 				@ cd ./srcs/libft && make bonus && cp libft.a ../.. && cd ../..
 
 $(NAME):		$(OBJS)
-				@ $(GCC)  $(OBJS) -g $(LIBFT_NAME) -ltermcap
+				@ $(GCC) -o $(NAME) $(OBJS) $(LIBFT_NAME) -ltermcap
 				@ echo 'minishell built, run ./minishell'
 
 clean:

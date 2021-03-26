@@ -409,6 +409,6 @@ int		buildin(char **arg, t_env **head, int *exit_value)
 		ft_exit(arg, *exit_value);
 	else
 		return (0);
-	printf("tuta\n");
+	// printf("tuta\n");
 	return (1);
 }

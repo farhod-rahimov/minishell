@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 14:03:41 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 13:32:26 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <curses.h>
 #include <signal.h>
 #include <string.h>
+#include <sys/errno.h>
 
 #define HISTFILE "/tmp/minishell_hist.txt"
 #define OUTPUT "/tmp/minishell_output.txt"

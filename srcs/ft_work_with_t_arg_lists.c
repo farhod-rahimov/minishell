@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 17:13:12 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 13:43:27 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_work_with_t_arg_lists(t_struct *strct, t_args **current_t_arg)
 
 	ft_free_two_dimensional_array(strct->path_to_bins);	
 	ft_get_path_to_bins(strct);
-	
+
 	while ((*current_t_arg)->prev != NULL)
 		*current_t_arg = (*current_t_arg)->prev;
 	
@@ -85,7 +85,15 @@ int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 		{
 			if ((execve(tmp->arg[0], tmp->arg, env)) == -1)
 			{
-				printf("my_bash: %s: No such file or directory\n", tmp->arg[0]);
+				write (2, "my_bash: ", 9);
+				write (2, tmp->arg[0], ft_strlen(tmp->arg[0]));
+				write(2, ": ", 2);
+				write(2, strerror(errno), ft_strlen(strerror(errno)));
+				write(2, "\n", 1);
+				if (errno == 2)
+					exit(127);
+				else if (errno == 13)
+					exit (126);
 				exit(EXIT_FAILURE);
 			}
 		}
@@ -101,8 +109,10 @@ int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 					execve(abs_path_to_command, tmp->arg, env);
 				if (!path_to_bins[i])
 				{
-					printf("my_bash: %s: command not found\n", tmp->arg[0]);
-					exit(EXIT_FAILURE);
+					write (2, "my_bash: ", 9);
+					write (2, tmp->arg[0], ft_strlen(tmp->arg[0]));
+					write(2, ": command not found\n", 20);
+					exit(127);
 				}
 			}
 		}
@@ -110,6 +120,7 @@ int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 	else
 	{
 		waitpid(pid, &status, 0);
+		strct->exit_value = WEXITSTATUS(status);
 		// if (tmp->next)
 		// 	if (!tmp->pipe && tmp->prev->pipe)   // если у текущего pipe = 0 && у предущего pipe != 0
 		// 		if ((dup2(strct->initial_fd[0], 0)) == -1)
