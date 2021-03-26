@@ -6,14 +6,13 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 09:17:01 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 15:18:55 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 17:22:55 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static	int		ft_add_back_string(t_struct *strct, int i, char c);
-static	void	ft_free_t_args(t_args *head);
 
 int	ft_show_prompt(t_struct *strct, int i)
 {
@@ -54,15 +53,15 @@ void	ft_begin_parsing(t_struct *strct)
 	tmp = strct->args_head;
 	strct->args_head = ft_create_new_t_args(strct, NULL);
 
-	if (tmp != NULL)
-		ft_free_t_args(tmp);
+	// if (tmp != NULL)
+	// 	ft_free_t_args(tmp);
 
 	ft_parse(strct, strct->args_head, 0);
 	
 	// ft_print_devided_args(strct->args_head);
 }
 
-static	void	ft_free_t_args(t_args *head)
+void	ft_free_t_args(t_args *head)
 {
 	t_args *tmp;
 

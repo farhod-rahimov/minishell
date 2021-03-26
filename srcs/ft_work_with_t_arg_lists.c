@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 15:20:43 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 17:22:12 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static	void	ft_check_redirections(t_args *tmp, t_struct *strct, char **env);
 void	ft_work_with_t_arg_lists(t_struct *strct, t_args **current_t_arg)
 {
 	t_redirect *tmp_red;
+	t_args *current_t_arg_head;
 	tmp_red = strct->args_head->redir_head;
 
 	int fd_pipe[2];
@@ -33,7 +34,7 @@ void	ft_work_with_t_arg_lists(t_struct *strct, t_args **current_t_arg)
 
 	while ((*current_t_arg)->prev != NULL)
 		*current_t_arg = (*current_t_arg)->prev;
-	
+	current_t_arg_head = *current_t_arg;	
 	while (*current_t_arg && (*current_t_arg)->exec_done == 0)
 	{
 		ft_check_redirections(*current_t_arg, strct, env);
@@ -50,6 +51,7 @@ void	ft_work_with_t_arg_lists(t_struct *strct, t_args **current_t_arg)
 		ft_check_if_reset_01fds_needed(*current_t_arg, strct, fd_pipe);
 	}
 	ft_free_two_dimensional_array(env);	
+	ft_free_t_args(current_t_arg_head);
 }
 
 void ft_free_two_dimensional_array(char **array)

@@ -8,7 +8,7 @@ char	**ft_make_hist(t_list **head)
 
 	i = ft_lstsize(*head);
 	if (!(hist = ft_calloc( i + 2, sizeof(char *))))
-		exit(-1);
+		ft_write_malloc_error();
 	hist[i + 1] = NULL;
 	while (*head)
 	{

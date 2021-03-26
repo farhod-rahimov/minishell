@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 15:27:26 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 17:24:07 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ int		ft_show_prompt(t_struct *strct, int i);
 void	ft_begin_parsing(t_struct *strct);
 
 
-int		ft_parse(t_struct *strct, t_args *tmp_head, int i);
+int		ft_parse(t_struct *strct, t_args *tmp, int i);
+void	ft_free_t_args(t_args *head);
 
 int		ft_parse_str_till_dq_ends(t_args **current_t_arg, int i, t_struct *strct);
 // int		ft_copy_str_to_structure_t_args(t_args **tmp, char *str, int n_i);
@@ -151,6 +152,8 @@ void    ft_pipe(t_struct *strct, int fd_pipe[2]);
 void    ft_close_pipe_01_dup_initial_0(int fd_pipe[2], t_struct *strct);
 void    ft_close_pipe_01_dup_initial_1(int fd_pipe[2], t_struct *strct);
 int		ft_check_syntax(t_struct *strct, char *str);
+
+int		ft_remove_back_slash(char **str, int i);
 
 //////////////////////////////////////////dickuordle
 
