@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 09:09:39 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 14:03:45 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:26:49 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static	int ft_print_stntax_error(t_struct *strct, char c)
 	write(2, &c, 1);
 	write(2, "'\n", 2);
 	ft_free_if_error(strct);
-	ft_new_error(strct, 258, 0);
+	strct->exit_value = 258;
 	return (-1);
 }
 

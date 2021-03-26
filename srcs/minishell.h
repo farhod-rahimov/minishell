@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 15:23:26 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:27:26 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,11 +129,9 @@ int		ft_skip_spaces(char *str, int i);
 //"balalalalalala $PATH popopopopopopopop" 'jcvnwkejncwkjenckjwencvjkwenkjwe' ; "balalalalalala $PATH popopopopopopopop""balalalalalala $PATH popopopopopopopop"
 
 void	ft_push_back_char(char **str, char c);
-void	ft_error();
 void	ft_write_malloc_error(void);
 char	*ft_strdup_new(const char *s1);
 char	*ft_strjoin_new(char const *s1, char const *s2);
-void	ft_new_error(t_struct *strct, int i, int exit_flag);
 void	ft_dup2_error(t_struct *strct);
 void	ft_errno_error(t_struct *strct, char *file_name);
 void	ft_strcopy(char *dst, char *src);

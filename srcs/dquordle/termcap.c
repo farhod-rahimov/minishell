@@ -68,7 +68,7 @@ void	ft_terminal_setup(t_struct *strct)
 	while (temp && ft_strcmp(temp->key, "TERM"))
 		temp = temp->next;
 //	if (!temp)
-//		ft_error;
+//		ft_error; // ft_error doesn`t exist, it`s deleted
 	tgetent(0, temp->value);
 }
 

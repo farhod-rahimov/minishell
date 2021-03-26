@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:08:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 15:10:12 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:27:23 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,19 +189,6 @@ void		ft_push_back_char(char **str, char c)
 	(*str)[len + 1] = '\0';
 	free(tmp);
 	return ;
-}
-
-void	ft_error()
-{
-	write(1, "malloc error\n", ft_strlen("malloc error\n"));
-	exit(1);
-}
-
-void	ft_new_error(t_struct *strct, int i, int exit_flag)
-{
-	strct->exit_value = i;
-	if (exit_flag)
-		exit(i);
 }
 
 void	ft_dup2_error(t_struct *strct)
