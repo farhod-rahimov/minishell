@@ -6,13 +6,13 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:52:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 17:25:37 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 18:54:27 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		ft_parse(t_struct *strct, t_args *tmp, int i)
+static	int	ft_parse(t_struct *strct, t_args *tmp, int i)
 {
 	char	*str;
 
@@ -38,4 +38,13 @@ int		ft_parse(t_struct *strct, t_args *tmp, int i)
 	free(str);
 	ft_work_with_t_arg_lists(strct, &tmp);
 	return (0);
+}
+
+void		ft_begin_parsing(t_struct *strct)
+{
+	t_args *tmp;
+
+	tmp = strct->args_head;
+	strct->args_head = ft_create_new_t_args(strct, NULL);
+	ft_parse(strct, strct->args_head, 0);
 }

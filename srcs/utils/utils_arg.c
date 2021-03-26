@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_utils.c                                        :+:      :+:    :+:   */
+/*   utils_arg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/18 10:08:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 15:33:12 by btammara         ###   ########.fr       */
+/*   Created: 2021/03/26 19:05:54 by btammara          #+#    #+#             */
+/*   Updated: 2021/03/26 19:09:45 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,20 @@ t_args	*ft_create_new_t_args(t_struct *strct, t_args *prev_t_args)
 	strct->n_i = 0;
 	
 	return (new_t_args);
+}
+
+void	ft_free_t_args(t_args *head)
+{
+	t_args *tmp;
+
+	while (head)
+	{
+		tmp = head;
+		head = head->next;
+		ft_free_arg(tmp->arg);
+		ft_free_redir(tmp->redir_head);
+		free(tmp);
+	}
 }
 
 int ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_arg, int i)
@@ -90,50 +104,6 @@ int ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_ar
 	return (i);
 }
 
-void		ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, char *type, char *file_name)
-{
-	t_redirect *tmp;
-	t_redirect *new;
-
-	if (redir_head == NULL)
-	{
-		if ((redir_head = (t_redirect *)malloc(sizeof(t_redirect))) == NULL)
-			ft_write_malloc_error();
-		redir_head->type = ft_strdup_new(type);
-		redir_head->file_name = NULL;
-		redir_head->next = NULL;
-		(*current_t_arg)->redir_head = redir_head;
-		(*current_t_arg)->redir_flag = 1;
-		return ;
-	}
-	tmp = redir_head;
-	while (tmp)
-	{
-		if (tmp->next == NULL)
-			break ;
-		tmp = tmp->next;
-	}
-	
-	if (tmp->type != NULL && tmp->file_name == NULL)
-	{
-		tmp->file_name = ft_strdup_new(file_name);
-		if (!ft_strncmp(tmp->type, "<", 1))
-			(*current_t_arg)->left_redir += 1;
-		else if (!ft_strncmp(tmp->type, ">", 1))
-			(*current_t_arg)->right_redir += 1;
-		(*current_t_arg)->redir_flag = 0;
-		return ;
-	}
-
-	if ((new = (t_redirect *)malloc(sizeof(t_redirect))) == NULL)
-		ft_write_malloc_error();
-	new->type = ft_strdup_new(type);
-	new->file_name = NULL;
-	new->next = NULL;
-	tmp->next = new;
-	(*current_t_arg)->redir_flag = 1;
-}
-
 void		ft_copy_str_to_structure_t_args(t_struct *strct, t_args **tmp, char *str, int n_i)
 {
 	char	**tmp_arg; // tmp->arg
@@ -175,69 +145,6 @@ static	void	ft_tolower_str(char *str)
 	}
 }
 
-void		ft_push_back_char(char **str, char c)
-{
-	int		len;
-	char	*tmp;
-	
-	len = ft_strlen(*str);
-	tmp = *str;
-	if ((*str = (char *)malloc(sizeof(char) * (len + 2))) == NULL)
-		ft_write_malloc_error();
-	ft_strcopy(*str, tmp);
-	(*str)[len] = c;
-	(*str)[len + 1] = '\0';
-	free(tmp);
-	return ;
-}
-
-void	ft_dup2_error(t_struct *strct)
-{
-	char *error;
-
-	error = "dup2 error\n";
-	strct->exit_value = 1;
-	write(2, "my_bash: ", 9);
-	write(2, error, ft_strlen(error));
-	dup2(strct->initial_fd[0], 0);
-	dup2(strct->initial_fd[1], 1);
-	exit(1);
-}
-
-void	ft_errno_error(t_struct *strct, char *file_name)
-{
-	strct->exit_value = 1;
-	write(2, "my_bash: ", 9);
-	write(2, file_name, ft_strlen(file_name));
-	write(2, ": ", 2);
-	write(2, strerror(errno), ft_strlen(strerror(errno)));
-	write(2, "\n", 1);
-	exit(1);
-}
-
-void	ft_write_malloc_error(void)
-{
-	printf("here\n");
-	write(2, "my_bash: ", 9);
-	write(2, strerror(errno), ft_strlen(strerror(errno)));
-	write(2, "\n", 1);
-	exit(1);
-}
-
-void	ft_strcopy(char *dst, char *src)
-{
-	int i;
-	int max;
-
-	i = 0;
-	max = ft_strlen(src);
-	while (i < max)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-}
-
 int		ft_copy_old_arg_to_new(t_args **new_arg, char **old_arg, int n_i)
 {
 	int		i;
@@ -261,26 +168,3 @@ void	ft_free_arg(char **tmp_arg)
 	// free(tmp_arg[i]);
 	free(tmp_arg);
 }
-
-void	ft_free_redir(t_redirect *head)
-{
-	t_redirect *tmp;
-	
-	tmp = head;
-	while (tmp)
-	{
-		free(tmp->type);
-		free(tmp->file_name);
-		head = head->next;
-		free(tmp);
-		tmp = head;
-	}
-}
-
-int				ft_skip_spaces(char *str, int i)
-{
-	while (str[i] == ' ')
-		i++;
-	return (i);
-}
-

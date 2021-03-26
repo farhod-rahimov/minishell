@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 17:24:07 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 19:12:55 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int		ft_show_prompt(t_struct *strct, int i);
 void	ft_begin_parsing(t_struct *strct);
 
 
-int		ft_parse(t_struct *strct, t_args *tmp, int i);
 void	ft_free_t_args(t_args *head);
 
 int		ft_parse_str_till_dq_ends(t_args **current_t_arg, int i, t_struct *strct);
@@ -102,7 +101,6 @@ void	ft_print_devided_args(t_args *head);
 
 
 void	ft_structure_env(t_struct *strct, char **env);
-void	ft_fill_t_env_list(t_env *env_list, char **env, int i, int k);
 t_env	*ft_create_new_t_env(t_env *prev);
 void	ft_get_path_to_bins(t_struct *strct);
 void	ft_print_path_to_bins(char **path_to_bins);

@@ -6,54 +6,29 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 15:14:21 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 15:14:56 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 17:35:54 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static  void    ft_increment_shell_level(t_env **current_env);
-static  void     ft_add_shell_level(t_env *env_head);
-
-void	ft_change_shell_level(t_env *env_head)
+static	void	ft_increment_shell_level(t_env **current_env)
 {
-	t_env	*tmp;
-	int		flag;
-
-	tmp = env_head;
-	flag = 0;
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->key, "SHLVL", ft_strlen(tmp->key) + ft_strlen("SHLVL")))
-		{
-			flag = 1;
-			ft_increment_shell_level(&tmp);
-			break;
-		}
-		tmp = tmp->next;
-	}
-	if (!flag)
-		ft_add_shell_level(env_head);
-}
-
-static  void    ft_increment_shell_level(t_env **current_env)
-{
-	int     value;
-	char    *tmp;
+	int		value;
+	char	*tmp;
 
 	value = ft_atoi((*current_env)->value);
-
-	tmp = (*current_env)->value; 
+	tmp = (*current_env)->value;
 	if (((*current_env)->value = ft_itoa(++value)) == NULL)
 		ft_write_malloc_error();
 	free(tmp);
 }
 
-static  void     ft_add_shell_level(t_env *env_head)
+static	void	ft_add_shell_level(t_env *env_head)
 {
 	t_env *tmp;
 	t_env *new;
-	
+
 	tmp = env_head;
 	while (tmp)
 	{
@@ -65,4 +40,26 @@ static  void     ft_add_shell_level(t_env *env_head)
 		}
 		tmp = tmp->next;
 	}
+}
+
+void			ft_change_shell_level(t_env *env_head)
+{
+	t_env	*tmp;
+	int		flag;
+
+	tmp = env_head;
+	flag = 0;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->key, "SHLVL", \
+		ft_strlen(tmp->key) + ft_strlen("SHLVL")))
+		{
+			flag = 1;
+			ft_increment_shell_level(&tmp);
+			break ;
+		}
+		tmp = tmp->next;
+	}
+	if (!flag)
+		ft_add_shell_level(env_head);
 }

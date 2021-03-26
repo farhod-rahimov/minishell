@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_common.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 09:18:08 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 17:01:48 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 19:15:07 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	ft_copy_old_str(char *old_buf, char *new_buf)
 {
@@ -40,4 +40,41 @@ int		ft_remove_back_slash(char **str, int i)
 		i++;
 	}
 	return (++initial_i);
+}
+
+void	ft_push_back_char(char **str, char c)
+{
+	int		len;
+	char	*tmp;
+
+	len = ft_strlen(*str);
+	tmp = *str;
+	if ((*str = (char *)malloc(sizeof(char) * (len + 2))) == NULL)
+		ft_write_malloc_error();
+	ft_strcopy(*str, tmp);
+	(*str)[len] = c;
+	(*str)[len + 1] = '\0';
+	free(tmp);
+	return ;
+}
+
+void	ft_strcopy(char *dst, char *src)
+{
+	int i;
+	int max;
+
+	i = 0;
+	max = ft_strlen(src);
+	while (i < max)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+}
+
+int		ft_skip_spaces(char *str, int i)
+{
+	while (str[i] == ' ')
+		i++;
+	return (i);
 }

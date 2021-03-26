@@ -6,18 +6,20 @@
 #    By: btammara <btammara@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/06 16:30:33 by btammara          #+#    #+#              #
-#    Updated: 2021/03/26 17:26:12 by btammara         ###   ########.fr        #
+#    Updated: 2021/03/26 19:11:48 by btammara         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS =			./srcs/main.c \
 				./srcs/ft_structure_env.c \
-				./srcs/utils.c \
+				./srcs/utils/utils_arg.c \
+				./srcs/utils/utils_common.c \
+				./srcs/utils/utils_env.c \
+				./srcs/utils/utils_error.c \
+				./srcs/utils/utils_redir.c \
 				./srcs/ft_strdup_new.c \
 				./srcs/ft_strjoin_new.c \
-				./srcs/ft_show_promt.c \
 				./srcs/parser/ft_parse.c \
-				./srcs/parser/new_utils.c \
 				./srcs/parser/ft_parse_str_till_env_var_ends.c \
 				./srcs/parser/ft_parse_str_till_it_ends.c \
 				./srcs/parser/ft_parse_str_till_sq_ends.c \

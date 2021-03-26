@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:39:57 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 14:18:22 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 19:02:28 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,14 @@
 
 int	main(int argc, char **argv, char **env)
 {
+	t_struct	strct;
+	int			fd;
+
 	(void)argv;
-	t_struct strct;
 	strct.args_head = NULL;
 	strct.exit_value = 0;
-	int fd;
-
-
 	if (argc != 1)
-		return (-1); // minishell doesn't launch with arguments
+		return (-1);
 	g_flags.signal_c = 0;
 	if ((fd = open(HISTFILE, O_CREAT, 00777)) == -1)
 		ft_errno_error(&strct, HISTFILE);
@@ -33,9 +32,5 @@ int	main(int argc, char **argv, char **env)
 	strct.initial_fd[0] = dup(0);
 	strct.initial_fd[1] = dup(1);
 	ft_term(&strct);
-
-//	while (ft_show_prompt(&strct, 1) != -1)
-//		;
 	return (0);
 }
-

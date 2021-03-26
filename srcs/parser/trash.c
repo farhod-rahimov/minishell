@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 17:25:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 17:25:53 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 18:56:19 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,26 @@ void	ft_print_devided_args(t_args *head)
 		k++;
 		tmp = tmp->next;
 	}
+}
+
+void	ft_print_env(t_env *head)
+{
+	t_env *tmp;
+	
+	tmp = head;
+	while (tmp)
+	{
+		printf("%s", tmp->key);
+		printf("=%s\n", tmp->value);
+		tmp = tmp->next;
+	}
+}
+
+void	ft_print_path_to_bins(char **path_to_bins)
+{
+	if (!path_to_bins)
+		return;
+	int i = 0;
+	while (path_to_bins[i])
+		printf("%s\n", path_to_bins[i++]);
 }

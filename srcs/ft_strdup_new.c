@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 14:24:40 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 14:57:04 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 18:54:45 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,3 @@ char	*ft_strdup_new(const char *s1)
 	p[i] = '\0';
 	return (p);
 }
-
