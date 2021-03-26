@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 14:49:28 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:20:43 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_work_with_t_arg_lists(t_struct *strct, t_args **current_t_arg)
 
 	if (!*current_t_arg)
 		return ;
-	env = ft_create_env(strct, strct->env_head);
+	env = ft_create_env(strct->env_head);
 
 	ft_free_two_dimensional_array(strct->path_to_bins);	
 	ft_get_path_to_bins(strct);
@@ -67,7 +67,6 @@ void ft_free_two_dimensional_array(char **array)
 
 int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 {
-	(void)strct;
 	pid_t	pid;
 	int		status;
 	char	*abs_path_to_command;
@@ -186,10 +185,6 @@ static	void	ft_check_redirections(t_args *tmp, t_struct *strct, char **env)
 
 int ft_exec_build_in(char **arg, t_env **head, t_struct *strct)
 {
-	(void)arg;
-	(void)head;
-
-
 	// ft_change_shell_level(*head); /// это при запуске нашего минишелла
 	// ft_print_env(*head);
 	// printf("\nHERE SHOULD BE THE RESULT OF EXECUTION OF 'BUILD IN' COMMAND\n");

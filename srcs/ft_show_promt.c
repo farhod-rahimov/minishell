@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 09:17:01 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 15:08:34 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:18:55 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,11 @@ int	ft_show_prompt(t_struct *strct, int i)
 
 	write(1, "my_bash% ", 9);
 	while ((read(0, &c, 1) == 1) && c != '\n') // Количество считываемых символов с инпута ограничено. Разобраться почему это так
-	{
-		if ((i = ft_add_back_string(strct, i, c)) == -1)
-			return (-1);
-	}
+		i = ft_add_back_string(strct, i, c);
 	
 	// printf("parsed str \"%s\"\n", strct->parsed_str);
 	
-	if (ft_begin_parsing(strct) == -1)
-		return (-1);
+	ft_begin_parsing(strct);
 	// ft_work_with_t_arg_lists(strct);
 	return (0);	
 }
@@ -51,7 +47,7 @@ static	int	ft_add_back_string(t_struct *strct, int i, char c)
 	return (i);
 }
 
-int	ft_begin_parsing(t_struct *strct)
+void	ft_begin_parsing(t_struct *strct)
 {
 	t_args *tmp;
 	
@@ -64,8 +60,6 @@ int	ft_begin_parsing(t_struct *strct)
 	ft_parse(strct, strct->args_head, 0);
 	
 	// ft_print_devided_args(strct->args_head);
-	
-	return (0);
 }
 
 static	void	ft_free_t_args(t_args *head)

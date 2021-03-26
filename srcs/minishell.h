@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 14:57:14 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:23:26 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,12 @@ void	ft_copy_old_str(char *old_buf, char *new_buf);
 
 
 int		ft_show_prompt(t_struct *strct, int i);
-int		ft_begin_parsing(t_struct *strct);
+void	ft_begin_parsing(t_struct *strct);
 
 
 int		ft_parse(t_struct *strct, t_args *tmp_head, int i);
 
-int		ft_parse_str_till_dq_ends(t_args **current_t_arg, int i, t_struct *strct, int k);
+int		ft_parse_str_till_dq_ends(t_args **current_t_arg, int i, t_struct *strct);
 // int		ft_copy_str_to_structure_t_args(t_args **tmp, char *str, int n_i);
 void	ft_copy_str_to_structure_t_args(t_struct *strct, t_args **tmp, char *str, int n_i);
 void	ft_push_backft_push_back_char(char **str, char c);
@@ -89,10 +89,10 @@ void	ft_free_arg(char **tmp_arg);
 void	ft_free_redir(t_redirect *head);
 
 
-int		ft_parse_str_till_sq_ends(t_args **current_t_arg, int i, t_struct *strct, int k);
-int		ft_parse_str_till_env_var_ends(t_args **current_t_arg, int i, t_struct *strct, int k);
+int		ft_parse_str_till_sq_ends(t_args **current_t_arg, int i, t_struct *strct);
+int		ft_parse_str_till_env_var_ends(t_args **current_t_arg, int i, t_struct *strct);
 int		ft_work_with_dollar(t_args **current_t_arg, int i, t_struct *strct);
-int		ft_parse_str_till_it_ends(t_args **current_t_arg, int i, t_struct *strct, int k);
+int		ft_parse_str_till_it_ends(t_args **current_t_arg, int i, t_struct *strct);
 
 t_args	*ft_create_new_t_args(t_struct *strct, t_args *prev_t_args);
 
@@ -101,7 +101,7 @@ void	ft_print_devided_args(t_args *head);
 
 
 void	ft_structure_env(t_struct *strct, char **env);
-int		ft_fill_t_env_list(t_env *env_list, char **env, int i, int k);
+void	ft_fill_t_env_list(t_env *env_list, char **env, int i, int k);
 t_env	*ft_create_new_t_env(t_env *prev);
 void	ft_get_path_to_bins(t_struct *strct);
 void	ft_print_path_to_bins(char **path_to_bins);
@@ -138,9 +138,9 @@ void	ft_dup2_error(t_struct *strct);
 void	ft_errno_error(t_struct *strct, char *file_name);
 void	ft_strcopy(char *dst, char *src);
 void	ft_work_with_t_arg_lists(t_struct *strct, t_args **tmp);
-char	**ft_create_env(t_struct *strct, t_env *env_head);
+char	**ft_create_env(t_env *env_head);
 int		ft_get_env_size(t_env *tmp);
-void	ft_change_shell_level(t_struct *strct, t_env *env_head);
+void	ft_change_shell_level(t_env *env_head);
 void	ft_print_env(t_env *head);
 void	ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, char *type, char *file_name);
 

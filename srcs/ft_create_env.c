@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 14:26:49 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 15:00:39 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:13:55 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static	int	ft_join_key_and_value(t_env *tmp, char **env);
 int			ft_get_env_size(t_env *tmp);
 
-char	**ft_create_env(t_struct *strct, t_env *env_head)
+char	**ft_create_env(t_env *env_head)
 {
 	int     i;
 	char    **env;

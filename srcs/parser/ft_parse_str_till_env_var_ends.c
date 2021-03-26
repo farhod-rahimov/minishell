@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 13:56:01 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 14:36:38 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:21:28 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 static char		*ft_get_env_var_value(char *env_var, t_struct *strct);
 
-int				ft_parse_str_till_env_var_ends(t_args **current_t_arg, int i, t_struct *strct, int k)
+int				ft_parse_str_till_env_var_ends(t_args **current_t_arg, int i, t_struct *strct)
 {
 	char	*str;
     char    *env_key;
-	(void)k;
-	
 	str = ft_strdup_new("");
 	while (strct->parsed_str[i] && (ft_isalnum(strct->parsed_str[i]) || strct->parsed_str[i] == '_'))
 	{

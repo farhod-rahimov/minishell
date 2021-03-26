@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 13:56:32 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 15:04:46 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:22:47 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@ static void		ft_work_with_spec_sym(char **str, int i, t_struct *strct);
 static	int		ft_remove_back_slash(char **str, int i);
 static	int		ft_get_env_var(char **str, int i, t_struct *strct);
 static char		*ft_get_env_var_value(char *env_var, t_struct *strct);
-static	int		ft_replace_env_key_to_its_value(char **str, char *env_value, int start_env_var, int len_env_var);
+static	void	ft_replace_env_key_to_its_value(char **str, char *env_value, int start_env_var, int len_env_var);
 
-int		ft_parse_str_till_dq_ends(t_args **current_t_arg, int i, t_struct *strct, int k)
+int		ft_parse_str_till_dq_ends(t_args **current_t_arg, int i, t_struct *strct)
 {
 	char	*str;
-	(void)k;
-	
 	str = ft_strdup_new("");
 	while (strct->parsed_str[i])
 	{
@@ -44,7 +42,6 @@ int		ft_parse_str_till_dq_ends(t_args **current_t_arg, int i, t_struct *strct, i
 
 static void		ft_work_with_spec_sym(char **str, int i, t_struct *strct)
 {
-	(void)strct;
 	while ((*str)[i])
 	{
 		if ((*str)[i] == '\\' && ((*str)[i + 1] == '\\' || (*str)[i + 1] == '$' || (*str)[i + 1] == '\"'))
@@ -66,7 +63,6 @@ static	int		ft_get_env_var(char **str, int i, t_struct *strct)
 	char	*env_var;
 	char	*env_key;
 	int		start_env_var;
-	(void)strct;
 
 	start_env_var = i - 1;
 	env_var = ft_strdup_new("");
@@ -80,15 +76,14 @@ static	int		ft_get_env_var(char **str, int i, t_struct *strct)
 	env_var = ft_get_env_var_value(env_var, strct);
 	// printf("env_value %s\n", env_var);
 	if (env_var[0] != '\0')
-		if (ft_replace_env_key_to_its_value(str, env_var, start_env_var, ft_strlen(env_key) + 1) == -1)
-			ft_new_error(strct, 1, 1);
+		ft_replace_env_key_to_its_value(str, env_var, start_env_var, ft_strlen(env_key) + 1);
 	// printf("str get_env_var %s\n", (*str));
 	free(env_key);
 	free(env_var);	
 	return (i);
 }
 
-static	int	ft_replace_env_key_to_its_value(char **str, char *env_value, int start_env_var, int len_env_var)
+static	void	ft_replace_env_key_to_its_value(char **str, char *env_value, int start_env_var, int len_env_var)
 {
 	char *tmp1;
 	char *tmp2;
@@ -106,7 +101,6 @@ static	int	ft_replace_env_key_to_its_value(char **str, char *env_value, int star
 	*str = ft_strjoin_new(*str, tmp1 + start_env_var + len_env_var);
 	free(tmp2);
 	free(tmp1);
-	return (0);
 }
 
 static char		*ft_get_env_var_value(char *env_var, t_struct *strct)

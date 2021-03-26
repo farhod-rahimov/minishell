@@ -6,16 +6,15 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 13:59:07 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 14:37:10 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:22:36 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int				ft_parse_str_till_sq_ends(t_args **current_t_arg, int i, t_struct *strct, int k)
+int				ft_parse_str_till_sq_ends(t_args **current_t_arg, int i, t_struct *strct)
 {
 	char	*str;
-	(void)k;
 	
 	str = ft_strdup_new("");
 	while (strct->parsed_str[i] && strct->parsed_str[i] != '\'')

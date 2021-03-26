@@ -6,25 +6,25 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 11:03:57 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 15:04:58 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:13:41 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static	char	*ft_create_str_from_2_char(char c1, char c2, t_struct *strct);
+static	char	*ft_create_str_from_2_char(char c1, char c2);
 
 int				ft_work_with_dollar(t_args **current_t_arg, int i, t_struct *strct)
 {
 	char	*str;
 	char	*tmp;
-	str = ft_create_str_from_2_char('$', '\0', strct);
+	str = ft_create_str_from_2_char('$', '\0');
 	
 	if (strct->parsed_str[i] != '\"' && strct->parsed_str[i] != '\'' && strct->parsed_str[i] != ';' && strct->parsed_str[i] != '|' \
 			&& strct->parsed_str[i] != ' ' && strct->parsed_str[i] != '>' && strct->parsed_str[i] != '<')
 	{
 		tmp = str;
-		str = ft_create_str_from_2_char('$', strct->parsed_str[i++], strct);
+		str = ft_create_str_from_2_char('$', strct->parsed_str[i++]);
 		free(tmp);
 	}
 
@@ -43,7 +43,7 @@ int				ft_work_with_dollar(t_args **current_t_arg, int i, t_struct *strct)
 	return (i);
 }
 
-static	char	*ft_create_str_from_2_char(char c1, char c2, t_struct *strct)
+static	char	*ft_create_str_from_2_char(char c1, char c2)
 {
 	char	*str;
 

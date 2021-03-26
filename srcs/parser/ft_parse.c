@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:52:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 14:43:49 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:24:05 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ int		ft_parse(t_struct *strct, t_args *tmp_head, int i)
 		// else if ((strct->parsed_str[i] == '<' || strct->parsed_str[i] == '>') && tmp_head->arg)
 		// 	return (-1);
 		if (strct->parsed_str[i] == '\"')
-			i = ft_parse_str_till_dq_ends(&tmp, ++i, strct, 1);						// dq = double quotes // ++i for skipping the first "
+			i = ft_parse_str_till_dq_ends(&tmp, ++i, strct);						// dq = double quotes // ++i for skipping the first "
 		else if (strct->parsed_str[i] == '\'')
-			i = ft_parse_str_till_sq_ends(&tmp, ++i, strct, 1);						// sq = single quote // ++i for skipping the first '
+			i = ft_parse_str_till_sq_ends(&tmp, ++i, strct);						// sq = single quote // ++i for skipping the first '
 		else if (strct->parsed_str[i] == '$' && (ft_isalnum(strct->parsed_str[i + 1]) || strct->parsed_str[i + 1] == '_'))
-			i = ft_parse_str_till_env_var_ends(&tmp, ++i, strct, 1);
+			i = ft_parse_str_till_env_var_ends(&tmp, ++i, strct);
 		else if (strct->parsed_str[i] == '$' && (!ft_isalnum(strct->parsed_str[i + 1]) && strct->parsed_str[i + 1] != '_'))
 			i = ft_work_with_dollar(&tmp, ++i, strct);
 		// else if (strct->parsed_str[i] == '|')
@@ -54,7 +54,7 @@ int		ft_parse(t_struct *strct, t_args *tmp_head, int i)
 		// else if (strct->parsed_str[i] == '<')
 		// 	ft_work_with_left_redirect;
 		else
-			i = ft_parse_str_till_it_ends(&tmp, i, strct, 1);
+			i = ft_parse_str_till_it_ends(&tmp, i, strct);
 	}
 	free(strct->parsed_str);
 	ft_work_with_t_arg_lists(strct, &tmp);
