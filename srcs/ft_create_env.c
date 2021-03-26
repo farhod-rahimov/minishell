@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 14:26:49 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 14:58:46 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:00:39 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**ft_create_env(t_struct *strct, t_env *env_head)
 	tmp = env_head;
 	i = ft_get_env_size(tmp);
 	if ((env = (char **)malloc(sizeof(char *) * i)) == NULL)
-		ft_new_error(strct, 1, 1);
+		ft_write_malloc_error();
 	i = 0;
 	while (tmp)
 	{

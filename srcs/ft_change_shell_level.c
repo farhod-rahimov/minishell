@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 15:14:21 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 14:33:56 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:07:34 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static  void    ft_increment_shell_level(t_struct *strct, t_env **current_env)
 
 	tmp = (*current_env)->value; 
 	if (((*current_env)->value = ft_itoa(++value)) == NULL)
-		ft_new_error(strct, 1, 1);
+		ft_write_malloc_error();
 	free(tmp);
 }
 
@@ -59,8 +59,7 @@ static  void     ft_add_shell_level(t_struct *strct, t_env *env_head)
 	{
 		if (tmp->next == NULL)
 		{
-			if ((new = ft_create_new_t_env(tmp)) == NULL)
-				ft_new_error(strct, 1, 1);
+			new = ft_create_new_t_env(tmp);
 			new->key = ft_strdup_new("SHLVL");
 			new->value = ft_strdup_new("1");
 		}

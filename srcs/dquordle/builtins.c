@@ -68,7 +68,7 @@ void	ft_new_env(t_env **head, char *key, char *value)
 	t_env	*tmp;
 
 	if ((new_env = (t_env *)malloc(sizeof(t_env))) == NULL)
-		exit (-1); // ft_error
+		ft_write_malloc_error();
 	new_env->next = NULL;
 	new_env->key = ft_strdup_new(key);
 	new_env->value = NULL;
@@ -310,7 +310,7 @@ char	**ft_sp_to_arr(t_env *env_head)
 	tmp = env_head;
 	i = ft_get_env_size(tmp);
 	if ((env = (char **)malloc(sizeof(char *) * i)) == NULL)
-		exit(1);
+		ft_write_malloc_error();
 	i = -1;
 	while (tmp)
 	{

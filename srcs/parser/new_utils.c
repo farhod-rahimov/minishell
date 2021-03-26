@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:08:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 14:56:44 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:10:12 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_args	*ft_create_new_t_args(t_struct *strct, t_args *prev_t_args)
 	t_args *new_t_args;
 
 	if ((new_t_args = (t_args *)malloc(sizeof(t_args))) == NULL)
-		return (NULL);
+		ft_write_malloc_error();
 	new_t_args->next = NULL;
 	new_t_args->prev = NULL;
 	new_t_args->arg = NULL;
@@ -72,8 +72,7 @@ int ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_ar
 		}
 		i = ft_skip_spaces(strct->parsed_str, ++i);
 		if (strct->parsed_str[i] != '\0')
-			if ((*current_t_arg = ft_create_new_t_args(strct, *current_t_arg)) == NULL)
-				return (-1);
+			*current_t_arg = ft_create_new_t_args(strct, *current_t_arg);
 	}
 	else if (strct->parsed_str[i] == '>' || strct->parsed_str[i] == '<')
 	{
@@ -99,7 +98,7 @@ void		ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, ch
 	if (redir_head == NULL)
 	{
 		if ((redir_head = (t_redirect *)malloc(sizeof(t_redirect))) == NULL)
-			ft_error();
+			ft_write_malloc_error();
 		redir_head->type = ft_strdup_new(type);
 		redir_head->file_name = NULL;
 		redir_head->next = NULL;
@@ -127,7 +126,7 @@ void		ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, ch
 	}
 
 	if ((new = (t_redirect *)malloc(sizeof(t_redirect))) == NULL)
-		ft_error();
+		ft_write_malloc_error();
 	new->type = ft_strdup_new(type);
 	new->file_name = NULL;
 	new->next = NULL;
@@ -150,14 +149,14 @@ void		ft_copy_str_to_structure_t_args(t_struct *strct, t_args **tmp, char *str, 
 	if (tmp_arg == NULL)
 	{
 		if (((*tmp)->arg = (char **)malloc(sizeof(char *) * 2)) == NULL)
-			ft_new_error(strct, 1, 1);
+			ft_write_malloc_error();
 		(*tmp)->arg[0] = ft_strdup_new(str);
 		(*tmp)->arg[1] = NULL;
 		return ;
 	}
 	ft_tolower_str((*tmp)->arg[0]);
 	if (((*tmp)->arg = (char **)malloc(sizeof(char *) * (n_i + 2))) == NULL)
-		ft_new_error(strct, 1, 1);
+		ft_write_malloc_error();
 	ft_copy_old_arg_to_new(tmp, tmp_arg, n_i);
 	(*tmp)->arg[n_i] = ft_strjoin_new(tmp_arg[n_i], str);
 	(*tmp)->arg[n_i + 1] = NULL;
@@ -184,7 +183,7 @@ void		ft_push_back_char(char **str, char c)
 	len = ft_strlen(*str);
 	tmp = *str;
 	if ((*str = (char *)malloc(sizeof(char) * (len + 2))) == NULL)
-		ft_error();
+		ft_write_malloc_error();
 	ft_strcopy(*str, tmp);
 	(*str)[len] = c;
 	(*str)[len + 1] = '\0';

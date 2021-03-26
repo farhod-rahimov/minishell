@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 11:03:57 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 11:12:12 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:04:58 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static	char	*ft_create_str_from_2_char(char c1, char c2, t_struct *strct)
 	char	*str;
 
 	if ((str = (char *)malloc(sizeof(char) * 3)) == NULL)
-		ft_new_error(strct, 1, 1);
+		ft_write_malloc_error();
 	str[0] = c1;
 	str[1] = c2;
 	str[2] = '\0';

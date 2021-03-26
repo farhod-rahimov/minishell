@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 13:56:32 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 14:50:22 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:04:46 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static	int	ft_replace_env_key_to_its_value(char **str, char *env_value, int star
 	tmp1 = *str;
 	// printf("str1 %s, start_env_var %d, len_env_var %d\n", *str, start_env_var, len_env_var);
 	if ((*str = ft_substr(*str, 0, start_env_var)) == NULL)
-		return (-1);
+		ft_write_malloc_error();
 	
 	tmp2 = *str;
 	*str = ft_strjoin_new(*str, env_value);

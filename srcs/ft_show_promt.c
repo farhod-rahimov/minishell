@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 09:17:01 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 13:44:49 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:08:34 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_show_prompt(t_struct *strct, int i)
 	char	c;
 
 	if ((strct->parsed_str = (char *)malloc(sizeof(char) * (i + 1))) == NULL)
-		return (-1);
+		ft_write_malloc_error();
 
 	write(1, "my_bash% ", 9);
 	while ((read(0, &c, 1) == 1) && c != '\n') // Количество считываемых символов с инпута ограничено. Разобраться почему это так
@@ -45,7 +45,7 @@ static	int	ft_add_back_string(t_struct *strct, int i, char c)
 	strct->parsed_str[i++] = '\0';
 	old_parsed_str = strct->parsed_str;
 	if ((strct->parsed_str = (char *)malloc(sizeof(char) * (i + 1))) == NULL)
-		return (-1);
+		ft_write_malloc_error();
 	ft_copy_old_str(old_parsed_str, strct->parsed_str);
 	free(old_parsed_str);
 	return (i);
@@ -56,8 +56,7 @@ int	ft_begin_parsing(t_struct *strct)
 	t_args *tmp;
 	
 	tmp = strct->args_head;
-	if ((strct->args_head = ft_create_new_t_args(strct, NULL)) == NULL)
-		return (-1);
+	strct->args_head = ft_create_new_t_args(strct, NULL);
 
 	if (tmp != NULL)
 		ft_free_t_args(tmp);
