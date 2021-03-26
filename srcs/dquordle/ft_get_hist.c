@@ -17,8 +17,7 @@ char	**ft_make_hist(t_list **head)
 		*head = (*head)->next;
 		free(tmp);
 	}
-	if (!(hist[0] = ft_strdup("")))
-		exit(-1);
+	hist[0] = ft_strdup_new("");
 	return (hist);
 }
 

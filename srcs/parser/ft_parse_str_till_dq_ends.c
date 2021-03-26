@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 13:56:32 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 11:09:35 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 14:50:22 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ int		ft_parse_str_till_dq_ends(t_args **current_t_arg, int i, t_struct *strct, i
 	char	*str;
 	(void)k;
 	
-	if (!(str = ft_strdup("")))
-		ft_new_error(strct, 1, 1);
+	str = ft_strdup_new("");
 	while (strct->parsed_str[i])
 	{
 		if (i > 0)
@@ -70,8 +69,7 @@ static	int		ft_get_env_var(char **str, int i, t_struct *strct)
 	(void)strct;
 
 	start_env_var = i - 1;
-	if (!(env_var = ft_strdup("")))
-		ft_new_error(strct, 1, 1);
+	env_var = ft_strdup_new("");
 	while ((*str)[i] && (ft_isalnum((*str)[i]) || (*str)[i] == '_'))
 	{
 		ft_push_back_char(&env_var, (*str)[i++]);
@@ -101,13 +99,11 @@ static	int	ft_replace_env_key_to_its_value(char **str, char *env_value, int star
 		return (-1);
 	
 	tmp2 = *str;
-	if ((*str = ft_strjoin(*str, env_value)) == NULL)
-		return (-1);
+	*str = ft_strjoin_new(*str, env_value);
 	free(tmp2);
 	
 	tmp2 = *str;
-	if ((*str = ft_strjoin(*str, tmp1 + start_env_var + len_env_var)) == NULL)
-		return (-1);
+	*str = ft_strjoin_new(*str, tmp1 + start_env_var + len_env_var);
 	free(tmp2);
 	free(tmp1);
 	return (0);
@@ -122,14 +118,12 @@ static char		*ft_get_env_var_value(char *env_var, t_struct *strct)
 	{
 		if (!ft_strncmp(env_var, tmp->key, ft_strlen(env_var) + ft_strlen(tmp->key)))
 		{
-			if ((env_var = ft_strdup(tmp->value)) == NULL)
-				ft_new_error(strct, 1, 1);
+			env_var = ft_strdup_new(tmp->value);
 			return (env_var);
 		}
 		tmp = tmp->next;
 	}
-	if ((env_var = ft_strdup("")) == NULL)
-		ft_new_error(strct, 1, 1);
+	env_var = ft_strdup_new("");
 	return (env_var);
 }
 

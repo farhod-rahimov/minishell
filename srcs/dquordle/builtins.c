@@ -50,7 +50,7 @@ void	ft_env(char **arg, t_env *head, int *exit_value)
 	{
 		if (tmp->value)
 		{
-			str = ft_strdup(tmp->key);
+			str = ft_strdup_new(tmp->key);
 			str = ft_append(str, "=");
 			str = ft_append(str, tmp->value);
 			str = ft_append(str, "\n");
@@ -70,10 +70,10 @@ void	ft_new_env(t_env **head, char *key, char *value)
 	if ((new_env = (t_env *)malloc(sizeof(t_env))) == NULL)
 		exit (-1); // ft_error
 	new_env->next = NULL;
-	new_env->key = ft_strdup(key);
+	new_env->key = ft_strdup_new(key);
 	new_env->value = NULL;
 	if (value)
-		new_env->value = ft_strdup(value);
+		new_env->value = ft_strdup_new(value);
 	if (!(*head))
 		*head = new_env;
 	else
@@ -98,7 +98,7 @@ int		ft_rewrite(t_env *head, char *key, char *value)
 			{
 				if (tmp->value)
 					free(tmp->value);
-				tmp->value = ft_strdup(value);
+				tmp->value = ft_strdup_new(value);
 			}
 			return (1);
 		}
@@ -160,8 +160,8 @@ int		ft_add_env(t_env **head, char *arg)
 //	t_env	*new;
 //
 //	new = (t_env *)malloc(sizeof(t_env));
-//	new->value = ft_strdup(value);
-//	new->key = ft_strdup(key);
+//	new->value = ft_strdup_new(value);
+//	new->key = ft_strdup_new(key);
 //	new->next = NULL;
 //	return (new);
 //}
@@ -265,7 +265,7 @@ int		ft_add_env(t_env **head, char *arg)
 //{
 //	char	*str;
 //
-//	str = ft_strdup("declare -x ");
+//	str = ft_strdup_new("declare -x ");
 //	str = ft_append(str, tmp->key);
 //	if (tmp->value)
 //	{
@@ -314,8 +314,7 @@ char	**ft_sp_to_arr(t_env *env_head)
 	i = -1;
 	while (tmp)
 	{
-		if (!(env[++i] = ft_strdup("declare -x ")))
-			exit(1);
+		env[++i] = ft_strdup_new("declare -x ");
 		env[i] = ft_append(env[i], tmp->key);
 		if (tmp->value)
 		{
@@ -414,7 +413,7 @@ void	ft_cd(char **arg, t_env **head, int *exit_value)
 	{
 		new_pwd = NULL;
 		new_pwd = getcwd(new_pwd, 0);
-		buf = ft_strjoin("PWD=", new_pwd);
+		buf = ft_strjoin_new("PWD=", new_pwd);
 		ft_add_env(head, buf);
 		free(buf);
 		free(new_pwd);

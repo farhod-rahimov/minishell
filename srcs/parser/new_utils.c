@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:08:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 14:18:22 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 14:56:44 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void		ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, ch
 	{
 		if ((redir_head = (t_redirect *)malloc(sizeof(t_redirect))) == NULL)
 			ft_error();
-		redir_head->type = ft_strdup(type);
+		redir_head->type = ft_strdup_new(type);
 		redir_head->file_name = NULL;
 		redir_head->next = NULL;
 		(*current_t_arg)->redir_head = redir_head;
@@ -117,7 +117,7 @@ void		ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, ch
 	
 	if (tmp->type != NULL && tmp->file_name == NULL)
 	{
-		tmp->file_name = ft_strdup(file_name);
+		tmp->file_name = ft_strdup_new(file_name);
 		if (!ft_strncmp(tmp->type, "<", 1))
 			(*current_t_arg)->left_redir += 1;
 		else if (!ft_strncmp(tmp->type, ">", 1))
@@ -128,7 +128,7 @@ void		ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, ch
 
 	if ((new = (t_redirect *)malloc(sizeof(t_redirect))) == NULL)
 		ft_error();
-	new->type = ft_strdup(type);
+	new->type = ft_strdup_new(type);
 	new->file_name = NULL;
 	new->next = NULL;
 	tmp->next = new;
@@ -151,8 +151,7 @@ void		ft_copy_str_to_structure_t_args(t_struct *strct, t_args **tmp, char *str, 
 	{
 		if (((*tmp)->arg = (char **)malloc(sizeof(char *) * 2)) == NULL)
 			ft_new_error(strct, 1, 1);
-		if (((*tmp)->arg[0] = ft_strdup(str)) == NULL)
-			ft_new_error(strct, 1, 1);
+		(*tmp)->arg[0] = ft_strdup_new(str);
 		(*tmp)->arg[1] = NULL;
 		return ;
 	}
@@ -160,8 +159,7 @@ void		ft_copy_str_to_structure_t_args(t_struct *strct, t_args **tmp, char *str, 
 	if (((*tmp)->arg = (char **)malloc(sizeof(char *) * (n_i + 2))) == NULL)
 		ft_new_error(strct, 1, 1);
 	ft_copy_old_arg_to_new(tmp, tmp_arg, n_i);
-	if (((*tmp)->arg[n_i] = ft_strjoin(tmp_arg[n_i], str)) == NULL)
-		ft_new_error(strct, 1, 1);
+	(*tmp)->arg[n_i] = ft_strjoin_new(tmp_arg[n_i], str);
 	(*tmp)->arg[n_i + 1] = NULL;
 	ft_free_arg(tmp_arg);
 }
@@ -231,6 +229,15 @@ void	ft_errno_error(t_struct *strct, char *file_name)
 	exit(1);
 }
 
+void	ft_write_malloc_error(void)
+{
+	printf("here\n");
+	write(2, "my_bash: ", 9);
+	write(2, strerror(errno), ft_strlen(strerror(errno)));
+	write(2, "\n", 1);
+	exit(1);
+}
+
 void	ft_strcopy(char *dst, char *src)
 {
 	int i;
@@ -252,8 +259,7 @@ int		ft_copy_old_arg_to_new(t_args **new_arg, char **old_arg, int n_i)
 	i = 0;
 	while (i < n_i)
 	{
-		if (((*new_arg)->arg[i] = ft_strdup(old_arg[i])) == NULL)
-			ft_error();
+		(*new_arg)->arg[i] = ft_strdup_new(old_arg[i]);
 		i++;
 	}
 	return (0);

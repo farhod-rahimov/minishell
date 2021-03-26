@@ -167,7 +167,7 @@ void	ft_term(t_struct *strct)
 			if (hist[curpl][0] != 0)
 				ft_add_command(strct, hist, hist[curpl]);
 		}
-		strct->parsed_str = ft_strdup(hist[curpl]);
+		strct->parsed_str = ft_strdup_new(hist[curpl]);
 		ft_terminal_backup();
 		write(1, "\n", 1);
 		if (hist[curpl][0] != 0)
@@ -178,7 +178,7 @@ void	ft_term(t_struct *strct)
 		}
 		ft_free_hist(&hist);
 	}
-//	strct->parsed_str = ft_strdup("export");
+//	strct->parsed_str = ft_strdup_new("export");
 //	ft_begin_parsing(strct);
 	write(1, "exit\n", 5);
 	exit(strct->exit_value);

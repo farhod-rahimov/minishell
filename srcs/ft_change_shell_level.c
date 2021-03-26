@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 15:14:21 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 11:23:50 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 14:33:56 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,8 @@ static  void     ft_add_shell_level(t_struct *strct, t_env *env_head)
 		{
 			if ((new = ft_create_new_t_env(tmp)) == NULL)
 				ft_new_error(strct, 1, 1);
-			if ((new->key = ft_strdup("SHLVL")) == NULL)
-				ft_new_error(strct, 1, 1);
-			if ((new->value = ft_strdup("1")) == NULL)
-				ft_new_error(strct, 1, 1);
+			new->key = ft_strdup_new("SHLVL");
+			new->value = ft_strdup_new("1");
 		}
 		tmp = tmp->next;
 	}

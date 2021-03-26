@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:21:41 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 13:31:21 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 14:49:09 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,7 @@ static	void	ft_add_slash_to_the_end_of_each_path_to_bins(t_struct *strct)
 	while (strct->path_to_bins[i])
 	{
 		tmp = strct->path_to_bins[i];
-		if ((strct->path_to_bins[i++] = ft_strjoin(tmp, "/")) == NULL)
-			ft_new_error(strct, 1, 1);
+		strct->path_to_bins[i++] = ft_strjoin_new(tmp, "/");
 		free(tmp);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 14:11:34 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 14:49:28 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,7 @@ int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 	
 	if ((pid = fork()) == 0)
 	{
-		if ((abs_path_to_command = ft_strdup("")) == NULL)
-			ft_new_error(strct, 1, 1);
+		abs_path_to_command = ft_strdup_new("");
 		if (tmp->arg[i][0] == '/' || tmp->arg[i][0] == '.' || tmp->arg[i][0] == '~')
 		{
 			if ((execve(tmp->arg[0], tmp->arg, env)) == -1)
@@ -102,8 +101,7 @@ int	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 			while (path_to_bins[i])
 			{
 				tmp_str = abs_path_to_command;
-				if ((abs_path_to_command = ft_strjoin(path_to_bins[i++], tmp->arg[0])) == NULL)
-					ft_new_error(strct, 1, 1);
+				abs_path_to_command = ft_strjoin_new(path_to_bins[i++], tmp->arg[0]);
 				free(tmp_str);
 				if (ft_strcmp(tmp->arg[0], ""))
 					execve(abs_path_to_command, tmp->arg, env);
