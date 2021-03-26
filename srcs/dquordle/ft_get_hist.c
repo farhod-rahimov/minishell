@@ -22,7 +22,7 @@ char	**ft_make_hist(t_list **head)
 	return (hist);
 }
 
-char 	**ft_get_hist(void)
+char 	**ft_get_hist(t_struct *strct)
 {
 	int fd;
 	t_list	*head;
@@ -32,7 +32,7 @@ char 	**ft_get_hist(void)
 	line = NULL;
 	head = NULL;
 	if ((fd = open(HISTFILE, O_RDONLY)) == -1)
-		exit(-1);
+		ft_fd_error(strct, HISTFILE);
 	while (get_next_line(fd, &line))
 	{
 		tmp = ft_lstnew(line);

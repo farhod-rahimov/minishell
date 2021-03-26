@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 13:32:26 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 14:12:03 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ int		ft_skip_spaces(char *str, int i);
 void	ft_push_back_char(char **str, char c);
 void	ft_error();
 void	ft_new_error(t_struct *strct, int i, int exit_flag);
+void	ft_dup2_error(t_struct *strct);
+void	ft_fd_error(t_struct *strct, char *file_name);
 void	ft_strcopy(char *dst, char *src);
 void	ft_work_with_t_arg_lists(t_struct *strct, t_args **tmp);
 char	**ft_create_env(t_struct *strct, t_env *env_head);
@@ -141,10 +143,10 @@ void	ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, cha
 
 int		ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env);
 int		ft_exec_build_in(char **arg, t_env **head, t_struct *strct);
-void    ft_left_redirect(t_args *args, int counter);
+void    ft_left_redirect(t_struct *strct, t_args *args, int counter);
 void ft_right_redirect(t_struct *strct, t_args *args, char **env, int counter);
 
-void    ft_pipe(int fd_pipe[2]);
+void    ft_pipe(t_struct *strct, int fd_pipe[2]);
 void    ft_close_pipe_01_dup_initial_0(int fd_pipe[2], t_struct *strct);
 void    ft_close_pipe_01_dup_initial_1(int fd_pipe[2], t_struct *strct);
 int		ft_check_syntax(t_struct *strct, char *str);
@@ -155,7 +157,7 @@ int		buildin(char **arg, t_env **env, int *exit_value);
 void	ft_term(t_struct *strct);
 int		ft_strcmp(const char *s1, const char *s2);
 int		get_next_line(int fd, char **line);
-char 	**ft_get_hist(void);
+char 	**ft_get_hist(t_struct *strct);
 void	ft_interrupt(int signal);
 void	ft_quit(int signal);
 void	ft_read(char **hist, int *curpl, int hsize, char **str);

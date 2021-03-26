@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 11:00:14 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 17:13:22 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 14:07:14 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ void ft_right_redirect(t_struct *strct, t_args *args, char **env, int counter)
 			if (ft_strlen(tmp_red->type) == 2)
 			{
 				if ((fd_red = open(tmp_red->file_name, O_CREAT | O_WRONLY | O_APPEND, 0766)) == -1)
-					write(2, "fd errorr\n", 10);
+					ft_fd_error(strct, tmp_red->file_name);
 				close(fd_red);
 			}
 			else
 			{
 				if ((fd_red = open(tmp_red->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0766)) == -1)
-					write(2, "fd errorr\n", 10);
+					ft_fd_error(strct, tmp_red->file_name);
 				close(fd_red);
 			}
 			counter++;
@@ -43,19 +43,19 @@ void ft_right_redirect(t_struct *strct, t_args *args, char **env, int counter)
 	if (ft_strlen(tmp_red->type) == 2)
 	{
 		if ((fd_red = open(tmp_red->file_name, O_CREAT | O_WRONLY | O_APPEND, 0766)) == -1)
-			write(2, "fd errorr\n", 10);
+			ft_fd_error(strct, tmp_red->file_name);
 	}
 	else
 	{
 		if ((fd_red = open(tmp_red->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0766)) == -1)
-			write(2, "fd errorr\n", 10);
+			ft_fd_error(strct, tmp_red->file_name);
 	}
 	if (dup2(fd_red, 1) == -1)
-		write(2, "dup2 error\n", 11);
+		ft_dup2_error(strct);
 	if (!(ft_exec_build_in(args->arg, &strct->env_head, strct)))
 		if (ft_strcmp(args->arg[0], ""))
 			ft_exec_bin(strct, args, strct->path_to_bins, env);
 	close(fd_red);
 	if (dup2(strct->initial_fd[1], 1) == -1)
-		write(2, "dup2 ERROR\n", 11);
+		ft_dup2_error(strct);
 }

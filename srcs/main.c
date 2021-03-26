@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:39:57 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/25 13:30:53 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 14:07:59 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	main(int argc, char **argv, char **env)
 	if (argc != 1)
 		return (-1); // minishell doesn't launch with arguments
 	g_flags.signal_c = 0;
-	fd = open(HISTFILE, O_CREAT, 00777);
+	if ((fd = open(HISTFILE, O_CREAT, 00777)) == -1)
+		ft_fd_error(&strct, HISTFILE);
 	close(fd);
 	signal(SIGINT, ft_interrupt);
 	signal(SIGQUIT, ft_quit);

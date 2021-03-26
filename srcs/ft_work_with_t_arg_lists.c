@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 13:45:50 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 14:11:34 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_work_with_t_arg_lists(t_struct *strct, t_args **current_t_arg)
 		ft_check_pipe(*current_t_arg, strct, env, fd_pipe);
 		if ((*current_t_arg)->left_redir)
 			if (dup2(strct->initial_fd[0], 0) == -1)
-				write(2, "dup2 ERROR\n", 11);
+				ft_dup2_error(strct);
 		(*current_t_arg)->exec_done = 1;
 		if (((*current_t_arg) = (*current_t_arg)->next) == NULL)
 		{
@@ -144,7 +144,7 @@ static	void	ft_check_if_reset_01fds_needed(t_args *tmp, t_struct *strct, int fd_
 			{
 				close(fd_pipe[1]);
 				if (dup2(fd_pipe[0], 0) == -1)
-					write(2, "dup2 ERROR\n", 11);
+					ft_dup2_error(strct);
 				return ;
 			}
 		}
@@ -158,7 +158,7 @@ static	void	ft_check_pipe(t_args *tmp, t_struct *strct, char **env, int fd_pipe[
 	{
 		if (tmp->pipe)
 		{
-			ft_pipe(fd_pipe);
+			ft_pipe(strct, fd_pipe);
 		}
 		else if (tmp->prev)
 		{
@@ -177,10 +177,10 @@ static	void	ft_check_redirections(t_args *tmp, t_struct *strct, char **env)
 	if (tmp->prev != NULL)
 	{
 		if (tmp->left_redir && !tmp->prev->pipe)
-			ft_left_redirect(tmp, 0);
+			ft_left_redirect(strct, tmp, 0);
 	}
 	else if (tmp->prev == NULL && tmp->left_redir)
-		ft_left_redirect(tmp, 0);
+		ft_left_redirect(strct, tmp, 0);
 
 	if (tmp->right_redir)
 		ft_right_redirect(strct, tmp, env, 0);

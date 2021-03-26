@@ -1,7 +1,7 @@
 #include "../minishell.h"
 
 
-void	ft_add_command(char **hist, char *command)
+void	ft_add_command(t_struct *strct, char **hist, char *command)
 {
 	int fd;
 	int i;
@@ -9,7 +9,8 @@ void	ft_add_command(char **hist, char *command)
 	i = 0;
 	while (hist[i])
 		i++;
-	fd = open(HISTFILE, O_WRONLY | O_APPEND);
+	if ((fd = open(HISTFILE, O_WRONLY | O_APPEND)) == -1)
+		ft_fd_error(strct, HISTFILE);
 	if (i > 1)
 		write(fd, "\n", 1);
 	write(fd, command, ft_strlen(command));
@@ -81,7 +82,7 @@ void	ft_terminal_backup(void)
 	tcsetattr(0, TCSANOW, &term);
 }
 
-void	ft_prompt(char **str, char ***history, int *curpl)
+void	ft_prompt(t_struct *strct, char **str, char ***history, int *curpl)
 {
 	int hsize;
 	char **hist;
@@ -91,7 +92,7 @@ void	ft_prompt(char **str, char ***history, int *curpl)
 	if (g_flags.signal_c != 1)
 		write(1, "my_bash% ", 9);
 	tputs(save_cursor, 1, ft_putchar);
-	hist = ft_get_hist();
+	hist = ft_get_hist(strct);
 	*history = hist;
 	hsize = 0;
 	while (hist[hsize])
@@ -152,7 +153,7 @@ void	ft_term(t_struct *strct)
 	while ((ft_strcmp(str, "\4")) || hist[curpl][0] != 0)
 	{
 		ft_terminal_setup(strct);
-		ft_prompt(&str, &hist, &curpl);
+		ft_prompt(strct, &str, &hist, &curpl);
 		if (g_flags.signal_c)
 		{
 			strct->exit_value = 1;
@@ -164,7 +165,7 @@ void	ft_term(t_struct *strct)
 		{
 			str[0] = 0;
 			if (hist[curpl][0] != 0)
-				ft_add_command(hist, hist[curpl]);
+				ft_add_command(strct, hist, hist[curpl]);
 		}
 		strct->parsed_str = ft_strdup(hist[curpl]);
 		ft_terminal_backup();
