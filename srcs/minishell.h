@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 14:12:03 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 14:18:22 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	ft_push_back_char(char **str, char c);
 void	ft_error();
 void	ft_new_error(t_struct *strct, int i, int exit_flag);
 void	ft_dup2_error(t_struct *strct);
-void	ft_fd_error(t_struct *strct, char *file_name);
+void	ft_errno_error(t_struct *strct, char *file_name);
 void	ft_strcopy(char *dst, char *src);
 void	ft_work_with_t_arg_lists(t_struct *strct, t_args **tmp);
 char	**ft_create_env(t_struct *strct, t_env *env_head);

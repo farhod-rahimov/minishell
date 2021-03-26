@@ -32,7 +32,7 @@ char 	**ft_get_hist(t_struct *strct)
 	line = NULL;
 	head = NULL;
 	if ((fd = open(HISTFILE, O_RDONLY)) == -1)
-		ft_fd_error(strct, HISTFILE);
+		ft_errno_error(strct, HISTFILE);
 	while (get_next_line(fd, &line))
 	{
 		tmp = ft_lstnew(line);

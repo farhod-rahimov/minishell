@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:08:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 14:11:10 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/26 14:18:22 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ void	ft_dup2_error(t_struct *strct)
 	exit(1);
 }
 
-void	ft_fd_error(t_struct *strct, char *file_name)
+void	ft_errno_error(t_struct *strct, char *file_name)
 {
 	strct->exit_value = 1;
 	write(2, "my_bash: ", 9);

@@ -10,7 +10,7 @@ void	ft_add_command(t_struct *strct, char **hist, char *command)
 	while (hist[i])
 		i++;
 	if ((fd = open(HISTFILE, O_WRONLY | O_APPEND)) == -1)
-		ft_fd_error(strct, HISTFILE);
+		ft_errno_error(strct, HISTFILE);
 	if (i > 1)
 		write(fd, "\n", 1);
 	write(fd, command, ft_strlen(command));
