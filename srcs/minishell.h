@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 19:12:55 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/27 10:52:07 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct args
 	t_redirect		*redir_head;
 	int				right_redir;
 	int				left_redir;
-	int				exec_done;
 } t_args;
 
 typedef struct s
@@ -77,7 +76,7 @@ int		ft_show_prompt(t_struct *strct, int i);
 void	ft_begin_parsing(t_struct *strct);
 
 
-void	ft_free_t_args(t_args *head);
+void	ft_free_t_args(t_args **head);
 
 int		ft_parse_str_till_dq_ends(t_args **current_t_arg, int i, t_struct *strct);
 // int		ft_copy_str_to_structure_t_args(t_args **tmp, char *str, int n_i);
@@ -141,7 +140,7 @@ void	ft_change_shell_level(t_env *env_head);
 void	ft_print_env(t_env *head);
 void	ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, char *type, char *file_name);
 
-int		ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env);
+void		ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env);
 int		ft_exec_build_in(char **arg, t_env **head, t_struct *strct);
 void    ft_left_redirect(t_struct *strct, t_args *args, int counter);
 void ft_right_redirect(t_struct *strct, t_args *args, char **env, int counter);

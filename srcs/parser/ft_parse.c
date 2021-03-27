@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:52:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 18:54:27 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/27 11:13:16 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,16 @@ static	int	ft_parse(t_struct *strct, t_args *tmp, int i)
 		return (-1);
 	while (str[i])
 	{
-		while (str[i] == ' ')
-			i++;
+		i = ft_skip_spaces(str, i);
+		if (!str[i] && !strct->n_i)
+		{
+			ft_free_t_args(&tmp);
+			break ;
+		}
+		// else if (i >= (int)ft_strlen(str))
+		// 	break;
 		if (str[i] == '\"')
+		// write(2, "here3\n", 6);
 			i = ft_parse_str_till_dq_ends(&tmp, ++i, strct);
 		else if (str[i] == '\'')
 			i = ft_parse_str_till_sq_ends(&tmp, ++i, strct);
@@ -32,9 +39,10 @@ static	int	ft_parse(t_struct *strct, t_args *tmp, int i)
 		else if (str[i] == '$' && (!ft_isalnum(str[i + 1]) \
 		&& str[i + 1] != '_'))
 			i = ft_work_with_dollar(&tmp, ++i, strct);
-		else
+		else if (str[i])
 			i = ft_parse_str_till_it_ends(&tmp, i, strct);
 	}
+	write(2, "here\n", 5);
 	free(str);
 	ft_work_with_t_arg_lists(strct, &tmp);
 	return (0);
