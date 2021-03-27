@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/27 15:05:04 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/27 15:12:48 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static	void	ft_exec_binary(char **path_to_bins, t_args *tmp, char **env)
 		free(tmp_str);
 		if (ft_strcmp(tmp->arg[0], ""))
 			execve(abs_path_to_command, tmp->arg, env);
-		if (!path_to_bins[i] && (!tmp->right_redir && tmp->arg[0]))
+		if (!path_to_bins[i] && (tmp->right_redir != -1 && tmp->arg[0]))
 		{
 			free(abs_path_to_command);
 			write (2, "my_bash: ", 9);

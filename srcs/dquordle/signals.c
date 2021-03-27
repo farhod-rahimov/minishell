@@ -13,7 +13,7 @@ void	ft_interrupt(int signal)
 		g_flags.signal_c = 2;
 	else
 	{
-		write(1, "2\nmy_bash% ", 11);  //mommy
+		write(1, "\nmy_bash% ", 10);  //mommy
 		g_flags.signal_c = 1;
 	}
 		// exit_value!!!
