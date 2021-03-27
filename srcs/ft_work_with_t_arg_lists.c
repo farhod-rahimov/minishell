@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/27 14:11:25 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/27 14:35:36 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ void	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 			if (ft_strlen(tmp->arg[0]) >= 3)
 				if (!ft_strncmp(tmp->arg[0], "..", 2) && tmp->arg[0][2] != '/')
 					return (ft_exec_binary(path_to_bins, tmp, env));
-			// 		flag = 1;
 			if ((execve(tmp->arg[0], tmp->arg, env)) == -1)
 			{
 				write (2, "my_bash: ", 9);
@@ -133,7 +132,18 @@ void	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 			free(abs_path_to_command);
 		}
 		else
-			ft_exec_binary(path_to_bins, tmp, env);
+		{
+			if (path_to_bins)
+				ft_exec_binary(path_to_bins, tmp, env);
+			else
+			{
+				free(abs_path_to_command);
+				write (2, "my_bash: ", 9);
+				write (2, tmp->arg[0], ft_strlen(tmp->arg[0]));
+				write(2, ": No such file or directory\n", 28);
+				exit(127);	
+			}
+		}
 	}
 	else
 	{
