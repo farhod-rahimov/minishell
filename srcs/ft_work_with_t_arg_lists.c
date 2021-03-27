@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/27 14:35:36 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/27 15:05:04 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static	void	ft_exec_binary(char **path_to_bins, t_args *tmp, char **env)
 		free(tmp_str);
 		if (ft_strcmp(tmp->arg[0], ""))
 			execve(abs_path_to_command, tmp->arg, env);
-		if (!path_to_bins[i])
+		if (!path_to_bins[i] && (!tmp->right_redir && tmp->arg[0]))
 		{
 			free(abs_path_to_command);
 			write (2, "my_bash: ", 9);
@@ -108,6 +108,8 @@ void	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 	
 	if ((pid = fork()) == 0)
 	{
+		if (tmp->redir_flag == -1)
+			exit(1);		
 		abs_path_to_command = ft_strdup_new("");
 		if (tmp->arg[i][0] == '/' || tmp->arg[i][0] == '.' || tmp->arg[i][0] == '~')
 		{
@@ -193,7 +195,7 @@ static	void	ft_check_pipe(t_args *tmp, t_struct *strct, char **env, int fd_pipe[
 				ft_close_pipe_01_dup_initial_1(fd_pipe, strct);	
 		}
 		if (!tmp->right_redir)
-			if (!(ft_exec_build_in(tmp->arg, &strct->env_head, strct)))
+			if (!(ft_exec_build_in(tmp, &strct->env_head, strct)))
 				ft_exec_bin(strct, tmp, strct->path_to_bins, env);
 	}
 }
@@ -212,10 +214,12 @@ static	void	ft_check_redirections(t_args *tmp, t_struct *strct, char **env)
 		ft_right_redirect(strct, tmp, env, 0);
 }
 
-int ft_exec_build_in(char **arg, t_env **head, t_struct *strct)
+int ft_exec_build_in(t_args *tmp, t_env **head, t_struct *strct)
 {
 	// ft_change_shell_level(*head); /// это при запуске нашего минишелла
 	// ft_print_env(*head);
 	// printf("\nHERE SHOULD BE THE RESULT OF EXECUTION OF 'BUILD IN' COMMAND\n");
-	return (buildin(arg, head, &(strct->exit_value)));
+	if (tmp->redir_flag == -1)
+		return (0);
+	return (buildin(tmp->arg, head, &(strct->exit_value)));
 }

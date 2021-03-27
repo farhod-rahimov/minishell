@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/27 10:52:07 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/27 15:03:46 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void	ft_print_env(t_env *head);
 void	ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, char *type, char *file_name);
 
 void		ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env);
-int		ft_exec_build_in(char **arg, t_env **head, t_struct *strct);
+int		ft_exec_build_in(t_args *tmp, t_env **head, t_struct *strct);
 void    ft_left_redirect(t_struct *strct, t_args *args, int counter);
 void ft_right_redirect(t_struct *strct, t_args *args, char **env, int counter);
 
