@@ -41,17 +41,25 @@ void	ft_arrow(char **hist, char *str, int *curpl, int hsize)
 	}
 }
 
-void	ft_backspace(char **hist, int curpl)
+void	ft_backspace_tab(char **hist, int curpl, char *str)
 {
-	if (hist[curpl][0])
+	if (!ft_strcmp(str, "\t"))
 	{
-		tputs("\e[D", 1, ft_putchar);
-		tputs(delete_character, 1, ft_putchar);
-		int j = 0;
-		while (hist[curpl][j])
-			j++;
-		if (j)
-			hist[curpl][j - 1] = 0;
+		hist[curpl] = ft_append(hist[curpl], "    ");
+		write(1, "    ", 4);
+	}
+	else
+	{
+		if (hist[curpl][0])
+		{
+			tputs("\e[D", 1, ft_putchar);
+			tputs(delete_character, 1, ft_putchar);
+			int j = 0;
+			while (hist[curpl][j])
+				j++;
+			if (j)
+				hist[curpl][j - 1] = 0;
+		}
 	}
 }
 
@@ -87,9 +95,9 @@ void	ft_prompt(t_struct *strct, char **str, char ***history, int *curpl)
 	int hsize;
 	char **hist;
 
-	if (g_flags.signal_c == 2)
+	if (g_signal == 2)
 		write(1, "\n", 1);
-	if (g_flags.signal_c != 1)
+	if (g_signal != 1 && g_signal != 3)
 		write(1, "my_bash% ", 9);
 	tputs(save_cursor, 1, ft_putchar);
 	hist = ft_get_hist(strct);
@@ -98,7 +106,7 @@ void	ft_prompt(t_struct *strct, char **str, char ***history, int *curpl)
 	while (hist[hsize])
 		hsize++;
 	(*curpl) = 0;
-	g_flags.signal_c = 0;
+	g_signal = 0;
 	ft_read(hist, curpl, hsize, str);
 }
 
@@ -114,13 +122,13 @@ void	ft_read(char **hist, int *curpl, int hsize, char **str)
 			i = read(0, *str, 999);
 			(*str)[i] = 0;
 		}
-		if (g_flags.signal_c || !ft_strcmp(*str, "\n") ||
+		if (g_signal || !ft_strcmp(*str, "\n") ||
 			(!ft_strcmp(*str, "\4") && hist[*curpl][0] == 0))
 			break ;
 		if (!ft_strcmp(*str, "\e[A") || !ft_strcmp(*str, "\e[B"))
 			ft_arrow(hist, *str, curpl, hsize);
-		else if (!strcmp(*str, "\177"))
-			ft_backspace(hist, *curpl);
+		else if (!strcmp(*str, "\177") || !ft_strcmp(*str, "\t"))
+			ft_backspace_tab(hist, *curpl, *str);
 		else if (ft_strcmp(*str, "\e[C") && ft_strcmp(*str, "\e[D") &&
 				 ft_strcmp(*str, "\4"))
 		{
@@ -154,9 +162,10 @@ void	ft_term(t_struct *strct)
 	{
 		ft_terminal_setup(strct);
 		ft_prompt(strct, &str, &hist, &curpl);
-		if (g_flags.signal_c)
+		if (g_signal)
 		{
-			strct->exit_value = 1;
+			if (g_signal == 2 || g_signal == 1)
+				strct->exit_value = 1;
 			continue;
 		}
 		if (!(ft_strcmp(str, "\4")) && hist[curpl][0] == 0)

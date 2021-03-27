@@ -11,6 +11,21 @@ void	ft_pwd(int *exit_value)
 	*exit_value = 0;
 }
 
+int		ft_is_flagn(char *str)
+{
+	int i;
+
+	if (str[0] == '-')
+	{
+		i = 1;
+		while (str[i] && str[i] == 'n')
+			i++;
+		if (!str[i])
+			return (1);
+	}
+	return (0);
+}
+
 void	ft_echo(char **arg, int *exit_value)
 {
 	int i;
@@ -20,8 +35,8 @@ void	ft_echo(char **arg, int *exit_value)
 	if (!arg[1])
 		return;
 	i = 1;
-	if (!ft_strcmp(arg[1], "-n"))
-		i+= ++n;
+	while (arg[i] && ft_is_flagn(arg[i]))
+		n+= ++i;
 	while (arg[i])
 	{
 		write(1, arg[i], ft_strlen(arg[i]));
@@ -113,7 +128,7 @@ int		valid(char *str)
 	int err;
 
 	err = 0;
-	if (ft_isdigit(str[0]))
+	if (ft_isdigit(str[0]) || str[0] == 0)
 		err++;
 	i = 0;
 	while (str[i] != '=' && str[i])
@@ -301,6 +316,19 @@ void	ft_sort_arr(char **array)
 	}
 }
 
+int		ft_get_size_env(t_env *tmp)
+{
+	int i;
+
+	i = 1;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
+
 char	**ft_sp_to_arr(t_env *env_head)
 {
 	int     i;
@@ -308,7 +336,7 @@ char	**ft_sp_to_arr(t_env *env_head)
 	t_env   *tmp;
 
 	tmp = env_head;
-	i = ft_get_env_size(tmp);
+	i = ft_get_size_env(tmp);
 	if ((env = (char **)malloc(sizeof(char *) * i)) == NULL)
 		ft_write_malloc_error();
 	i = -1;
@@ -320,8 +348,9 @@ char	**ft_sp_to_arr(t_env *env_head)
 		{
 			env[i] = ft_append(env[i], "=\"");
 			env[i] = ft_append(env[i], tmp->value);
-			env[i] = ft_append(env[i], "\"\n");
+			env[i] = ft_append(env[i], "\"");
 		}
+		env[i] = ft_append(env[i], "\n");
 		tmp = tmp->next;
 	}
 	env[++i] = NULL;
@@ -368,22 +397,58 @@ void	ft_del_one(t_env *head)
 	free(tmp);
 }
 
+void	ft_del_head(t_env **head)
+{
+	t_env	*tmp;
+
+	tmp = *head;
+	*head = (*head)->next;
+	free(tmp->key);
+	if (tmp->value)
+		free(tmp->value);
+	free(tmp);
+}
+
+int		valid_key(char *str, int *exit_value)
+{
+	int i;
+	int err;
+
+	err = 0;
+	if (ft_isdigit(str[0]) || str[0] == 0)
+		err++;
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			err++;
+		i++;
+	}
+	if (err)
+	{
+		write(2, "unset: `", 8);
+		write(2, str, ft_strlen(str));
+		write(2, "': not a valid identifier\n", 26);
+		*exit_value = 1;
+		return (0);
+	}
+	return (1);
+}
+
 void	ft_unset(char **arg, t_env **head, int *exit_value)
 {
 	t_env	*tmp;
 	int i;
 
+	*exit_value = 0;
 	i = 0;
 	while (arg[++i])
 	{
+		if (!valid_key(arg[i], exit_value))
+			continue ;
 		tmp = *head;
 		if (!ft_strcmp(tmp->key, arg[i]))
-		{
-			*head = (*head)->next;
-			free(tmp->key);
-			free(tmp->value);
-			free(tmp);
-		}
+			ft_del_head(head);
 		else
 		{
 			while (tmp && tmp->next)
@@ -394,24 +459,83 @@ void	ft_unset(char **arg, t_env **head, int *exit_value)
 			}
 		}
 	}
-	*exit_value = 0;
 }
+
+void	ft_cd_home(t_env *head, int *exit_value)
+{
+	t_env *tmp;
+
+	tmp = head;
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->key, "HOME"))
+		{
+			if ((tmp->value)[0] && chdir(tmp->value) == -1)
+			{
+				write(2, "my_bash: cd: ", 13);
+				write(2, tmp->value, ft_strlen(tmp->value));
+				write(2, ": ", 2);
+				write(2, strerror(errno), ft_strlen(strerror(errno)));
+				write(2, "\n", 1);
+				*exit_value = 1;
+			}
+			*exit_value = 0;
+			return ;
+		}
+		tmp = tmp->next;
+	}
+	write(2, "my_bash: cd: HOME not set\n", 26);
+	*exit_value = 1;
+}
+
+//void	ft_cd_old_path(t_env *head, int *exit_value)
+//{
+//	t_env *tmp;
+//
+//	tmp = head;
+//	while (tmp)
+//	{
+//		if (!ft_strcmp(tmp->key, "OLDPWD"))
+//		{
+//			if (chdir(tmp->value) == -1)
+//			{
+//				write(2, "my_bash: cd: ", 13);
+//				write(2, tmp->value, ft_strlen(tmp->value));
+//				write(2, ": ", 2);
+//				write(2, strerror(errno), ft_strlen(strerror(errno)));
+//				write(2, "\n", 1);
+//				*exit_value = 1;
+//			}
+//			*exit_value = 0;
+//			return ;
+//		}
+//		tmp = tmp->next;
+//	}
+//	write(2, "my_bash: cd: HOME not set\n", 26);
+//	*exit_value = 1;
+//}
 
 void	ft_cd(char **arg, t_env **head, int *exit_value)
 {
 	char *new_pwd;
 	char *buf;
 
-	if (chdir(arg[1]) == -1)
+	new_pwd = NULL;
+	if (!arg[1])
+		ft_cd_home(*head, exit_value);
+	if (!getcwd(new_pwd, 0))
+		write(1, "tut\n", 4);
+	else if (arg[1][0] && chdir(arg[1]) == -1)
 	{
+		write(2, "my_bash: cd: ", 13);
+		write(2, arg[1], ft_strlen(arg[1]));
+		write(2, ": ", 2);
 		write(2, strerror(errno), ft_strlen(strerror(errno)));
 		write(2, "\n", 1);
-//		printf("%s\n", strerror(errno));
 		*exit_value = 1;
 	}
 	else
 	{
-		new_pwd = NULL;
 		new_pwd = getcwd(new_pwd, 0);
 		buf = ft_strjoin_new("PWD=", new_pwd);
 		ft_add_env(head, buf);
