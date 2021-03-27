@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 19:05:54 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 19:09:45 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/27 13:58:31 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_args	*ft_create_new_t_args(t_struct *strct, t_args *prev_t_args)
 	new_t_args->right_redir = 0;
 	new_t_args->left_redir = 0;
 	new_t_args->redir_flag = 0;
-	new_t_args->exec_done = 0;
 		
 	if (prev_t_args != NULL)
 	{
@@ -42,17 +41,18 @@ t_args	*ft_create_new_t_args(t_struct *strct, t_args *prev_t_args)
 	return (new_t_args);
 }
 
-void	ft_free_t_args(t_args *head)
+void	ft_free_t_args(t_args **head)
 {
 	t_args *tmp;
 
-	while (head)
+	while ((*head))
 	{
-		tmp = head;
-		head = head->next;
+		tmp = (*head);
+		(*head) = (*head)->next;
 		ft_free_arg(tmp->arg);
 		ft_free_redir(tmp->redir_head);
 		free(tmp);
+		tmp = NULL;
 	}
 }
 
@@ -69,7 +69,7 @@ int ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_ar
 	{
 		if (strct->parsed_str[i] == ';')
 		{
-			// ft_print_devided_args(*current_t_arg);
+			ft_print_devided_args(*current_t_arg);
 			ft_work_with_t_arg_lists(strct, current_t_arg);
 		}
 		if (strct->parsed_str[i] == '|')
@@ -85,7 +85,7 @@ int ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_ar
 				(*current_t_arg)->pipe = 1;
 		}
 		i = ft_skip_spaces(strct->parsed_str, ++i);
-		if (strct->parsed_str[i] != '\0')
+		// if (strct->parsed_str[i] != '\0')
 			*current_t_arg = ft_create_new_t_args(strct, *current_t_arg);
 	}
 	else if (strct->parsed_str[i] == '>' || strct->parsed_str[i] == '<')
@@ -138,6 +138,8 @@ static	void	ft_tolower_str(char *str)
 	int i;
 
 	i = 0;
+	if (str[i] == '-')
+		return ;
 	while (str[i])
 	{
 		str[i] = ft_tolower(str[i]);
@@ -163,6 +165,8 @@ void	ft_free_arg(char **tmp_arg)
 	int i;
 
 	i = 0;
+	if (tmp_arg == NULL)
+		return ;
 	while (tmp_arg[i])
 		free(tmp_arg[i++]);
 	// free(tmp_arg[i]);

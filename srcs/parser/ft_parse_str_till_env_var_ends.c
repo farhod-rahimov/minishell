@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 13:56:01 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 17:09:00 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/27 14:12:04 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,17 @@ int				ft_parse_str_till_env_var_ends(t_args **current_t_arg, \
 	free(env_key);
 	ft_copy_str_to_structure_t_args(strct, current_t_arg, str, strct->n_i);
 	free(str);
+	i = ft_skip_spaces(strct->parsed_str, i);
+	if (!ft_strcmp((*current_t_arg)->arg[0], ""))
+	{
+		i = ft_skip_spaces(strct->parsed_str, i);
+		if (strct->parsed_str[i] == ';')
+			i++;
+		free((*current_t_arg)->arg[0]);
+		free((*current_t_arg)->arg);
+		(*current_t_arg)->arg = NULL;
+		return (i);
+	}
 	i = ft_check_if_new_list_or_arg_is_needed(strct, current_t_arg, i);
 	return (i);
 }

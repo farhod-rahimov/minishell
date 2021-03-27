@@ -1,34 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup_new.c                                    :+:      :+:    :+:   */
+/*   ft_strjoin_new.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/26 14:24:40 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 18:54:45 by btammara         ###   ########.fr       */
+/*   Created: 2021/03/26 14:46:11 by btammara          #+#    #+#             */
+/*   Updated: 2021/03/26 19:32:57 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
 
-char	*ft_strdup_new(const char *s1)
+char			*ft_strjoin_new(char const *s1, char const *s2)
 {
-	char					*p;
-	unsigned long long int	i;
-	unsigned long long int	a;
+	size_t	len;
+	size_t	i;
+	char	*p;
 
-	i = 0;
-	a = 0;
-	while (s1[i] != '\0')
-		i++;
-	if ((p = (char *)malloc((i + 1) * sizeof(char))) == NULL)
-		ft_write_malloc_error();
-	while (a < i)
+	if (s1 == NULL)
 	{
-		p[a] = s1[a];
-		a++;
+		p = ft_strdup_new(s2);
+		return (p);
 	}
-	p[i] = '\0';
+	len = ft_strlen(s1) + ft_strlen(s2);
+	i = 0;
+	if ((p = (char *)malloc((len + 1) * sizeof(char))) == NULL)
+		ft_write_malloc_error();
+	while (s1[i] != '\0')
+	{
+		p[i] = s1[i];
+		i++;
+	}
+	len = i;
+	i = 0;
+	while (s2[i] != '\0')
+		p[len++] = s2[i++];
+	p[len] = '\0';
 	return (p);
 }

@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 11:00:14 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 18:51:03 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/27 15:03:21 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,8 @@ void			ft_right_redirect(t_struct *strct, t_args *args, \
 		fd_red = open_file(strct, &tmp_red, ">");
 	if (dup2(fd_red, 1) == -1)
 		ft_dup2_error(strct);
-	if (!(ft_exec_build_in(args->arg, &strct->env_head, strct)))
-		if (ft_strcmp(args->arg[0], ""))
-			ft_exec_bin(strct, args, strct->path_to_bins, env);
+	if (!(ft_exec_build_in(args, &strct->env_head, strct)))
+		ft_exec_bin(strct, args, strct->path_to_bins, env);
 	close(fd_red);
 	if (dup2(strct->initial_fd[1], 1) == -1)
 		ft_dup2_error(strct);

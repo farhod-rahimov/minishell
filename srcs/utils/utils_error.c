@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 19:08:57 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 19:20:47 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/27 14:01:43 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_dup2_error(t_struct *strct)
 	char *error;
 
 	error = "dup2 error\n";
-//	strct->exit_value = 1;
+	// strct->exit_value = 1;
 	write(2, "my_bash: ", 9);
 	write(2, error, ft_strlen(error));
 	dup2(strct->initial_fd[0], 0);
@@ -33,12 +33,11 @@ void	ft_errno_error(t_struct *strct, char *file_name)
 	write(2, ": ", 2);
 	write(2, strerror(errno), ft_strlen(strerror(errno)));
 	write(2, "\n", 1);
-//	exit(1);
+	// exit(1);
 }
 
 void	ft_write_malloc_error(void)
 {
-	printf("here\n");
 	write(2, "my_bash: ", 9);
 	write(2, strerror(errno), ft_strlen(strerror(errno)));
 	write(2, "\n", 1);
