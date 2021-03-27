@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/27 10:59:02 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/27 14:11:25 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ void	ft_work_with_t_arg_lists(t_struct *strct, t_args **current_t_arg)
 
 	if ((*current_t_arg) == NULL)
 		return ;
-	ft_print_devided_args((*current_t_arg));
+	if ((*current_t_arg)->arg ==NULL)
+		return ;
+	// ft_print_devided_args((*current_t_arg));
 	env = ft_create_env(strct->env_head);
 
 	ft_free_two_dimensional_array(strct->path_to_bins);	

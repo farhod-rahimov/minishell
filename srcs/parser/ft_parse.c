@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:52:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/27 11:13:16 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/27 14:12:07 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static	int	ft_parse(t_struct *strct, t_args *tmp, int i)
 		else if (str[i])
 			i = ft_parse_str_till_it_ends(&tmp, i, strct);
 	}
-	write(2, "here\n", 5);
 	free(str);
 	ft_work_with_t_arg_lists(strct, &tmp);
 	return (0);

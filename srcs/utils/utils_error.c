@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 19:08:57 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/27 13:58:47 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/27 14:01:43 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	ft_errno_error(t_struct *strct, char *file_name)
 
 void	ft_write_malloc_error(void)
 {
-	printf("here\n");
 	write(2, "my_bash: ", 9);
 	write(2, strerror(errno), ft_strlen(strerror(errno)));
 	write(2, "\n", 1);
