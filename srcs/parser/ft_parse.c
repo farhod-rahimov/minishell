@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:52:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/27 14:12:07 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/27 17:00:21 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,7 @@ static	int	ft_parse(t_struct *strct, t_args *tmp, int i)
 			ft_free_t_args(&tmp);
 			break ;
 		}
-		// else if (i >= (int)ft_strlen(str))
-		// 	break;
 		if (str[i] == '\"')
-		// write(2, "here3\n", 6);
 			i = ft_parse_str_till_dq_ends(&tmp, ++i, strct);
 		else if (str[i] == '\'')
 			i = ft_parse_str_till_sq_ends(&tmp, ++i, strct);

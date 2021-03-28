@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/27 15:03:46 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/27 17:07:45 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct red
 typedef struct args
 {
 	char			**arg;			//args[0] = command, argsp[1 + ...] arguments	
+	char			*arg_exp_uns;
 	int				pipe;
 	struct	args	*next;
 	struct	args	*prev;

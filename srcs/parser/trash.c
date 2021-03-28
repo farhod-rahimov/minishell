@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 17:25:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 18:56:19 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/28 10:16:25 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_print_devided_args(t_args *head)
 			tmp->redir_head = tmp->redir_head->next;
 		}
 		printf("arg[%d][pipe]	|%d|\n", k, tmp->pipe);
+		// printf("arg[%d][ex_uns]	|%s|\n", k, tmp->arg_exp_uns);
 		printf("arg[%d][rh_red]	|%d|\n", k, tmp->right_redir);
 		printf("arg[%d][lh_red]	|%d|\n", k, tmp->left_redir);
 		printf("------------------------\n\n");

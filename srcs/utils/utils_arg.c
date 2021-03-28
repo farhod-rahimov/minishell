@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 19:05:54 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/27 13:58:31 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/27 17:08:57 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_args	*ft_create_new_t_args(t_struct *strct, t_args *prev_t_args)
 	new_t_args->prev = NULL;
 	new_t_args->arg = NULL;
 	new_t_args->redir_head = NULL;
+	new_t_args->arg_exp_uns = NULL;
 
 	new_t_args->pipe = 0;
 	new_t_args->right_redir = 0;
