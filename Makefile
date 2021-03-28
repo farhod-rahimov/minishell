@@ -38,7 +38,13 @@ SRCS =			./srcs/main.c \
 				./srcs/dquordle/gnl.c \
 				./srcs/dquordle/signals.c \
 				./srcs/dquordle/termcap.c \
-				./srcs/dquordle/more_utils.c
+				./srcs/dquordle/more_utils.c \
+				./srcs/dquordle/export.c \
+				./srcs/dquordle/unset.c \
+				./srcs/dquordle/exit.c \
+				./srcs/dquordle/cd_env.c \
+				./srcs/dquordle/built_utils.c \
+				./srcs/dquordle/term_utils.c
 
 OBJS =			$(SRCS:.c=.o)
 

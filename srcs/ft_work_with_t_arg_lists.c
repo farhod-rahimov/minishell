@@ -149,7 +149,7 @@ void	ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env)
 	else
 	{
 		waitpid(pid, &status, 0);
-		if (g_signal == 1)
+		if (g_signal == 2)
 			strct->exit_value = 130;
 		else if (g_signal == 3)
 			strct->exit_value = 131;

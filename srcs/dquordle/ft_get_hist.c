@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_get_hist.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dquordle <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/28 17:38:27 by dquordle          #+#    #+#             */
+/*   Updated: 2021/03/28 17:38:28 by dquordle         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 char	**ft_make_hist(t_list **head)
@@ -7,7 +19,7 @@ char	**ft_make_hist(t_list **head)
 	t_list	*tmp;
 
 	i = ft_lstsize(*head);
-	if (!(hist = ft_calloc( i + 2, sizeof(char *))))
+	if (!(hist = ft_calloc(i + 2, sizeof(char *))))
 		ft_write_malloc_error();
 	hist[i + 1] = NULL;
 	while (*head)
@@ -21,9 +33,9 @@ char	**ft_make_hist(t_list **head)
 	return (hist);
 }
 
-char 	**ft_get_hist(t_struct *strct)
+char	**ft_get_hist(t_struct *strct)
 {
-	int fd;
+	int		fd;
 	t_list	*head;
 	t_list	*tmp;
 	char	*line;

@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **env)
 		return (-1);
 	g_signal = 0;
 	if ((fd = open(HISTFILE, O_CREAT, 00777)) == -1)
-		ft_errno_error(&strct, HISTFILE);
+		ft_file_error(HISTFILE);
 	close(fd);
 	signal(SIGINT, ft_interrupt);
 	signal(SIGQUIT, ft_quit);

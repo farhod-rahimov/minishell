@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   gnl.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dquordle <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/28 17:38:35 by dquordle          #+#    #+#             */
+/*   Updated: 2021/03/28 17:38:36 by dquordle         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 char	*ft_strjoinf(char *s1, char *s2)
@@ -11,7 +23,7 @@ char	*ft_strjoinf(char *s1, char *s2)
 	j = ft_strlen(s2);
 	i = ft_strlen(s1);
 	if (!(res = (char *)malloc(i + j + 1)))
-		return (NULL);
+		ft_write_malloc_error();
 	res[0] = '\0';
 	ft_strlcat(res, s1, i + 1);
 	ft_strlcat(res, s2, i + j + 1);
@@ -68,12 +80,14 @@ int		get_next_line(int fd, char **line)
 	int			check;
 
 	buf = NULL;
-	if (!line || (read(fd, buf, 0) == -1) || !(*line = ft_strdup("")))
-		return (-1);
+	if (read(fd, buf, 0) == -1)
+		ft_file_error(HISTFILE);
+	if (!(*line = ft_strdup("")))
+		ft_write_malloc_error();
 	if (!rem)
 	{
 		if (!(rem = (char *)malloc(10000)))
-			return (-1);
+			ft_write_malloc_error();
 		check = read(fd, rem, 9999);
 		if (check == 0)
 		{
@@ -84,6 +98,4 @@ int		get_next_line(int fd, char **line)
 		rem[check] = 0;
 	}
 	return (ft_reading(&rem, line, fd));
-	//// Change return(-1) to exit(-1)
 }
-

@@ -12,7 +12,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
-#include <sys/wait.h>  // wait()
+#include <sys/wait.h>
 #include "./libft/libft.h"
 #include <fcntl.h>
 #include <stdlib.h>
@@ -22,7 +22,7 @@
 #include <string.h>
 #include <sys/errno.h>
 
-#define HISTFILE "/goinfre/btammara/minishell_hist.txt"
+#define HISTFILE "/goinfre/dquordle/minishell_hist.txt"
 
 int				g_signal;
 
@@ -148,6 +148,8 @@ int		ft_check_syntax(t_struct *strct, char *str);
 
 int		ft_remove_back_slash(char **str, int i);
 char	*ft_create_str_from_2_char(char c1, char c2);
+
+
 //////////////////////////////////////////dickuordle
 
 int		buildin(char **arg, t_env **env, int *exit_value);
@@ -161,6 +163,21 @@ void	ft_read(char **hist, int *curpl, int hsize, char **str);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_putchar(int c);
 char	*ft_append(char *old, char *new);
-
+void	ft_file_error(char *file);
+void	ft_export(char **arg, t_env **head, int *exit_value);
+int		ft_add_env(t_env **head, char *arg);
+void	ft_new_env(t_env **head, char *key, char *value);
+int		ft_get_size_env(t_env *tmp);
+int		valid(char *str);
+void	ft_unset(char **arg, t_env **head, int *exit_value);
+void	ft_exit(char **arg, int *exit_value);
+void	ft_env(char **arg, t_env *head, int *exit_value);
+void	ft_cd(char **arg, t_env **head, int *exit_value);
+void	ft_term_error(void);
+void	ft_free_hist(char ***hist);
+void	ft_add_command(t_struct *strct, char **hist, char *command);
+void	ft_terminal_setup(t_struct *strct);
+void	ft_terminal_backup(void);
+void	ft_backspace_tab(char **hist, int curpl, char *str);
 
 // ls -la >0file ; ls -la | grep Makefile ; grep <0file >1file ;

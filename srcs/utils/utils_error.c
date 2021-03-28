@@ -43,3 +43,19 @@ void	ft_write_malloc_error(void)
 	write(2, "\n", 1);
 	exit(1);
 }
+
+void	ft_file_error(char *file)
+{
+	write(2, "my_bash: ", 9);
+	write(2, file, ft_strlen(file));
+	write(2, ": ", 2);
+	write(2, strerror(errno), ft_strlen(strerror(errno)));
+	write(2, "\nChange name of the history file please\n", 40);
+	exit(1);
+}
+
+void	ft_term_error(void)
+{
+	write(2, "my_bash: Set the TERM variable\n", 31);
+	exit(1);
+}
