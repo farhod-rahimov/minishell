@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 13:56:32 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/27 10:25:45 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/28 13:45:40 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ static	char	*ft_get_env_var_value(char *env_var, t_struct *strct)
 	tmp = strct->env_head;
 	while (tmp)
 	{
-		if (!ft_strncmp(env_var, tmp->key, \
-			ft_strlen(env_var) + ft_strlen(tmp->key)))
+		if (!ft_strcmp(env_var, tmp->key))
 		{
 			env_var = ft_strdup_new(tmp->value);
 			return (env_var);
@@ -56,14 +55,18 @@ static	int		ft_get_env_var(char **str, int i, t_struct *strct)
 	int		start_env_var;
 
 	start_env_var = i - 1;
-	env_var = ft_strdup_new("");
-	while ((*str)[i] && (ft_isalnum((*str)[i]) || (*str)[i] == '_'))
+	if (ft_isdigit((*str)[i]))
+		env_var = ft_create_str_from_2_char((*str)[i++], '\0');
+	else
+	{
+		env_var = ft_strdup_new("");
+		while ((*str)[i] && (ft_isalnum((*str)[i]) || (*str)[i] == '_'))
 		ft_push_back_char(&env_var, (*str)[i++]);
+	}
 	env_key = env_var;
 	env_var = ft_get_env_var_value(env_var, strct);
-	if (env_var[0] != '\0')
-		ft_replace_env_key_to_its_value(str, env_var, \
-			start_env_var, ft_strlen(env_key) + 1);
+	ft_replace_env_key_to_its_value(str, env_var, \
+		start_env_var, ft_strlen(env_key) + 1);
 	free(env_key);
 	free(env_var);
 	return (i);
@@ -104,8 +107,11 @@ int				ft_parse_str_till_dq_ends(t_args **current_t_arg, \
 		ft_push_back_char(&str, strct->parsed_str[i++]);
 	}
 	ft_work_with_spec_sym(&str, 0, strct);
-	ft_copy_str_to_structure_t_args(strct, current_t_arg, str, strct->n_i);
-	free(str);
+	if (str[0] != '\0')
+		ft_copy_str_to_structure_t_args(strct, current_t_arg, str, strct->n_i);
+	if (str[0] == '\0')
+		strct->n_i--;
 	i = ft_check_if_new_list_or_arg_is_needed(strct, current_t_arg, ++i);
+	free(str);
 	return (i);
 }

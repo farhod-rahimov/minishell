@@ -6,16 +6,25 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 11:00:14 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/28 11:03:31 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/28 15:34:44 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static	int		ft_wrong_redirect()
+{
+	write(2, "my_bash :", 9);
+	write(2, " ambiguous redirect\n", 20);
+	return (-1);
+}
+
 static	int		open_file(t_struct *strct, t_redirect **tmp_red, char *redirect)
 {
 	int	fd_red;
 
+	if ((*tmp_red)->file_name == NULL)
+		return (ft_wrong_redirect());
 	if (!ft_strcmp(redirect, ">>"))
 	{
 		if ((fd_red = open((*tmp_red)->file_name, \
@@ -38,6 +47,8 @@ static	int		part1(t_struct *strct, t_redirect **tmp_red, \
 
 	while (1)
 	{
+		if ((*tmp_red)->file_name == NULL)
+			return (ft_wrong_redirect());
 		if (!ft_strncmp((*tmp_red)->type, ">", 1))
 		{
 			if (ft_strlen((*tmp_red)->type) == 2)
@@ -54,14 +65,17 @@ static	int		part1(t_struct *strct, t_redirect **tmp_red, \
 	return (fd_red);
 }
 
-void			ft_right_redirect(t_struct *strct, t_args *args, \
+int			ft_right_redirect(t_struct *strct, t_args *args, \
 							char **env, int counter)
 {
 	t_redirect	*tmp_red;
 	int			fd_red;
 
 	tmp_red = args->redir_head;
-	fd_red = part1(strct, &tmp_red, args, counter);
+	if ((fd_red = part1(strct, &tmp_red, args, counter)) == -1)
+		return (-1);
+	if (tmp_red->file_name == NULL)
+		return (ft_wrong_redirect());
 	if (ft_strlen(tmp_red->type) == 2)
 		fd_red = open_file(strct, &tmp_red, ">>");
 	else
@@ -74,4 +88,5 @@ void			ft_right_redirect(t_struct *strct, t_args *args, \
 	close(fd_red);
 	if (dup2(strct->initial_fd[1], 1) == -1)
 		ft_dup2_error(strct);
+	return (0);
 }

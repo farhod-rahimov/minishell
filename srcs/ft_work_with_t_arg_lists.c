@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/28 10:56:40 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/28 15:34:06 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static	void	ft_check_if_reset_01fds_needed(t_args *tmp, t_struct *strct, int fd_pipe[2]);
 static	void	ft_check_pipe(t_args *tmp, t_struct *strct, char **env, int fd_pipe[2]);
-static	void	ft_check_redirections(t_args *tmp, t_struct *strct, char **env);
+static	int		ft_check_redirections(t_args *tmp, t_struct *strct, char **env);
 
 void	ft_work_with_t_arg_lists(t_struct *strct, t_args **current_t_arg)
 {
@@ -38,7 +38,8 @@ void	ft_work_with_t_arg_lists(t_struct *strct, t_args **current_t_arg)
 	current_t_arg_head = *current_t_arg;	
 	while (*current_t_arg)
 	{
-		ft_check_redirections(*current_t_arg, strct, env);
+		if (ft_check_redirections(*current_t_arg, strct, env) == -1)
+			return ;
 		ft_check_pipe(*current_t_arg, strct, env, fd_pipe);
 		if ((*current_t_arg)->left_redir)
 			if (dup2(strct->initial_fd[0], 0) == -1)
@@ -200,18 +201,22 @@ static	void	ft_check_pipe(t_args *tmp, t_struct *strct, char **env, int fd_pipe[
 	}
 }
 
-static	void	ft_check_redirections(t_args *tmp, t_struct *strct, char **env)
+static	int		ft_check_redirections(t_args *tmp, t_struct *strct, char **env)
 {
 	if (tmp->prev != NULL)
 	{
 		if (tmp->left_redir && !tmp->prev->pipe)
-			ft_left_redirect(strct, tmp, 0);
+			if (ft_left_redirect(strct, tmp, 0) == -1)
+				return (-1);
 	}
 	else if (tmp->prev == NULL && tmp->left_redir)
-		ft_left_redirect(strct, tmp, 0);
+		if (ft_left_redirect(strct, tmp, 0) == -1)
+			return (-1);
 
 	if (tmp->right_redir)
-		ft_right_redirect(strct, tmp, env, 0);
+		if (ft_right_redirect(strct, tmp, env, 0) == -1)
+			return (-1);
+	return (0);
 }
 
 int ft_exec_build_in(t_args *tmp, t_env **head, t_struct *strct)

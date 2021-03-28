@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 09:09:39 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/27 08:17:33 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/28 15:45:24 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static	int		ft_print_stntax_error(t_struct *strct, char c)
 int				ft_check_syntax(t_struct *strct, char *str)
 {
 	int		i;
+	int		tmp_i;
 	char	tmp;
 	int		s_q;
 	int		d_q;
@@ -70,6 +71,12 @@ int				ft_check_syntax(t_struct *strct, char *str)
 			d_q *= -1;
 		if (str[i] == '\'' && d_q != -1)
 			s_q *= -1;
+		if (str[i] == '|')
+		{
+			i = ft_skip_spaces(str, ++i);
+			if (str[i] == '|' || str[i] == ';' || str[i] == '<' || str[i] == '>')
+				return (ft_print_stntax_error(strct, str[i]));
+		}
 		if ((str[i] == ';' || str[i] == '|') && (s_q != 1 || d_q != 1))
 		{
 			tmp = str[i];
@@ -78,6 +85,20 @@ int				ft_check_syntax(t_struct *strct, char *str)
 				return (ft_print_stntax_error(strct, str[i]));
 			else if (tmp == '|' && str[i] == ';')
 				return (ft_print_stntax_error(strct, str[i]));
+		}
+		if (str[i] == '>' && str[i + 1] == '>')
+		{
+			i += 2;
+			i = ft_skip_spaces (str, i);
+			if (str[i] == '>' || str[i] == '<' || str[i] == '|' || str[i] == ';')
+				return (ft_print_stntax_error(strct, str[i]));
+		}
+		if ((str[i] == '>' && str[i + 1] == '>' && str[i + 2] == ' ') || (str[i] == '>' && str[i + 1] == ' ') || (str[i] == '<' && str[i + 1] == ' '))
+		{
+			tmp_i = i;
+			tmp_i = ft_skip_spaces(str, ++tmp_i);
+			if (i != tmp_i && (str[tmp_i] == '>' || str[tmp_i] == '<' || str[tmp_i] == '|' || str[tmp_i] == ';'))
+				return (ft_print_stntax_error(strct, str[tmp_i]));
 		}
 		if ((str[i] == '>' || str[i] == '<') && (s_q != 1 || d_q != 1))
 		{

@@ -6,13 +6,13 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 11:03:57 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/27 10:26:00 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/28 13:38:12 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static	char	*ft_create_str_from_2_char(char c1, char c2)
+char	*ft_create_str_from_2_char(char c1, char c2)
 {
 	char	*str;
 

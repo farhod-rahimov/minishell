@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/28 10:32:51 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/28 14:36:56 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct red
 typedef struct args
 {
 	char			**arg;			//args[0] = command, argsp[1 + ...] arguments	
-	char			*arg_exp_uns;
 	int				pipe;
 	struct	args	*next;
 	struct	args	*prev;
@@ -139,8 +138,8 @@ void	ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, cha
 
 void		ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env);
 int		ft_exec_build_in(t_args *tmp, t_env **head, t_struct *strct);
-void    ft_left_redirect(t_struct *strct, t_args *args, int counter);
-void ft_right_redirect(t_struct *strct, t_args *args, char **env, int counter);
+int	ft_left_redirect(t_struct *strct, t_args *args, int counter);
+int ft_right_redirect(t_struct *strct, t_args *args, char **env, int counter);
 
 void    ft_pipe(t_struct *strct, int fd_pipe[2]);
 void    ft_close_pipe_01_dup_initial_0(int fd_pipe[2], t_struct *strct);
@@ -148,7 +147,7 @@ void    ft_close_pipe_01_dup_initial_1(int fd_pipe[2], t_struct *strct);
 int		ft_check_syntax(t_struct *strct, char *str);
 
 int		ft_remove_back_slash(char **str, int i);
-
+char	*ft_create_str_from_2_char(char c1, char c2);
 //////////////////////////////////////////dickuordle
 
 int		buildin(char **arg, t_env **env, int *exit_value);

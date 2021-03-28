@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 17:25:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/28 10:58:41 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/28 13:22:05 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_print_devided_args(t_args *head)
 	while (tmp)
 	{
 		tmp_red = tmp->redir_head;
-		while (tmp->arg[i])
+		while (tmp->arg && tmp->arg[i])
 		{
 			printf("arg[%d][%d]	|%s|\n", k, i, tmp->arg[i]);
 			i++;
@@ -37,11 +37,13 @@ void	ft_print_devided_args(t_args *head)
 			printf("arg[%d][name]	|%s|\n", k, tmp_red->file_name);
 			tmp_red = tmp_red->next;
 		}
-		printf("arg[%d][pipe]	|%d|\n", k, tmp->pipe);
-		// printf("arg[%d][ex_uns]	|%s|\n", k, tmp->arg_exp_uns);
-		printf("arg[%d][rh_red]	|%d|\n", k, tmp->right_redir);
-		printf("arg[%d][lh_red]	|%d|\n", k, tmp->left_redir);
-		printf("------------------------\n\n");
+		if (tmp)
+		{
+			printf("arg[%d][pipe]	|%d|\n", k, tmp->pipe);
+			printf("arg[%d][rh_red]	|%d|\n", k, tmp->right_redir);
+			printf("arg[%d][lh_red]	|%d|\n", k, tmp->left_redir);
+			printf("------------------------\n\n");
+		}
 		i = 0;
 		k++;
 		tmp = tmp->next;
