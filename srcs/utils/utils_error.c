@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 19:08:57 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/27 14:01:43 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/28 17:01:30 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,28 @@ void	ft_write_malloc_error(void)
 	write(2, strerror(errno), ft_strlen(strerror(errno)));
 	write(2, "\n", 1);
 	exit(1);
+}
+
+void	ft_free_if_error(t_struct *strct)
+{
+	free(strct->parsed_str);
+	free(strct->args_head);
+	strct->args_head = NULL;
+}
+
+int		ft_print_stntax_error(t_struct *strct, char c)
+{
+	char	*str;
+
+	if (c == '\0')
+		str = ft_strdup_new("newline");
+	else
+		str = ft_str_from_char(c);
+	write(2, "my_bash: syntax error near unexpected token '", 45);
+	write(2, str, ft_strlen(str));
+	write(2, "'\n", 2);
+	ft_free_if_error(strct);
+	strct->exit_value = 258;
+	free(str);
+	return (-1);
 }

@@ -6,13 +6,14 @@
 #    By: btammara <btammara@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/06 16:30:33 by btammara          #+#    #+#              #
-#    Updated: 2021/03/26 19:32:43 by btammara         ###   ########.fr        #
+#    Updated: 2021/03/28 19:30:58 by btammara         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS =			./srcs/main.c \
 				./srcs/ft_structure_env.c \
-				./srcs/utils/utils_arg.c \
+				./srcs/utils/utils_arg_1.c \
+				./srcs/utils/utils_arg_2.c \
 				./srcs/utils/utils_common.c \
 				./srcs/utils/utils_env.c \
 				./srcs/utils/utils_error.c \
@@ -26,8 +27,9 @@ SRCS =			./srcs/main.c \
 				./srcs/parser/ft_parse_str_till_dq_ends.c \
 				./srcs/parser/ft_work_with_dollar.c \
 				./srcs/parser/ft_check_syntax.c \
-				./srcs/parser/trash.c \
-				./srcs/ft_work_with_t_arg_lists.c \
+				./srcs/work_with_t_args_list/ft_work_with_t_arg_lists.c \
+				./srcs/work_with_t_args_list/ft_exec_bin.c \
+				./srcs/work_with_t_args_list/ft_check.c \
 				./srcs/ft_create_env.c \
 				./srcs/ft_change_shell_level.c \
 				./srcs/ft_left_redirect.c \

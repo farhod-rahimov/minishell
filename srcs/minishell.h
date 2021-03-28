@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:32:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/28 14:36:56 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/28 19:32:19 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,25 +74,27 @@ void	ft_begin_parsing(t_struct *strct);
 
 void	ft_free_t_args(t_args **head);
 
-int		ft_parse_str_till_dq_ends(t_args **current_t_arg, int i, t_struct *strct);
+int		ft_parse_str_till_dq_ends(t_args **cur_t_arg, int i, t_struct *strct);
 // int		ft_copy_str_to_structure_t_args(t_args **tmp, char *str, int n_i);
 void	ft_copy_str_to_structure_t_args(t_struct *strct, t_args **tmp, char *str, int n_i);
 void	ft_push_backft_push_back_char(char **str, char c);
-int		ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_arg, int i);
+int		ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **cur_t_arg, int i);
 int		ft_copy_old_arg_to_new(t_args **new_arg, char **old_arg, int n_i);
-void	ft_free_arg(char **tmp_arg);
+void	ft_free_two_dimensional_array(char **tmp_arg);
 void	ft_free_redir(t_redirect *head);
 
 
-int		ft_parse_str_till_sq_ends(t_args **current_t_arg, int i, t_struct *strct);
-int		ft_parse_str_till_env_var_ends(t_args **current_t_arg, int i, t_struct *strct);
-int		ft_work_with_dollar(t_args **current_t_arg, int i, t_struct *strct);
-int		ft_parse_str_till_it_ends(t_args **current_t_arg, int i, t_struct *strct);
+int		ft_parse_str_till_sq_ends(t_args **cur_t_arg, int i, t_struct *strct);
+int		ft_parse_str_till_env_var_ends(t_args **cur_t_arg, int i, t_struct *strct);
+int		ft_work_with_dollar(t_args **cur_t_arg, int i, t_struct *strct);
+int		ft_parse_str_till_it_ends(t_args **cur_t_arg, int i, t_struct *strct);
 
 t_args	*ft_create_new_t_args(t_struct *strct, t_args *prev_t_args);
 
 
-void	ft_print_devided_args(t_args *head);
+void	ft_check_if_reset_01fds_needed(t_args *tmp, t_struct *strct, int fd_pipe[2]);
+void	ft_check_pipe(t_args *tmp, t_struct *strct, char **env, int fd_pipe[2]);
+int		ft_check_redirections(t_args *tmp, t_struct *strct, char **env);
 
 
 void	ft_structure_env(t_struct *strct, char **env);
@@ -101,6 +103,7 @@ void	ft_get_path_to_bins(t_struct *strct);
 void	ft_print_path_to_bins(char **path_to_bins);
 void	ft_free_two_dimensional_array(char **array);
 int		ft_skip_spaces(char *str, int i);
+void	ft_tolower_str(char *str);
 // void	ft_print_env(t_env *head);
 
 // int		ft_get_command_e(t_struct *strct, int i);
@@ -134,7 +137,7 @@ char	**ft_create_env(t_env *env_head);
 int		ft_get_env_size(t_env *tmp);
 void	ft_change_shell_level(t_env *env_head);
 void	ft_print_env(t_env *head);
-void	ft_push_back_redir_list(t_args **current_t_arg, t_redirect *redir_head, char *type, char *file_name);
+void	ft_push_back_redir_list(t_args **cur_t_arg, t_redirect *redir_head, char *type, char *file_name);
 
 void		ft_exec_bin(t_struct *strct, t_args *tmp, char **path_to_bins, char **env);
 int		ft_exec_build_in(t_args *tmp, t_env **head, t_struct *strct);
@@ -144,10 +147,13 @@ int ft_right_redirect(t_struct *strct, t_args *args, char **env, int counter);
 void    ft_pipe(t_struct *strct, int fd_pipe[2]);
 void    ft_close_pipe_01_dup_initial_0(int fd_pipe[2], t_struct *strct);
 void    ft_close_pipe_01_dup_initial_1(int fd_pipe[2], t_struct *strct);
-int		ft_check_syntax(t_struct *strct, char *str);
+int		ft_check_syntax(t_struct *strct, char *str, int s_q, int d_q);
 
 int		ft_remove_back_slash(char **str, int i);
 char	*ft_create_str_from_2_char(char c1, char c2);
+void	ft_free_if_error(t_struct *strct);
+int		ft_print_stntax_error(t_struct *strct, char c);
+char	*ft_str_from_char(char c);
 //////////////////////////////////////////dickuordle
 
 int		buildin(char **arg, t_env **env, int *exit_value);

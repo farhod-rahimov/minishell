@@ -6,18 +6,15 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 16:52:30 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/27 17:00:21 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/28 18:45:46 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static	int	ft_parse(t_struct *strct, t_args *tmp, int i)
+static	int	ft_parse(t_struct *strct, t_args *tmp, int i, char *str)
 {
-	char	*str;
-
-	str = strct->parsed_str;
-	if (ft_check_syntax(strct, str) == -1)
+	if (ft_check_syntax(strct, str, -1, -1) == -1)
 		return (-1);
 	while (str[i])
 	{
@@ -50,5 +47,5 @@ void		ft_begin_parsing(t_struct *strct)
 
 	tmp = strct->args_head;
 	strct->args_head = ft_create_new_t_args(strct, NULL);
-	ft_parse(strct, strct->args_head, 0);
+	ft_parse(strct, strct->args_head, 0, strct->parsed_str);
 }

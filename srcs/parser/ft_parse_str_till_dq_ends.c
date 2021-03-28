@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 13:56:32 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/28 13:45:40 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/28 17:25:24 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static	int		ft_get_env_var(char **str, int i, t_struct *strct)
 	{
 		env_var = ft_strdup_new("");
 		while ((*str)[i] && (ft_isalnum((*str)[i]) || (*str)[i] == '_'))
-		ft_push_back_char(&env_var, (*str)[i++]);
+			ft_push_back_char(&env_var, (*str)[i++]);
 	}
 	env_key = env_var;
 	env_var = ft_get_env_var_value(env_var, strct);
@@ -92,7 +92,7 @@ static	void	ft_work_with_spec_sym(char **str, int i, t_struct *strct)
 	}
 }
 
-int				ft_parse_str_till_dq_ends(t_args **current_t_arg, \
+int				ft_parse_str_till_dq_ends(t_args **cur_t_arg, \
 								int i, t_struct *strct)
 {
 	char	*str;
@@ -108,10 +108,10 @@ int				ft_parse_str_till_dq_ends(t_args **current_t_arg, \
 	}
 	ft_work_with_spec_sym(&str, 0, strct);
 	if (str[0] != '\0')
-		ft_copy_str_to_structure_t_args(strct, current_t_arg, str, strct->n_i);
+		ft_copy_str_to_structure_t_args(strct, cur_t_arg, str, strct->n_i);
 	if (str[0] == '\0')
 		strct->n_i--;
-	i = ft_check_if_new_list_or_arg_is_needed(strct, current_t_arg, ++i);
+	i = ft_check_if_new_list_or_arg_is_needed(strct, cur_t_arg, ++i);
 	free(str);
 	return (i);
 }
