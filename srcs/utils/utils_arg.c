@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-static	void	ft_tolower_str(char *str);
+static void	ft_tolower_str(char *str);
 
 t_args	*ft_create_new_t_args(t_struct *strct, t_args *prev_t_args)
 {

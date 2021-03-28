@@ -15,7 +15,6 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_struct	strct;
-	int			fd;
 
 	(void)argv;
 	strct.args_head = NULL;
@@ -23,9 +22,6 @@ int	main(int argc, char **argv, char **env)
 	if (argc != 1)
 		return (-1);
 	g_signal = 0;
-	if ((fd = open(HISTFILE, O_CREAT, 00777)) == -1)
-		ft_file_error(HISTFILE);
-	close(fd);
 	signal(SIGINT, ft_interrupt);
 	signal(SIGQUIT, ft_quit);
 	ft_structure_env(&strct, env);

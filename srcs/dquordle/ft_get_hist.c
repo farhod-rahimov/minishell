@@ -42,6 +42,9 @@ char	**ft_get_hist(t_struct *strct)
 
 	line = NULL;
 	head = NULL;
+	if ((fd = open(HISTFILE, O_CREAT, 00777)) == -1)
+		ft_file_error(HISTFILE);
+	close(fd);
 	if ((fd = open(HISTFILE, O_RDONLY)) == -1)
 		ft_errno_error(strct, HISTFILE);
 	while (get_next_line(fd, &line))
