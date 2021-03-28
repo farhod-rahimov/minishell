@@ -22,13 +22,11 @@
 #include <string.h>
 #include <sys/errno.h>
 
-#define HISTFILE "/tmp/minishell_hist.txt"
+#define HISTFILE "/goinfre/minishell_hist.txt"
 #define OUTPUT "/tmp/minishell_output.txt"
 
-typedef struct flags
-{
-	int	signal_c;
-}				t_flags;
+
+int				g_signal;
 
 typedef struct env
 {
@@ -168,6 +166,4 @@ int		ft_putchar(int c);
 char	*ft_append(char *old, char *new);
 
 
-
-t_flags g_flags;
 // ls -la >0file ; ls -la | grep Makefile ; grep <0file >1file ;
