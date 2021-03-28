@@ -1,21 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   termcap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dquordle <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/28 17:39:07 by dquordle          #+#    #+#             */
+/*   Updated: 2021/03/28 17:39:08 by dquordle         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
-
-
-void	ft_add_command(t_struct *strct, char **hist, char *command)
-{
-	int fd;
-	int i;
-
-	i = 0;
-	while (hist[i])
-		i++;
-	if ((fd = open(HISTFILE, O_WRONLY | O_APPEND)) == -1)
-		ft_errno_error(strct, HISTFILE);
-	if (i > 1)
-		write(fd, "\n", 1);
-	write(fd, command, ft_strlen(command));
-	close(fd);
-}
 
 void	ft_arrow(char **hist, char *str, int *curpl, int hsize)
 {
@@ -41,59 +36,10 @@ void	ft_arrow(char **hist, char *str, int *curpl, int hsize)
 	}
 }
 
-void	ft_backspace_tab(char **hist, int curpl, char *str)
-{
-	if (!ft_strcmp(str, "\t"))
-	{
-		hist[curpl] = ft_append(hist[curpl], "    ");
-		write(1, "    ", 4);
-	}
-	else
-	{
-		if (hist[curpl][0])
-		{
-			tputs("\e[D", 1, ft_putchar);
-			tputs(delete_character, 1, ft_putchar);
-			int j = 0;
-			while (hist[curpl][j])
-				j++;
-			if (j)
-				hist[curpl][j - 1] = 0;
-		}
-	}
-}
-
-void	ft_terminal_setup(t_struct *strct)
-{
-	struct termios term;
-	t_env *temp;
-
-	tcgetattr(0, &term);
-	term.c_lflag &= ~(ECHO);
-	term.c_lflag &= ~(ICANON);
-	tcsetattr(0, TCSANOW, &term);
-	temp = strct->env_head;
-	while (temp && ft_strcmp(temp->key, "TERM"))
-		temp = temp->next;
-//	if (!temp)
-//		ft_error; // ft_error doesn`t exist, it`s deleted
-	tgetent(0, temp->value);
-}
-
-void	ft_terminal_backup(void)
-{
-	struct termios term;
-
-	tcgetattr(0, &term);
-	term.c_lflag |= ECHO;
-	term.c_lflag |= ICANON;
-	tcsetattr(0, TCSANOW, &term);
-}
-
 void	ft_prompt(t_struct *strct, char **str, char ***history, int *curpl)
 {
-	int hsize;
-	char **hist;
+	int		hsize;
+	char	**hist;
 
 	if (g_signal == 2)
 		write(1, "\n", 1);
@@ -130,7 +76,7 @@ void	ft_read(char **hist, int *curpl, int hsize, char **str)
 		else if (!strcmp(*str, "\177") || !ft_strcmp(*str, "\t"))
 			ft_backspace_tab(hist, *curpl, *str);
 		else if (ft_strcmp(*str, "\e[C") && ft_strcmp(*str, "\e[D") &&
-				 ft_strcmp(*str, "\4"))
+					ft_strcmp(*str, "\4"))
 		{
 			write(1, *str, i);
 			hist[*curpl] = ft_append(hist[*curpl], *str);
@@ -139,57 +85,44 @@ void	ft_read(char **hist, int *curpl, int hsize, char **str)
 	}
 }
 
-void	ft_free_hist(char ***hist)
+void	ft_send_func(char *str, t_struct *strct, char ***hist, int curpl)
 {
-	int	i;
-
-	i = 0;
-	while ((*hist)[i])
-		free((*hist)[i++]);
-	free(*hist);
+	if (!ft_strcmp(str, "\n"))
+	{
+		str[0] = 0;
+		if ((*hist)[curpl][0] != 0)
+			ft_add_command(strct, *hist, (*hist)[curpl]);
+	}
+	strct->parsed_str = ft_strdup_new((*hist)[curpl]);
+	ft_terminal_backup();
+	write(1, "\n", 1);
+	if ((*hist)[curpl][0] != 0)
+		ft_begin_parsing(strct);
+	ft_free_hist(hist);
 }
 
 void	ft_term(t_struct *strct)
 {
-	char *str;
-	int curpl;
-	char **hist;
+	char	*str;
+	int		curpl;
+	char	**hist;
 
-
-	str = (char *)malloc(1000);
-	ft_bzero(str, 1000);
+	if (!(str = (char *)ft_calloc(1000, 1)))
+		ft_write_malloc_error();
 	while ((ft_strcmp(str, "\4")) || hist[curpl][0] != 0)
 	{
 		ft_terminal_setup(strct);
 		ft_prompt(strct, &str, &hist, &curpl);
-		if (g_signal)
+		if (g_signal != 0 && g_signal != 3)
 		{
-			if (g_signal == 2 || g_signal == 1)
-				strct->exit_value = 1;
+			ft_free_hist(&hist);
+			strct->exit_value = 1;
 			continue;
 		}
 		if (!(ft_strcmp(str, "\4")) && hist[curpl][0] == 0)
 			break ;
-		if (!ft_strcmp(str, "\n"))
-		{
-			str[0] = 0;
-			if (hist[curpl][0] != 0)
-				ft_add_command(strct, hist, hist[curpl]);
-		}
-		strct->parsed_str = ft_strdup_new(hist[curpl]);
-		ft_terminal_backup();
-		write(1, "\n", 1);
-		if (hist[curpl][0] != 0)
-		{
-			ft_begin_parsing(strct);
-			// if (ft_begin_parsing(strct) != -1)
-			// 	ft_work_with_t_arg_lists(strct);
-		}
-		ft_free_hist(&hist);
+		ft_send_func(str, strct, &hist, curpl);
 	}
-//	strct->parsed_str = ft_strdup_new("export");
-//	ft_begin_parsing(strct);
 	write(1, "exit\n", 5);
 	exit(strct->exit_value);
 }
-

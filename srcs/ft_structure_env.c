@@ -23,6 +23,17 @@ static	void	ft_fill_t_env_list(t_env *env_list, char **env, int i, int k)
 			ft_write_malloc_error();
 }
 
+static void		ft_env_i(t_struct *strct)
+{
+	char *value;
+
+	strct->env_head->key = ft_strdup_new("PWD");
+	value = NULL;
+	if (!(strct->env_head->value = getcwd(value, 0)))
+		ft_write_malloc_error();
+	ft_new_env(&(strct->env_head), "SHLVL", "1");
+}
+
 void			ft_structure_env(t_struct *strct, char **env)
 {
 	t_env	*tmp;
@@ -46,6 +57,8 @@ void			ft_structure_env(t_struct *strct, char **env)
 		prev = tmp;
 		i++;
 	}
+	if (!env[0])
+		ft_env_i(strct);
 	ft_get_path_to_bins(strct);
 	ft_change_shell_level(strct->env_head);
 }

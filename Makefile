@@ -6,7 +6,7 @@
 #    By: btammara <btammara@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/06 16:30:33 by btammara          #+#    #+#              #
-#    Updated: 2021/03/28 19:30:58 by btammara         ###   ########.fr        #
+#    Updated: 2021/03/28 20:01:10 by btammara         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRCS =			./srcs/main.c \
 				./srcs/utils/utils_arg_2.c \
 				./srcs/utils/utils_common.c \
 				./srcs/utils/utils_env.c \
-				./srcs/utils/utils_error.c \
+				./srcs/utils/utils_error_1.c \
+				./srcs/utils/utils_error_2.c \
 				./srcs/utils/utils_redir.c \
 				./srcs/utils/ft_strdup_new.c \
 				./srcs/utils/ft_strjoin_new.c \
@@ -40,7 +41,13 @@ SRCS =			./srcs/main.c \
 				./srcs/dquordle/gnl.c \
 				./srcs/dquordle/signals.c \
 				./srcs/dquordle/termcap.c \
-				./srcs/dquordle/more_utils.c
+				./srcs/dquordle/more_utils.c \
+				./srcs/dquordle/export.c \
+				./srcs/dquordle/unset.c \
+				./srcs/dquordle/exit.c \
+				./srcs/dquordle/cd_env.c \
+				./srcs/dquordle/built_utils.c \
+				./srcs/dquordle/term_utils.c
 
 OBJS =			$(SRCS:.c=.o)
 
@@ -72,8 +79,7 @@ fclean:			clean
 				@ rm -f $(NAME)
 				@ cd ./srcs/libft && make fclean && cd ../..
 				@ rm -f $(LIBFT_NAME)
-				@ rm -f /tmp/minishell_hist.txt
-				@ rm -f /tmp/minishell_output.txt
+				@ rm -f /goinfre/minishell_hist.txt
 
 re:				fclean all
 

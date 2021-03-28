@@ -17,11 +17,18 @@ static	void	ft_increment_shell_level(t_env **current_env)
 	int		value;
 	char	*tmp;
 
-	value = ft_atoi((*current_env)->value);
-	tmp = (*current_env)->value;
+	tmp = NULL;
+	if (!((*current_env)->value))
+		value = 0;
+	else
+	{
+		value = ft_atoi((*current_env)->value);
+		tmp = (*current_env)->value;
+	}
 	if (((*current_env)->value = ft_itoa(++value)) == NULL)
 		ft_write_malloc_error();
-	free(tmp);
+	if (tmp)
+		free(tmp);
 }
 
 static	void	ft_add_shell_level(t_env *env_head)
@@ -37,6 +44,7 @@ static	void	ft_add_shell_level(t_env *env_head)
 			new = ft_create_new_t_env(tmp);
 			new->key = ft_strdup_new("SHLVL");
 			new->value = ft_strdup_new("1");
+			break ;
 		}
 		tmp = tmp->next;
 	}
@@ -51,12 +59,15 @@ void			ft_change_shell_level(t_env *env_head)
 	flag = 0;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->key, "SHLVL", \
-		ft_strlen(tmp->key) + ft_strlen("SHLVL")))
+		if (!flag && !ft_strcmp(tmp->key, "SHLVL"))
 		{
 			flag = 1;
 			ft_increment_shell_level(&tmp);
-			break ;
+		}
+		if (!ft_strcmp(tmp->key, "OLDPWD"))
+		{
+			free(tmp->value);
+			tmp->value = NULL;
 		}
 		tmp = tmp->next;
 	}
