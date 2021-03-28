@@ -23,7 +23,7 @@ static	void	ft_fill_t_env_list(t_env *env_list, char **env, int i, int k)
 			ft_write_malloc_error();
 }
 
-static void 	ft_env_i(t_struct *strct)
+static void		ft_env_i(t_struct *strct)
 {
 	char *value;
 

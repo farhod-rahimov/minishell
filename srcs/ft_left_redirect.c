@@ -12,14 +12,14 @@
 
 #include "./minishell.h"
 
-static	int		ft_wrong_redirect()
+static	int	ft_wrong_redirect(void)
 {
 	write(2, "my_bash :", 9);
 	write(2, " ambiguous redirect\n", 20);
 	return (-1);
 }
 
-int	ft_left_redirect(t_struct *strct, t_args *args, int counter)
+int			ft_left_redirect(t_struct *strct, t_args *args, int counter)
 {
 	t_redirect	*tmp_red;
 	int			fd_red;
