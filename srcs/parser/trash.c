@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 17:25:46 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/28 10:16:25 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/28 10:58:41 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	ft_print_devided_args(t_args *head)
 {
-	t_args	*tmp;
+	t_args		*tmp;
+	t_redirect	*tmp_red;
 	int		i;
 	int		k;
 
@@ -24,16 +25,17 @@ void	ft_print_devided_args(t_args *head)
 	printf("------------------------\n");
 	while (tmp)
 	{
+		tmp_red = tmp->redir_head;
 		while (tmp->arg[i])
 		{
 			printf("arg[%d][%d]	|%s|\n", k, i, tmp->arg[i]);
 			i++;
 		}
-		while (tmp->redir_head)
+		while (tmp_red)
 		{
-			printf("arg[%d][type]	|%s|\n", k, tmp->redir_head->type);
-			printf("arg[%d][name]	|%s|\n", k, tmp->redir_head->file_name);
-			tmp->redir_head = tmp->redir_head->next;
+			printf("arg[%d][type]	|%s|\n", k, tmp_red->type);
+			printf("arg[%d][name]	|%s|\n", k, tmp_red->file_name);
+			tmp_red = tmp_red->next;
 		}
 		printf("arg[%d][pipe]	|%d|\n", k, tmp->pipe);
 		// printf("arg[%d][ex_uns]	|%s|\n", k, tmp->arg_exp_uns);

@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 08:39:57 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/26 19:02:28 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/28 10:31:23 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv, char **env)
 	strct.exit_value = 0;
 	if (argc != 1)
 		return (-1);
-	g_flags.signal_c = 0;
+	g_signal = 0;
 	if ((fd = open(HISTFILE, O_CREAT, 00777)) == -1)
 		ft_errno_error(&strct, HISTFILE);
 	close(fd);

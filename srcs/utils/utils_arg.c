@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 19:05:54 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/27 17:08:57 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/28 10:55:30 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int ft_check_if_new_list_or_arg_is_needed(t_struct *strct, t_args **current_t_ar
 				(*current_t_arg)->pipe = 1;
 		}
 		i = ft_skip_spaces(strct->parsed_str, ++i);
-		// if (strct->parsed_str[i] != '\0')
+		if (strct->parsed_str[i] != '\0')
 			*current_t_arg = ft_create_new_t_args(strct, *current_t_arg);
 	}
 	else if (strct->parsed_str[i] == '>' || strct->parsed_str[i] == '<')

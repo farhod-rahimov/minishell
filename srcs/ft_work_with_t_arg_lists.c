@@ -6,7 +6,7 @@
 /*   By: btammara <btammara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 14:46:37 by btammara          #+#    #+#             */
-/*   Updated: 2021/03/27 15:12:48 by btammara         ###   ########.fr       */
+/*   Updated: 2021/03/28 10:56:40 by btammara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ static	void	ft_check_redirections(t_args *tmp, t_struct *strct, char **env);
 
 void	ft_work_with_t_arg_lists(t_struct *strct, t_args **current_t_arg)
 {
-	t_redirect *tmp_red;
 	t_args *current_t_arg_head;
-	tmp_red = strct->args_head->redir_head;
 
 	int fd_pipe[2];
 	char **env;
